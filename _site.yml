@@ -1,0 +1,34 @@
+name: EDLD 650
+output_dir: "."
+navbar:
+  title: "EDUC 650"
+  
+  left:
+  - text: Syllabus
+    href: syllabus.html
+  - text: Schedule
+    href: schedule.html
+  - text: Lectures
+    menu: 
+      - text: "Unit 1: Intro and Common Vocabulary"
+        href: 
+      - text: "Unit 2: Difference-in-Differences"
+        href: 
+      - text: "Unit 3: Regression Discontinuity"
+        href: 
+      - text: "Unit 4: Instrumental Variables"
+        href: 
+      - text: "Unit 5: Matching"
+        href: 
+
+
+  right:
+  - text: Assignments
+    href: assignments.html
+  - icon: fa-github
+    href: 
+
+output:
+  html_document:
+   lib_dir: site_libs
+   self_contained: no
