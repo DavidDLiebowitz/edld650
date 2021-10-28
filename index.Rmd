@@ -1,6 +1,6 @@
 ---
 title: "EDLD 650: Advanced Seminar in Educational Research Methods"
-subtitle: "aka Causal Inference"
+subtitle: "aka Methods for Causal Inference in Educational Research"
 author: "David Liebowitz"
 
 site: distill::distill_website
