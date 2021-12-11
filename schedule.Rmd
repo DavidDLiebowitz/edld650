@@ -100,7 +100,7 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
+- Class Questions: doc
 - R Script: 
 - Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](./data/edld650_class_2_eepa_data.dta)
 
