@@ -1,0 +1,95 @@
+---
+title: "Data Analysis and Replication Exercises (DAREs)"
+site: distill::distill_website
+output:
+  html_document:
+    toc: TRUE
+    toc_depth: 2
+    toc_float: TRUE
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. General Guidelines
+
+For each of the four units, you will complete a Data Analysis and Replication Exercise (DARE) that will require you to integrate statistical programming, methodological understanding and scholarly writing skills. In the preceding class, you will be provided with guidance and a detailed assignment that will entail familiarizing yourself with a replication dataset for one of the papers we have read. You will need to familiarize yourself with this small data set, produce a set of tables and figures that replicate some of the results from the paper, and write up your results in a memo following scholarly reporting standards. Each DARE will have a detailed assignment sheet, accompanying rubric, and you will receive exemplar models after your work is graded. 
+
+# 2. Submission Requirements
+
+You will need to upload your work to Canvas by 9:00am of the Monday in the week in which the DARE is due.  
+
+We encourage (though don't require) you to form pairs (2 people maximum) for the DAREs. Both members of the pair should contribute equally to the submitted product, both members should list their names on their submitted work, both members of the pair should submit the assignment on Canvas, and each member of the pair will receive the same score on the assignment. Please email us if you have attempted to form a group or pair without success.
+
+Please submit the following two documents for each DARE:
+
+ * An .html, .doc/x, or .pdf file that includes your typed responses, tables, and/or figures to the problems  
+ * The programming code (.Rmd, .R, .do or similar file) that you used to generate the tables and figures in the above html/doc/pdf
+
+# 3. DARE details
+
+## DARE #1
+
+**Difference-in-differences**
+
+Replication paper: Liebowitz, Porter & Bragg (2021)
+
+Deadline: 9:00am, January 17 (*note that this is MLK Jr. Day; feel free to submit earlier*)
+
+Assignment details: pdf
+
+Dataset: csv
+
+Answer Key: pdf | R script
+
+## DARE #2 
+
+**Regression discontinuity**
+
+Replication paper: Holden (2016)
+
+Deadline: 9:00am, January 31
+
+Assignment details: pdf
+
+Dataset: dta
+
+Answer Key: pdf | R script
+
+## DARE #3 
+
+**Instrumental variables**
+
+Replication paper: Kim, Capotosto, Hartry & Fitzgerald (2011)
+
+Deadline: 9:00am, January 31
+
+Assignment details: pdf
+
+Dataset: dta
+
+Answer Key: pdf | R script
+
+## DARE #4 
+
+**Matching**
+
+Replication paper: Umansky & Dumont (2021)
+
+Deadline: 9:00am, January 31
+
+Assignment details: pdf
+
+Dataset: dta
+
+Answer Key: pdf | R script
+
+
+
+
+
+
+
+

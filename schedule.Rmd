@@ -1,5 +1,5 @@
 ---
-title: "EDLD 650 Schedule"
+title: "Schedule"
 site: distill::distill_website
 output:
   html_document:
