@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>An Introduction to Causal Inference</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="David D. Liebowitz" />
+    <script src="EDLD_650_1_intro_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="EDLD_650_1_intro_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="EDLD_650_1_intro_files/remark-css-0.0.1/uo.css" rel="stylesheet" />
+    <link href="EDLD_650_1_intro_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my_custom.css" type="text/css" />
+    <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# An Introduction to Causal Inference
+## EDLD 650: Advanced Research Methods Seminar
+### David D. Liebowitz
+
+---
+
+
+
+# Roadmap
+
+&lt;img src="causal_id.jpg" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Goals for today
+
+1. Articulate in words (and using simple mathematical terms) a framework for identifying causal relationships
+2. Describe the conceptual approach to identifying causal effects using the difference-in-differences approach
+
+
+---
+class: middle, inverse
+
+# Causal frameworks
+
+
+
+---
+class: middle, inverse
+
+# Correlation ...and causality
+
+---
+# Correlations
+
+* Correlation coefficients `\((r)\)` describe the **strength** of a linear relationship between two variables. 
+
+* The concept was first developed by Karl Pearson a eugenics professor at the University College of London. He held many despicable [views](https://nautil.us/issue/92/frontiers/how-eugenics-shaped-statistics).
+
+* He (along with Francis Galton and RA Fisher) also pioneered many of the basic tools of modern statistics, including standard deviation, `\(\chi^2\)`, goodness of fit and correlation
+
+* Correlations are dimensionless measures that eliminate the metrics of any particular scale. To do so requires **standardizing** each variable.
+
+---
+# Standardizing variables
+
+* Any variable can be standardized using a simple algorithm.
+
+Each observation `\((i)\)` is transformed into standardized form using the following formula:
+
+`$$z_{i} = \frac{X_{i} - \mu}{\sigma}$$`
+
+* The standardized value is calculated calculated by **subtracting the mean** from each value and **dividing by the standard deviation**.
+
+* The sample mean of the new variable is 0 and its standard deviation is 1
+
+* The new values represent an observation's distance from the mean in standard deviation units.
+
+* Values range from -1 to 1
+  + Positive Values - higher values of Y `\(\rightarrow\)` higher values of X (and vice-versa)
+  + Negative Values - higher values of Y `\(\rightarrow\)` lower values of X (and vice-versa)
+
+* **Doesn't change anyone's relative rank**
+
+* **Doesn't create a normally distributed variable**
+
+---
+# Correlations visualized
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Anscombe's Quartet
+
+...but, correlation is not everything. [Frank Anscombe (1973)](https://www.jstor.org/stable/2682899) first highlighted the following set of distributions, all with correlations `\((r)\)` of exactly 0.816.
+
+&lt;img src="anscombe.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# What correlation does(n't) mean
+
+Four datasets, each with two variables with (nearly) identical means and correlations
+
+
+```
+#&gt; # A tibble: 4 x 4
+#&gt;   dataset    `mean(x)` `mean(y)` `cor(x, y)`
+#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+#&gt; 1 circle          54.3      47.8     -0.0683
+#&gt; 2 dino            54.3      47.8     -0.0645
+#&gt; 3 h_lines         54.3      47.8     -0.0617
+#&gt; 4 slant_down      54.3      47.8     -0.0690
+```
+
+.blue[What's the correlation between x and y  across these four datasets?]
+
+--
+
+All seem pretty similar, right? Let's take a look at their bivariate relationship...
+
+---
+# What correlation does(n't) mean
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+# Why correlation `\(\neq\)` causation?
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Spurious correlation
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+A third variable causes changes in X and also in Y. Sometimes called a .red[*confounder*].
+
+&gt; .small[It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights. -George Bernard Shaw (1906)]
+
+---
+# Why correlation `\(\neq\)` causation?
+
+Other common problems include:
+- [Colliders](http://www.the100.ci/2017/03/14/that-one-weird-third-variable-problem-nobody-ever-mentions-conditioning-on-a-collider/): a third variable that is caused by both the predictor and outcome; controlling for this can make a true causal relationship disappear!
+- Reverse causation: X may cause Y **or** Y may cause X
+- Simpson's Paradox: a third variable may reverse the correlation
+- Also, **lack** of correlation `\(\neq\)` **lack** of causality
+
+&lt;img src="causalinf.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+h/t [@causalinf](https://twitter.com/causalinf)
+
+
+
+---
+# From correlation to causality
+
+### Five criteria for establishing causality:&lt;sup&gt;1&lt;/sup&gt;
+
+1. Cause must precede effect in time
+2. Identified mechanism
+3. Consistency
+4. Responsiveness
+5. No plausible alternative explanation
+
+Highest priority is establishing .red[**exogeneous variation**] in exposure to some "treatment."
+
+--
+
+Research design is critical. So too can be [Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629). We have whole classes dedicated to just this topic (EDLD 650, EDLD 679).
+
+.footnote[[1] Derived from [Shadish, Cook and Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) and John Stuart Mill.]
+
+
+---
+class: middle, inverse
+
+# Difference-in-differences
+
+
+---
+class: middle, inverse
+# Synthesis and wrap-up
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
