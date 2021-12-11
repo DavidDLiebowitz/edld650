@@ -10,15 +10,23 @@ navbar:
     href: schedule.html
   - text: Lectures
     menu: 
-      - text: "Unit 1: Intro and Common Vocabulary"
+      - text: "Week 1: Intro to Causal Inference"
         href: 
-      - text: "Unit 2: Difference-in-Differences"
+      - text: "Week 2: Difference-in-Differences (DD) I"
         href: 
-      - text: "Unit 3: Regression Discontinuity"
+      - text: "Week 3: Difference-in-Differences (DD) II"
         href: 
-      - text: "Unit 4: Instrumental Variables"
+      - text: "Week 4: Regression Discontinuity (RD) I"
         href: 
-      - text: "Unit 5: Matching"
+      - text: "Week 5: Regression Discontinuity (RD) II"
+        href: 
+      - text: "Week 6: Instrumental Variables (IV) I"
+        href:
+      - text: "Week 7: Instrumental Variables (IV) II"
+        href: 
+      - text: "Week 8: Matching I"
+        href: 
+      - text: "Week 9: Matching II"
         href: 
 
 

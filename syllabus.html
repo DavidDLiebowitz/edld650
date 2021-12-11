@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>EDLD 650 Syllabus</title>
+
+<!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content=""/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+<!--radix_placeholder_site_in_header-->
+<!--/radix_placeholder_site_in_header-->
+
+<style type="text/css">
+body {
+  padding-top: 60px;
+}
+</style>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="index.html" class="title">EDUC 650</a>
+<a href="syllabus.html">Syllabus</a>
+<a href="schedule.html">Schedule</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Lectures
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<span class="nav-dropdown-header">Unit 1: Intro and Common Vocabulary</span>
+<span class="nav-dropdown-header">Unit 2: Difference-in-Differences</span>
+<span class="nav-dropdown-header">Unit 3: Regression Discontinuity</span>
+<span class="nav-dropdown-header">Unit 4: Instrumental Variables</span>
+<span class="nav-dropdown-header">Unit 5: Matching</span>
+</div>
+</div>
+</div>
+<div class="nav-right">
+<a href="assignments.html">Assignments</a>
+<a>
+<i class="fa fa-github" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">EDUC 650</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="syllabus.html">Syllabus</a>
+</li>
+<li>
+  <a href="schedule.html">Schedule</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Unit 1: Intro and Common Vocabulary</li>
+    <li class="dropdown-header">Unit 2: Difference-in-Differences</li>
+    <li class="dropdown-header">Unit 3: Regression Discontinuity</li>
+    <li class="dropdown-header">Unit 4: Instrumental Variables</li>
+    <li class="dropdown-header">Unit 5: Matching</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="assignments.html">Assignments</a>
+</li>
+<li>
+  <a>
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">EDLD 650 Syllabus</h1>
+
+</div>
+
+
+<div id="course-overview" class="section level1">
+<h1>Course Overview</h1>
+<p>This course explores methods for causal inference in educational research. The two primary goals of the course are (1) to provide students with the analytic tools and skills to assess the quality of research claims in education, human development, and other substantive fields; and (2) to provide students with the skills to conduct research that supports causal inference. The course will introduce students to four core methods of quasi-experimental design: difference-in-differences (and comparative interrupted time series), regression discontinuity, instrumental variables and matching. The course will culminate in either a research proposal or completed paper using one of the methods from the course. <em>Prior coursework minimally through multiple regression and familiarity with a statistical programming language (preferably R) is assumed.</em></p>
+</div>
+<div id="meeting-time-and-location" class="section level1">
+<h1>Meeting Time and Location</h1>
+<p>Class meets on Tuesdays from 9:00am to 11:50am in Lokey 119</p>
+</div>
+<div id="instructor" class="section level1">
+<h1>Instructor</h1>
+<p><strong>David Liebowitz</strong></p>
+<p>Email: <a href="mailto:%20daviddl@uoregon.edu">daviddl@uoregon.edu</a></p>
+<p>Office: 102S Lokey Education Building</p>
+<p>Office Hours: Wednesdays, 9:00am - 10:30am or by appointment</p>
+</div>
+<div id="student-learning-outcomes" class="section level1">
+<h1>Student Learning Outcomes</h1>
+<p>By the end of this term, we expect students will be able to:</p>
+<ol style="list-style-type: decimal">
+<li>Describe the potential outcome framework and use it to assess the extent to which various research designs support causal claims about their hypothesis tests;</li>
+<li>Understand, analyze and critique descriptive and causal quantitative social science research;</li>
+<li>Implement, in practical terms, research designs to make credibly causal inferences in quantitative social science research, including difference-in-differences, regression discontinuity, instrumental variables and matching strategies;</li>
+<li>Make progress in developing an independent research project that capitalizes on the research tools of EDLD 650.</li>
+</ol>
+</div>
+<div id="textbooks-and-reading-materials" class="section level1">
+<h1>Textbooks and Reading Materials</h1>
+<p><em>Required Text:</em></p>
+<p>Murnane, R.J. &amp; Willet, J.B. (2011). <em>Methods Matter: Improving Causal Inference in Educational and Social Science Research</em>. New York: Oxford University Press.</p>
+<p><em>Supplemental Optional Texts:</em></p>
+<p>Angrist, J.D. &amp; Pischke, J. (2009). <em>Mostly Harmless Econometrics: An Empiricist’s Companion</em>. Princeton, NJ: Princeton University Press.</p>
+<p>Cunningham, S. (2021). <em><a href="https://www.scunning.com/mixtape.html">Causal Inference: The Mixtape</a></em>.</p>
+<p>Huntington-Klein, N. (2021). <em><a href="https://theeffectbook.net/">The Effect: An Introduction to Research Design and Causality</a></em>.</p>
+<p>Angrist, J.D. &amp; Pischke, J. (2014). <em>Mastering ‘Metrics: The Path from Cause to Effect</em>. Princeton, NJ: Princeton University Press.</p>
+<p>Methods Matter (MM) by Murnane and Willett should be ordered online or purchased from the Duckstore. Other readings are linked directly or downloadable from the course website.</p>
+</div>
+<div id="class-logistics-and-expectations" class="section level1">
+<h1>Class Logistics and Expectations</h1>
+<div id="class-structure" class="section level2">
+<h2>Class Structure</h2>
+<p>In general, each analytic method will be covered over two weeks. Class in the first week will be divided into two parts. First, we will discuss thoroughly the methods and their applications following a series of questions for which you are required to prepare answers in advance. Then, we will preview a Data Analysis and Replication Exercise (DARE) and guide you through a series of analytic programming steps. Class in the second week will also be divided into two parts. The first part of this class will be devoted to analyzing an empirical paper and comparing its results with the analytic replication and extensions you will have conducted. In the second part of the class, we will provide a conceptual overview of the new methodological strategy that will be introduced in the following unit.</p>
+<p>Each week, you will read papers from the scholarly literature as well as chapters from Murnane and Willett (2011) and prepare explicit responses to a set of detailed questions that we will post on the Canvas website on the Thursday prior to each class. During class, we will discuss the questions at which point we will “cold” call on students at least partially at random. We do this to formatively assess class members’ grasp of the course content, to promote more equitable distribution in class participation, and to promote a spirit of accountability for developing a thorough understanding of complex and technical readings. Class discussions will focus on, but not necessarily be limited to, your answers to these questions. Cold calls will be restricted to only those pre-published questions, but the discussion will extend to student questions and extension points.</p>
+</div>
+<div id="groups-and-partner-work" class="section level2">
+<h2>Groups and Partner Work</h2>
+<p>Research is an inherently collaborative experience. Building skill in research collaboration during graduate studies can be an important complement to technical and analytic skills. We strongly encourage you to form study groups to engage in the work of the class. Group members may jointly prepare responses to the reading questions (these are not for submission). We also encourage you to form pairs (2 people maximum) for the data replication exercises. Both members of the pair should contribute equally to the submitted product and each member of the pair will receive the same score on the assignment. Please email us if you have attempted to form a group or pair without success.</p>
+</div>
+<div id="statistical-software" class="section level2">
+<h2>Statistical Software</h2>
+<p>This course will complement the understanding of methodologies for generating causal inference in social science research design with applied exercises in the analysis of data to carry out these techniques. The teaching team will be able to support your learning in two commonly used statistical languages: R and Stata. R and RStudio are available free of charge to download. We will not directly support other programming languages, but students are welcome to complete either their DAREs or research project using other software with which they are familiar as long as they produce correct results.</p>
+<div id="r-and-rstudio" class="section level3">
+<h3>R and RStudio</h3>
+<p>Students can download the latest version of R <a href="https://ftp.osuosl.org/pub/cran/">here</a>. We strongly recommended that students also download the RStudio GUI, available <a href="https://www.rstudio.com/products/rstudio/download/#download">here</a>. Both softwares are free.</p>
+</div>
+<div id="resources-for-r-and-rstudio" class="section level3">
+<h3>Resources for R and RStudio</h3>
+<p>While we will teach you how to effectively use R and RStudio to conduct analyses, one of the key skills required to use R is the ability to find answers on your own. Many common questions or problems are either available on blogs or have been asked and answered in discussion forums already. Finding and deciphering those answers is an important skill you should seek to hone. <em>You will never remember all of the programming commands!</em></p>
+<p>Here are some sites where you can find the answers to many R questions and learn new tricks:</p>
+<ul>
+<li><a href="https://bookdown.org/ndphillips/YaRrr/"><em>YaRrr, the Pirate’s Guide to R</em></a> by Nathaniel Phillips</li>
+<li><a href="https://r4ds.had.co.nz/"><em>R for Data Science</em></a> by Hadley Wickham</li>
+<li><a href="https://www.rstudio.com/resources/cheatsheets">Cheat Sheets</a></li>
+<li><a href="https://www.statmethods.net">Quick-R</a></li>
+<li><a href="https://stackoverflow.com/questions/tagged/r">StackOverflow</a></li>
+<li><a href="https://stats.stackexchange.com">Stack Exchange</a></li>
+</ul>
+</div>
+</div>
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+</div>
+<div id="schedule" class="section level1">
+<h1>Schedule</h1>
+<p>This is a high-level sketch of our weekly schedule. For more details, see <a href="./schedule.html">here</a>.</p>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="4%" />
+<col width="13%" />
+<col width="62%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Week</th>
+<th align="left">Class Date</th>
+<th align="left">Topics</th>
+<th align="left">Required Readings</th>
+<th align="left">Assignments Due</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">Jan. 4</td>
+<td align="left">A Common Vocabulary</td>
+<td align="left">MM Ch. 1-5, 7 <br> <a href="https://www.educationnext.org/the-immensity-of-the-coleman-data-project/">Hoxby 2016</a></td>
+<td align="left">Student survey (Jan. 5)</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">Jan. 11</td>
+<td align="left">Difference-in-differences (I)</td>
+<td align="left">MM Ch. 8 <br> <a href="https://doi.org/10.1257/000282803321455287">Dynarski 2003</a></td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">Jan. 18</td>
+<td align="left">Difference-in-differences (II)</td>
+<td align="left"><a href="https://doi.org/10.1080/19345747.2021.2015496">Liebowitz et al. 2021</a></td>
+<td align="left">DARE #1 (Jan. 17)</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">Jan. 25</td>
+<td align="left">Regression discontinuity (I)</td>
+<td align="left">MM Ch. 9 <br> <a href="https://doi.org/10.1162/003355399556061">Angrist &amp; Lavy 1999</a> <br> <a href="https://doi.org/10.1162/qjec.122.1.159">Ludwig &amp; Miller 2007</a></td>
+<td align="left">Research project proposal (Jan. 28)</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">Feb. 1</td>
+<td align="left">Regression discontinuity (II)</td>
+<td align="left"><a href="http://dx.doi.org/10.1257/app.20150112">Holden 2016</a></td>
+<td align="left">DARE #2 (Jan. 31)</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">Feb. 8</td>
+<td align="left">Instrumental variables (I)</td>
+<td align="left">MM Ch. 10 &amp; 11 <br> <a href="https://doi.org/10.1016/j.jpubeco.2003.11.002">Dee 2004</a> <br> <a href="https://doi.org/10.1086/683665">Angrist et al. 2016</a></td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">Feb. 15</td>
+<td align="left">Instrumental variables (II)</td>
+<td align="left"><a href="https://doi.org/10.3102/0162373711399148">Kim et al. 2011</a></td>
+<td align="left">DARE #3 (Feb. 14)</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">Feb. 22</td>
+<td align="left">Matching (I)</td>
+<td align="left">MM Ch. 12 <br> <a href="https://doi.org/10.3368/jhr.XLI.2.319">Diaz &amp; Handa 2002</a></td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">Mar. 1</td>
+<td align="left">Matching (II)</td>
+<td align="left">MM Ch. 13 &amp; 14 <br> <a href="https://doi.org/10.3102%2F0002831221997571">Umansky &amp; Dumont 2021</a></td>
+<td align="left">DARE #4 (Feb. 28)</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">Mar. 8</td>
+<td align="left">Presentations</td>
+<td align="left">None</td>
+<td align="left">Research project presentation (Mar. 8)</td>
+</tr>
+<tr class="odd">
+<td align="left">Finals</td>
+<td align="left">NA</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">Final research project (Mar. 17)</td>
+</tr>
+</tbody>
+</table>
+<p><em>MM = Methods Matter</em></p>
+</div>
+<div id="grading-components-and-criteria" class="section level1">
+<h1>Grading Components and Criteria</h1>
+<p>Final grades will be based on the following elements:</p>
+<ol style="list-style-type: decimal">
+<li><p>Data Analysis and Replication Exercises (DAREs) (4 DAREs, worth 10 points each for a total of 40 points): For each of the four units, you will complete a Data Analysis and Replication Exercise (DARE) that will require you to integrate statistical programming, methodological understanding and scholarly writing skills. In the preceding class, you will be provided with guidance and a detailed assignment that will entail familiarizing yourself with a replication dataset for one of the papers we have read. You will need to familiarize yourself with this small data set, produce a set of tables and figures that replicate some of the results from the paper, and write up your results in a memo following scholarly reporting standards. Each DARE will have a detailed assignment sheet, accompanying rubric, and you will receive exemplar models after your work is graded. You will need to upload your work to Canvas by 9:00am of the Monday in the week in which the DARE is due.</p></li>
+<li><p>Final Research Project (10 points for the presentation, 35 points for the written manuscript): The central culminating project of this class is to initiate and/or complete an original research project, present the project to the class, and produce a written product that might take on a variety of forms. Our notion of what constitutes a complete project is intentionally vague to permit a variety of projects at different stages and is subject to negotiation between student and instructor. Some examples of the types of projects you might complete:</p></li>
+</ol>
+<ul>
+<li>Replicate and extend a published study that uses (or should have used) one of the methods taught in the course;</li>
+<li>Write a proposal describing future research drawing on methods learned in this course;</li>
+<li>Write a critical synthesis and review article on a substantive area of interest drawing on methodological lessons from this course; or</li>
+<li>Conduct and report in manuscript form the results of an empirical study using methods from this course We favor projects that will lead ultimately to a scholarly product that can appear on your CV. This includes, but is not limited to conference presentations, published papers, proposals, qualifying papers, a dissertation. In order to ensure that you make an early start and continue to make progress on your project, you must submit an initial one page overview of your proposed project to us by <strong>January 28 at 9:00am</strong>. You will make a public presentation of your project to other class members on <strong>March 8</strong>. Your final written project is due <strong>March 17 at 9:00am</strong>. You will have the opportunity to receive extended written comments on one (1) draft of your written project. You may submit your written project by March 10 at 9:00am and will receive extended comments that will help you revise your work for your final paper. If you choose this option, you will receive general comments on your final draft.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Course Participation (15 points): You will be assessed on your contribution to the intellectual community of the class via your weekly class participation. Students who share answers that are generally responsive to the prepared prompts and engage respectfully in the classroom community on a regular basis should expect to earn 13 or 14 points. Consistently insightful responses, questions and participation will be awarded 15 points. We do not anticipate that this level of performance will be the norm. Participation that is consistently inaccurate, indicative of a lack of preparation, or marred by frequent, unexcused absences will result in a score of 12 points or fewer.</li>
+</ol>
+<p>Final grades are based on the following scale: A+ 98-100, A 94-97, A- 90-93; B+ 87-89, B 83-86, B- 80-82; C+ 77-79, C 73-76, C- 70-72. Any work scoring less than a C- will be required to be revised and resubmitted. Students taking the course on a Pass/Not Pass basis must earn a minimum grade of 80% and complete all assignments for the class.</p>
+</div>
+<div id="student-engagement-inventory" class="section level1">
+<h1>Student Engagement Inventory</h1>
+<p>Graduate students are expected to perform work of high quality and quantity, typically with forty hours of student engagement for each student credit hour. For this course, the following table shows the number of hours a typical student would expect to spend in each of the following activities:</p>
+<table>
+<colgroup>
+<col width="53%" />
+<col width="8%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Educational activity</th>
+<th>Hours</th>
+<th>Explanatory comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Class attendance</td>
+<td>26</td>
+<td>10 class meetings of 2:40 (includes 10 min. break)</td>
+</tr>
+<tr class="even">
+<td>Class reading and prep</td>
+<td>30</td>
+<td>Includes out-of-class preparation of responses to detailed questions on reading</td>
+</tr>
+<tr class="odd">
+<td>Data Analytic &amp; Replication Exercises (DAREs)</td>
+<td>24</td>
+<td>DAREs should take approx. 6 hours each (on avg.)</td>
+</tr>
+<tr class="even">
+<td>Research project</td>
+<td>40</td>
+<td>Includes data analysis, preparation of presentation, and drafting of written project</td>
+</tr>
+<tr class="odd">
+<td><strong>Total hours</strong></td>
+<td><strong>120</strong></td>
+<td><strong>These are approximations.</strong> Reading and <em>especially</em> analytic time will vary per individual</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="common-course-policies" class="section level1">
+<h1>Common Course Policies</h1>
+<div id="indigenous-recognition-statement" class="section level2">
+<h2>Indigenous Recognition Statement</h2>
+<p>The University of Oregon is located on Kalapuya Ilihi, the traditional indigenous homeland of the Kalapuya people. Today, descendants are citizens of the Confederated Tribes of the Grand Ronde Community of Oregon and the Confederated Tribes of the Siletz Indians of Oregon, and they continue to make important contributions in their communities, at UO, and across the land we now refer to as Oregon.</p>
+</div>
+<div id="uo-covid-regulations-and-prevention" class="section level2">
+<h2>UO COVID Regulations and Prevention</h2>
+<p>The University of Oregon (UO), in accordance with guidance from the Centers for Disease Control, Oregon Health Authority, and Lane County Public Health requires faculty, staff, students, visitors, and vendors across all UO locations to use face coverings when in UO owned, leased, or controlled buildings. This includes classrooms. Please correctly wear a suitable face covering during class. Students unable to wear face coverings can work with the Accessible Education Center to find a reasonable accommodation. Students refusing to wear a face covering will be asked to leave the class. Face coverings are not required for fully vaccinated instructors, provided there is 6 feet of distance to others and that all others in the class are masked. For full guidelines, which are subject to change, see the UO’s face covering regulations. Students should obtain wipes available outside of classrooms before they enter class and use them to wipe down the table and seat they will use. See <a href="https://coronavirus.uoregon.edu/regulations">https://coronavirus.uoregon.edu/regulations</a> for more information.</p>
+</div>
+<div id="absence-and-attendance-policies" class="section level2">
+<h2>Absence and Attendance Policies</h2>
+<p>Attendance at all class and discussion groups is expected and required. Students must contact the instructor in case of illness or emergencies that preclude attending class sessions. Messages can be left on the instructor’s e-mail at any time of the day or night, prior to class.</p>
+<p>As the university community adjusts to teaching and learning in the context of the COVID-19 pandemic, course requirements, deadlines, and grading percentages are subject to change. I will be mindful of the many impacts the unfolding events related to COVID-19 may be having on you. There may be situations beyond the control of individual students that lead to excessive absences such as becoming ill, caring for others, managing home schooling, etc. Students are expected to attend class, however if a student misses more than two consecutive classes they will be asked to complete a make-up assignment to be developed by the instructor to compensate for the missed class time. Each student who is experiencing difficulty attending scheduled class times or class activities must contact the instructor to develop a plan for making up the class time and satisfactorily meeting the credit hours required.</p>
+</div>
+<div id="diversity-equity-and-inclusion" class="section level2">
+<h2>Diversity, Equity, and Inclusion</h2>
+<p>It is the policy of the University of Oregon to support and value equity and diversity and to provide inclusive learning environments for all students. To do so requires that we:</p>
+<ul>
+<li>respect the dignity and essential worth of all individuals.</li>
+<li>promote a culture of respect throughout the University community.</li>
+<li>respect the privacy, property, and freedom of others.</li>
+<li>reject bigotry, discrimination, violence, or intimidation of any kind.</li>
+<li>practice personal and academic integrity and expect it from others.</li>
+<li>promote the diversity of opinions, ideas and backgrounds which is the lifeblood of the university.</li>
+</ul>
+<p>In this course, class discussions, projects/activities and assignments will challenge students to think critically about and be sensitive to the influence, and intersections, of race, ethnicity, nationality, documentation, language, religion, gender, socioeconomic background, physical and cognitive ability, sexual orientation, and other cultural identities and experiences. Students will be encouraged to develop or expand their respect and understanding of such differences.</p>
+<p>Maintaining an inclusive classroom environment where all students feel able to talk about their cultural identities and experiences, ideas, beliefs, and values will not only be my responsibility, but the responsibility of each class member as well. Behavior that disregards or diminishes another student will not be permitted for any reason. This means that no racist, ableist, transphobic, xenophobic, chauvinistic or otherwise derogatory comments will be allowed. It also means that students must pay attention and listen respectfully to each other’s comments</p>
+</div>
+<div id="using-pronouns-and-personal-preference" class="section level2">
+<h2>Using Pronouns and Personal Preference</h2>
+<p>The College of Education is always working to include and engage everyone. One way we can do this is to share your pronouns, or the words you want to be called when people aren’t using your name. Like names, pronouns are an important part of how we identify that deserves to be respected. And we recognize that assuming someone’s gender can be hurtful, especially to members of our community who are transgender, genderqueer, or non-binary. As a community, we are all learning together about the importance of pronouns and being better allies to the trans community on campus. Please discuss the pronouns you wish to be used with your professor to help them be aware of how to address you respectfully. Please visit this university <a href="https://studentlife.uoregon.edu/pronouns">website</a> for more information.</p>
+</div>
+<div id="accessible-education" class="section level2">
+<h2>Accessible Education</h2>
+<p>The University of Oregon is working to create inclusive learning environments. Please notify me if there are aspects of the instruction or design of this course that result in disability-related barriers to your participation. Participation includes access to lectures, web-based information, in-class activities, and exams. The <a href="http://aec.uoregon.edu/">Accessible Education Center</a> works with students to provide an instructor notification letter that outlines accommodations and adjustments to class design that will enable better access. Contact the Accessible Education Center in 360 Oregon Hall at 541-346-1155 or <a href="uoaec@uoregon.edu">uoaec@uoregon.edu</a> for assistance with access or disability-related questions or concerns.</p>
+</div>
+<div id="children-in-class" class="section level2">
+<h2>Children in Class</h2>
+<p>As a parent of three young children, I understand the difficulty in balancing academic, work, and family commitments. Here are my policies (with credit to <a href="https://github.com/datalorax">Daniel Anderson</a>) regarding children in class:</p>
+<ul>
+<li>All breastfeeding babies are welcome in class as often as necessary.</li>
+<li>Non-nursing babies and older children are welcome whenever alternate arrangements cannot be made. I understand that childcare arrangements fall through, partners have conflicting schedules, children get sick, and other issues arise that leave caregivers with few other options.</li>
+<li>In cases where children come to class, I invite parents/caregivers to sit close to the door so as to more easily excuse yourself to attend to your child’s needs. Non-parents in the class: please reserve seats near the door for your parenting classmates.</li>
+<li>All students are expected to join with me in creating a welcoming environment that is respectful of your classmates who bring children to class.</li>
+<li>I understand that sleep deprivation and exhaustion are among the most difficult aspects of caring for young children. The struggle of balancing school, work, childcare, and graduate school is tiring (not to mention being in the middle of a pandemic!), and I will do my best to accommodate any such issues while maintaining the same high expectations for all students enrolled in the class. Please do not hesitate to contact me with any questions or concerns.</li>
+</ul>
+</div>
+<div id="reporting-title-ix-experiences" class="section level2">
+<h2>Reporting Title IX Experiences</h2>
+<p>Any student who has experienced sexual assault, relationship violence, sex or gender-based bullying, stalking, and/or sexual harassment may seek resources and help at safe.uoregon.edu. To get help by phone, a student can also call either the UO’s 24-hour hotline at 541-346-7244 [SAFE], or the non-confidential Title IX Coordinator at 541-346-8136. From the SAFE website, students may also connect to Callisto, a confidential, third-party reporting site that is not a part of the university.</p>
+<p>Students experiencing any other form of prohibited discrimination or harassment can find information at <a href="https://respect.uoregon.edu/">https://respect.uoregon.edu/</a> or <a href="https://aaeo.uoregon.edu/">https://aaeo.uoregon.edu/</a> or contact the non-confidential AAEO office at 541-346-3123 or the Dean of Students Office at 541-346-3216 for help. As UO policy has different reporting requirements based on the nature of the reported harassment or discrimination, additional information about reporting requirements for discrimination or harassment unrelated to sexual assault, relationship violence, sex or gender based bullying, stalking, and/or sexual harassment is available at <a href="http://aaeo.uoregon.edu/content/discrimination-harassment">http://aaeo.uoregon.edu/content/discrimination-harassment</a></p>
+<p>Specific details about confidentiality of information and reporting obligations of employees can be found at <a href="https://titleix.uoregon.edu">https://titleix.uoregon.edu</a>.</p>
+</div>
+<div id="reporting-obligations" class="section level2">
+<h2>Reporting Obligations</h2>
+<p>I am a student-directed employee. For information about my reporting obligations as an employee, please see Employee Reporting Obligations on the Office of Investigations and Civil Rights Compliance (OICRC) website. Students experiencing any form of prohibited discrimination or harassment, including sex or gender-based violence, may seek information and resources at safe.uoregon.edu, respect.uoregon.edu, or investigations.uoregon.edu or contact the non-confidential Title IX office/Office of Civil Rights Compliance (541-346-3123), or Dean of Students offices (541-346-3216), or call the 24-7 hotline 541-346-SAFE for help. I am also a mandatory reporter of child abuse. Please find more information at Mandatory Reporting of Child Abuse and Neglect</p>
+</div>
+<div id="academic-misconduct" class="section level2">
+<h2>Academic Misconduct</h2>
+<p>The University Student Conduct Code (available at conduct.uoregon.edu) defines academic misconduct. Students are prohibited from committing or attempting to commit any act that constitutes academic misconduct. By way of example, students should not give or receive (or attempt to give or receive) unauthorized help on assignments or examinations without express permission from the instructor. Students should properly acknowledge and document all sources of information (e.g. quotations, paraphrases, ideas) and use only the sources and resources authorized by the instructor. If there is any question about whether an act constitutes academic misconduct, it is the students’ obligation to clarify the question with the instructor before committing or attempting to commit the act. Additional information about a common form of academic misconduct, plagiarism, is available at <a href="https://researchguides.uoregon.edu/citing-plagiarism">https://researchguides.uoregon.edu/citing-plagiarism</a></p>
+</div>
+<div id="inclement-weather" class="section level2">
+<h2>Inclement Weather</h2>
+<p>It is generally expected that class will meet unless the University is officially closed for inclement weather. If it becomes necessary to cancel class while the University remains open, this will be announced on Canvas and by email. Updates on inclement weather and closure are also communicated in other ways described <a href="https://hr.uoregon.edu/about-hr/campus-notifications/inclement-weather/inclement-weather-immediate-updates">here</a>.</p>
+</div>
+<div id="mental-health-and-wellness" class="section level2">
+<h2>Mental Health and Wellness</h2>
+<p>Life at college can be very complicated. Students often feel overwhelmed or stressed, experience anxiety or depression, struggle with relationships, or just need help navigating challenges in their life. If you’re facing such challenges, you don’t need to handle them on your own–there’s help and support on campus.</p>
+<p>As your instructor if I believe you may need additional support, I will express my concerns, the reasons for them, and refer you to resources that might be helpful. It is not my intention to know the details of what might be bothering you, but simply to let you know I care and that help is available. Getting help is a courageous thing to do—for yourself and those you care about. University Health Services help students cope with difficult emotions and life stressors. If you need general resources on coping with stress or want to talk with another student who has been in the same place as you, visit the Duck Nest (located in the EMU on the ground floor) and get help from one of the specially trained Peer Wellness Advocates. Find out more at health.uoregon.edu/ducknest.</p>
+<p>University Counseling Services (UCS) has a team of dedicated staff members to support you with your concerns, many of whom can provide identity-based support. All clinical services are free and confidential. Find out more at counseling.uoregon.edu or by calling 541-346-3227 (anytime UCS is closed, the After-Hours Support and Crisis Line is available by calling this same number).</p>
+</div>
+<div id="basic-needs" class="section level2">
+<h2>Basic Needs</h2>
+<p>Any student who has difficulty affording groceries or accessing sufficient food to eat every day, or who lacks a safe and stable place to live and believes this may affect their performance in the course is urged to contact the Dean of Students Office (346-3216, 164 Oregon Hall) for support. This UO webpage includes resources for food, housing, healthcare, childcare, transportation, technology, finances, and legal support: <a href="https://blogs.uoregon.edu/basicneeds/food/" class="uri">https://blogs.uoregon.edu/basicneeds/food/</a></p>
+</div>
+<div id="accommodation-for-religious-observances" class="section level2">
+<h2>Accommodation for Religious Observances</h2>
+<p>The university makes reasonable accommodations, upon request, for students who are unable to attend a class for religious obligations or observance reasons, in accordance with the university discrimination policy which says “Any student who, because of religious beliefs, is unable to attend classes on a particular day shall be excused from attendance requirements and from any examination or other assignment on that day. The student shall make up the examination or other assignment missed because of the absence.” To request accommodations for this course for religious observance, visit the Office of the Registrar’s website (<a href="https://registrar.uoregon.edu/calendars/religious-observances" class="uri">https://registrar.uoregon.edu/calendars/religious-observances</a>) and complete and submit to the instructor the “Student Religious Accommodation Request” form prior to the end of the second week of the term.</p>
+</div>
+<div id="conflict-resolution" class="section level2">
+<h2>Conflict Resolution</h2>
+<p>Several options, both informal and formal, are available to resolve conflicts for students who believe they have been subjected to or have witnessed bias, unfairness, or other improper treatment.</p>
+<p>It is important to exhaust the administrative remedies available to you including discussing the conflict with the specific individual, contacting the Department Head, or within the College of Education, fall term you can contact the Associate Dean for Academic Affairs, Lillian Duran, 541-346-2502, <a href="mailto%20:%20lduran@uoregon.edu">lduran@uoregon.edu</a>. Outside the College, you can contact:</p>
+<ul>
+<li><a href="http://bias.uoregon.edu/whatbrt.htm">UO Bias Response Team</a>: 346-3216<br />
+</li>
+<li>[Conflict Resolution Services}(<a href="http://studentlife.uoregon.edu/support" class="uri">http://studentlife.uoregon.edu/support</a>): 346-3216</li>
+<li><a href="http://aaeo.uoregon.edu/">Affirmative Action and Equal Opportunity</a>: 346-3123</li>
+</ul>
+</div>
+<div id="grievance-policy" class="section level2">
+<h2>Grievance Policy</h2>
+<p>A student or group of students of the College of Education may appeal decisions or actions pertaining to admissions, programs, evaluation of performance and program retention and completion. Students who decide to file a grievance should follow University <a href="https://policies.uoregon.edu/grievance-procedures">student grievance procedures</a> and/or consult with the College Associate Dean for Academic Affairs (Lillian Duran, 346-2502, <a href="mailto:lduran@uoregon.edu" class="email">lduran@uoregon.edu</a>).</p>
+</div>
+<div id="course-incomplete-policy" class="section level2">
+<h2>Course Incomplete Policy</h2>
+<p>Students are expected to be familiar with university policy regarding grades of “incomplete” and the time line for completion. For details on the policy and procedures regarding incompletes, Please see: <a href="https://education.uoregon.edu/academics/incompletes-courses">https://education.uoregon.edu/academics/incompletes-courses</a></p>
+</div>
+</div>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

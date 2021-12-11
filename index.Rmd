@@ -1,7 +1,7 @@
 ---
 title: "EDLD 650: Advanced Seminar in Educational Research Methods"
 subtitle: "aka Methods for Causal Inference in Educational Research"
-author: "David Liebowitz"
+
 
 site: distill::distill_website
 output:
@@ -25,4 +25,5 @@ This course explores methods for causal inference in educational research. The t
 Tuesdays, 9:00am - 11:50am
 Lokey 119
 
-# Instructors
+# Instructor
+David Liebowitz

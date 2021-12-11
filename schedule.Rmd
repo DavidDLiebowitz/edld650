@@ -1,0 +1,313 @@
+---
+title: "EDLD 650 Schedule"
+site: distill::distill_website
+output:
+  html_document:
+    toc: TRUE
+    toc_depth: 3
+    toc_float: TRUE
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+*	This calendar and reading assignments may change at the discretion of the teaching team. 
+*	Readings for a given week are to be completed by the time of the class on that date
+*	You can read in any order you like but we have ordered readings for each week in what we think may make the most sense. 
+*	For most weeks, we have included supplemental readings. They serve to provide additional perspectives on the methodological or substantive topics of that week. They are not required, but could be insightful to your future academic or professional work.
+
+
+## Unit 1: A Common Vocabulary
+
+### Week 1: January 4
+
+**Objectives:**
+
+1. Articulate in words (and using simple mathematical terms) a framework for identifying causal relationships
+2. Describe the conceptual approach to identifying causal effects using the difference-in-differences approach
+
+
+**Readings:**
+
+1. Murnane and Willet. (2011). *Methods Matter*, Chapters 1-5, 7 
+2. Hoxby, C. (2016). The immensity of the Coleman data project. *Education Next, 16*(2), 64-69. [https://www.educationnext.org/the-immensity-of-the-coleman-data-project/](https://www.educationnext.org/the-immensity-of-the-coleman-data-project/).
+
+**Lecture:**
+
+- Slides: [html](./slides/EDLD_650_1_intro.html) | pdf
+- Class Questions: [doc](./questions/EDLD 650 Class 1 Questions.docx)
+- R Script: 
+- Data: [dta](./data/ch7_sfa.dta)
+
+**Assignment:**
+
+- Student survey (see email or Canvas)
+
+*Further readings:*
+
+1.  Murnane and Willett, Chapter 6
+2.	Angrist and Pischke (2009), pp. 1-110
+3.	Angrist and Pischke (2014), Chapters 1-2
+4.	Cunningham (2021), pp. 67-103
+
+
+## Unit 2: Differences-in-differences
+
+### Week 2: January 11
+
+**Objectives:**
+
+1. Describe threats to validity in difference-in-differences (DD) identification strategy and multiple approaches to address these threats.
+2. Using a cleaned dataset, estimate multiple DD specifications in R and interpret these results
+
+**Readings:**
+
+1.	Murnane and Willett, Chapter 8
+2.	Dynarski, S.M. (2003). [Does aid matter? Measuring the effect of student aid on college attendance and completion](./readings/Dynarski 2003.pdf). *The American Economic Review, 93*(1), 279-288.  
+
+**Lecture:**
+
+- Slides: [html](./slides/EDLD_650_2_DD_1.html) | pdf
+- Class Questions: [doc](./questions/EDLD 650 Class 2 Questions.docx)
+- R Script: 
+- Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](.data/edld650_class_2_eepa_data.dta)
+
+**Assignment:**
+
+- Complete DARE #1 by 9:00am, January 17 (*note that this is MLK Jr. Day; feel free to submit earlier*)
+
+*Further readings:*
+
+1.	Angrist and Pischke (2009), Chapter 5
+2.	Angrist and Pischke (2014), Chapter 5
+3.	Cunningham (2021), 245-285
+
+
+### Week 3: January 18
+
+**Objectives:**
+
+1. Describe threats to validity in difference-in-differences (DD) identification strategy and approaches to address these threats
+2. Conduct applied difference-in-difference analysis and interpret these results
+3. Describe conceptual approach to regression discontinuity analysis
+
+**Readings:**
+
+1. Liebowitz, D.D., Porter, L. & Bragg, D. (Online First). The effects of higher-stakes teacher evaluation on office disciplinary referrals. *Journal of Research on Educational Effectiveness*. [Online Appendix]
+
+**Lecture:**
+
+- Slides: html | pdf
+- Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
+- R Script: 
+- Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](./data/edld650_class_2_eepa_data.dta)
+
+**Assignment:**
+
+- Submit Research Project Proposal by 9:00am, January 28
+
+*Further readings:*
+
+## Unit 3: Regression Discontinuity
+
+### Week 4: January 25
+
+**Objectives:**
+
+1. Describe conceptual approach to regression discontinuity analysis
+2. Assess validity of RD assumptions in applied context
+3. Conduct RD analysis in simplified data and interpret results substantively
+
+**Readings:**
+
+1.	Murnane and Willet, Chapter 9
+2. Angrist, J.D. & Lavy, V. (1999). [Using Maimonides’ Rule to estimate the effect of class size on scholastic achievement](./readings/Angrist Lavy 1999.pdf). *Quarterly Journal of Economics, 114*(2), 533-575. 
+3. Ludwig, J. & Miller, D. (2007). [Does Head Start improve children’s life chances? Evidence from a regression discontinuity design](./readings/Ludwig Miller 2007.pdf). *Quarterly Journal of Economics, 122*(1), 159-208.
+	 
+
+**Lecture:**
+
+- Slides: html | pdf
+- Class Questions: 
+- R Script: 
+- Data: 
+
+
+**Assignment:** 
+
+- Complete DARE #2 by 9:00am, January 31
+
+*Further readings:*
+
+1. Angrist and Pischke (2009), Chapter 6
+2. Angrist and Pischke (2014), Chapter 4
+3. Cunningham (2021), pp. 153-204
+
+
+### Week 5: February 1
+
+**Objectives:**
+
+1. Implement RD design in simplified data and interpret results
+2. Assess basic assumptions of RD design
+3. Describe the conceptual and simple mathematical approach to identifying causal effects using the Instrumental Variables approach
+
+
+**Readings:**
+
+1. Holden, K.L. (2016). [Buy the book? Evidence on the effect of textbook funding on school-level achievement.](./readings/Holden 2016.pdf) *American Economic Journal: Applied Economics, 8*(4), 100-127. [Online Appendix](./readings/Holden 2016 appendix.pdf)
+
+**Lecture:**
+
+- Slides: html | pdf
+- Class Questions: 
+- R Script: 
+- Data: 
+
+**Assignment:** 
+
+- Work on research project
+
+*Further readings:*
+
+
+## Unit 4: Instrumental Variables
+
+### Week 6: February 8
+
+**Objectives:**
+
+1. Describe conceptual approach to instrumental variables (IV) analysis
+2. Assess validity of IV assumptions in applied context
+3. Conduct IV analysis in simplified data and interpret results
+
+**Readings:**
+
+1. Murnane and Willet, Chapters 10 and 11
+2. Dee, T.S. (2004). [Are there civic returns to education?](./readings/Dee 2004.pdf) *Journal of Public Economics, 118*(4) 1495-1532.
+3. Angrist, J.D., Cohodes, S.R., Dynarski, S.M., Pathak, P.A. & Walters, C.R. (2016). [Stand and deliver: Effects of Boston’s charter high schools on college preparation, entry, and choice](readings/Angrist et al 2016.pdf). *Journal of Labor Economics, 34*(2), 275-318. 
+	 
+
+**Lecture:**
+
+- Slides: html | pdf
+- Class Questions: 
+- R Script: 
+- Data: 
+
+**Assignment:**
+
+- Complete DARE #3 by 9:00am February 14
+
+*Further readings:*
+
+1.	Angrist and Pischke (2009), Chapter 4
+2.	Angrist and Pischke (2014), Chapter 3
+3.	Cunningham (2021), pp. 205-243
+
+
+### Week 7: February 15
+
+**Objectives:**
+
+1. Implement instrumental variables estimatation in simplified data and interpret results
+2. Assess basic assumptions of IV design in an experimental setting with imperfect compliance
+3. Describe the conceptual approach of using selection on observables to defend causal inferences about the effects of treatment
+
+
+**Readings:**
+
+1.	Kim, J.S., Capotosto, L., Hartry, A. & Fitzegerald, R. (2011). [Can a mixed-method literacy intervention improve the reading achievement of low-performing elementary school students in an after-school program? Results from a randomized controlled trial of READ180 Enterprise](./readings/Kim et al 2011.pdf). *Educational Evaluation and Policy Analysis, 33*(2), 183-201. 
+
+**Lecture:**
+
+- Slides: html | pdf
+- Class Questions: 
+- R Script: 
+- Data: 
+
+**Assignment:**
+
+- Work on research project
+
+*Further readings:*
+
+## Unit 5: Matching
+
+### Week 8: February 22
+
+**Objectives:**
+
+1. Describe conceptual approach to matching analysis
+2. Assess validity of matching approach
+3. Conduct matching analysis in simplified data using both propensity-score matching and CEM; interpret and compare results
+
+**Readings:**
+
+1. Murnane and Willett, Chapter 12
+2. Diaz, J.J. & Handa, S. (2006). [An assessment of propensity score matching as a nonexperimental impact estimator: Evidence from Mexico’s PROGRESA program](./readings/Diaz Handa 2006.pdf). *The Journal of Human Resources, 41*(2), 319-345. 
+ 
+
+**Lecture:**
+
+- Slides: html | pdf
+- Class Questions: 
+- R Script: 
+- Data: 
+
+**Assignment:**
+
+- Complete DARE #4 by 9:00 February 28
+
+*Further readings:*
+
+1.	Cunningham (2021), pp. 105-151.
+2.	Dehejia, R.H. & Wahba, S. (2002). Propensity score-matching methods for nonexperimental causal studies. *Review of Economics and Statistics, 84*(1), 151–161. https://doi.org/10.1162/003465302317331982. 
+3.	Iacus, S. M., King, G., & Porro, G. (2011). Causal inference without balance checking: Coarsened Exact Matching. *Political Analysis, 20*(1), 1–24. https://doi.org/10.1093/pan/mpr013. 
+4.	King, G., Nielsen, R., Coberly, C., Pope, J.E. & Wells, A. (2011). Comparative effectiveness of matching methods for causal inference. Working Paper. http://j.mp/2nydGlv. 
+5.	King, G. & Nielsen, R. (2019). Why propensity scores should not be used for matching. *Political Analysis, 27*(4), 435-454. https://doi.org/10.1017/pan.2019.11. 
+
+
+### Week 9: March 1
+
+**Objectives:**
+
+1. Describe conceptual approach to matching analysis
+2. Assess validity of matching approach
+3. Conduct matching analysis in simplified data using both propensity-score matching and CEM; interpret and compare results
+
+**Readings:**
+
+1.	Murnane and Willett, Chapters 13 and 14
+2.	Umansky, I, & Dumont, H. (2021). [English Learner labeling: How English Learner status shapes teacher perceptions of student skills and the moderating role of bilingual instructional settings](./readings/Umansky Dumont 2021.pdf). *American Educational Research Journal, 58*(5), 993-1031. [Online Appendix](./readings/Umansky Dumont 2021 app.pdf)
+
+
+**Lecture:**
+
+- Slides: html | pdf
+- Class Questions: 
+- R Script: 
+- Data: 
+
+**Assignment:**
+
+- Prepare to present Research Project Presentation in class on March 8
+
+*Further readings:*
+
+## Unit 6: Presentations
+
+### Week 10: March 8
+
+
+**Readings:** 
+
+- None!
+
+
+**Assignment:** Submit Final Research Project by **9:00am March 17th.**
+
+
+
