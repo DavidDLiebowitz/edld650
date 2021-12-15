@@ -5,7 +5,7 @@ author: "David D. Liebowitz"
 #date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   xaringan::moon_reader:
-    css: ['default', 'uo', 'ki-fonts', 'my_custom.css', 'xaringanthemer.css']
+    css: ['default', 'rladies', 'ki-fonts', 'my_custom.css', 'xaringanthemer.css']
     # self_contained: true
     nature:
       highlightStyle: github
@@ -16,13 +16,20 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{css, echo=F}
+.inverse {
+  background-color : #2293bf;
+}
+```
+
 ```{R, setup, include = F}
 library(pacman)
 
-p_load(here, MASS, tidyverse, ggplot2, xaringan, knitr, kableExtra, foreign, broom, xaringanthemer)
+p_load(here, MASS, tidyverse, ggplot2, xaringan, knitr, kableExtra, foreign, broom, xaringanthemer, gganimate, ggthemes)
 
 
 i_am("slides/EDLD_650_1_intro.rmd")
+
 
 # Define color
 extra_css <- list(
@@ -33,9 +40,12 @@ extra_css <- list(
   ".red-pink" = list(color= "#e64173"),
   ".grey-light" = list(color= "grey70"),
   ".slate" = list(color="#314f4f"),
-  ".small" = list("font-size" = "90%"))
+  ".small" = list("font-size" = "90%"),
+  ".large" = list("font-size" = "120%"))
+
 
 write_extra_css(css = extra_css, outfile = "my_custom.css")
+
 
 # Knitr options
 opts_chunk$set(
@@ -75,12 +85,112 @@ knit_hooks$set(output = function(x, options) {
   hook_output(x, options)
 })
 
+
+
 ```
+# Why causal research? (I)
+
+.pull-left[
+```{r, echo=F, out.width="90%"}
+include_graphics("museum.jpg")
+```
+]
+
+--
+
+.pull-right[
+```{r, echo=F, out.width="110%"}
+include_graphics("museum2.jpg")
+```
+]
+
+---
+# Why causal research? (II)
+- .large[**Abstract**]: We estimate the relationship between X and Y.
+- .large[**Intro**]: It would be important to know whether X causes Y.
+- .large[**Data and Analytic Strategy**]: Our data and research design are observational, and so we are unable to identify the causal impact of X on Y.
+- .large[**Results**]: We find that a one-percentage point difference in X is associated with a 4.5 percentage point difference in Y.
+- .large[**Discussion**]: A major limitation of our study is that we cannot rule out the possibility of confounders or reverse causality. Thus, while we cannot say whether X causes Y, our findings show this is a strong possibility and future research should explicitly explore it.
+- .large[**Conclusion**]: But really `r emo::ji("wink")`, X causes Y.
+
+---
+# Why .red[*careful*] causal research?
+
+.pull-left[
+```{r, echo=F, out.width="90%"}
+include_graphics("cuddy.jpg")
+```
+]
+
+--
+
+.pull-right[
+```{r, echo=F, out.width="90%"}
+include_graphics("cuddy_art.jpg")
+```
+]
+
+--
+
+```{r, echo=F, out.width="90%"}
+include_graphics("cuddy_art2.jpg")
+```
+---
+# Descriptive and causal research
+
+> **Quality causal research question**: Did the Success for All whole-school intervention improve students' reading achievement?
+
+--
+
+> **Quality descriptive research question**<sup>1</sup>: Do the teachers of English Learner students in self-contained classrooms have different pedagogical skill levels than teachers of non-English Learners?
+
+.footnote[[1] Helpful resource: Loeb et al. (2017). [Descriptive analysis in education: A guide for researchers.](./readings/Loeb et al 2017.pdf) (NCEE 2017-4023). Washington, DC: US DoE, IES]
+
+--
+
+.pull-left[
+.red[**Don't attempt to answer a question that is inherently (or implicitly) causal using a correlational approach!** .small[*We only care about the relationship between museum-going and mortality if it is a directionally causal one!*]]
+
+]
+
+.pull-right[
+```{r, echo=F, out.width="30%"}
+include_graphics("lanes.jpg")
+```
+]
+
+--
+
+.large[**The overarching goal of this course**]: To provide you with (some of) the tools to be effective consumers and producers of causal research
+
+
+---
 # Roadmap
 
 ```{r, echo=F}
 include_graphics("causal_id.jpg")
 ```
+
+
+---
+# Agenda
+1. **Introduction**
+  - Correlation $\neq$ causality
+  - Roadmap
+  - Agenda/goals
+2. **A Causal Framework**
+  - Experiments and potential outcomes
+     - Class 1 Questions (Sections I and II)
+  - Complexificating it
+     - A word about DAGs
+3. **Break**
+4. **Panel data is panel data**
+  - Class 1 Questions (Section III)
+5. **Difference-in-differences**
+6. **Conclusions**
+  - Key course expectations & logistics
+  - To-dos
+  - Plus/deltas
 
 
 ---
@@ -96,179 +206,12 @@ class: middle, inverse
 # Causal frameworks
 
 
-
 ---
-class: middle, inverse
+# Five conditions of causal claims
 
-# Correlation ...and causality
+[William Shadish, Donald Cook and Thomas Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) adapt John Stuart Mill's critical conditions that must exist in order to defend the claim that one thing causes another:
 
----
-# Correlations
-
-* Correlation coefficients $(r)$ describe the **strength** of a linear relationship between two variables. 
-
-* The concept was first developed by Karl Pearson a eugenics professor at the University College of London. He held many despicable [views](https://nautil.us/issue/92/frontiers/how-eugenics-shaped-statistics).
-
-* He (along with Francis Galton and RA Fisher) also pioneered many of the basic tools of modern statistics, including standard deviation, $\chi^2$, goodness of fit and correlation
-
-* Correlations are dimensionless measures that eliminate the metrics of any particular scale. To do so requires **standardizing** each variable.
-
----
-# Standardizing variables
-
-* Any variable can be standardized using a simple algorithm.
-
-Each observation $(i)$ is transformed into standardized form using the following formula:
-
-$$z_{i} = \frac{X_{i} - \mu}{\sigma}$$
-
-* The standardized value is calculated calculated by **subtracting the mean** from each value and **dividing by the standard deviation**.
-
-* The sample mean of the new variable is 0 and its standard deviation is 1
-
-* The new values represent an observation's distance from the mean in standard deviation units.
-
-* Values range from -1 to 1
-  + Positive Values - higher values of Y $\rightarrow$ higher values of X (and vice-versa)
-  + Negative Values - higher values of Y $\rightarrow$ lower values of X (and vice-versa)
-
-* **Doesn't change anyone's relative rank**
-
-* **Doesn't create a normally distributed variable**
-
----
-# Correlations visualized
-```{r, echo = F, fig.width = 10, fig.height = 6}
-set.seed(5)
-# create the variance covariance matrix
-sigma<-rbind(c(1,-0.2,-0.9), c(-0.2,1, 0.6), c(-0.9,0.6,1))
-# create the mean vector
-mu<-c(10, 5, 2) 
-# generate the multivariate normal distribution
-df<-as.data.frame(mvrnorm(n=100, mu=mu, Sigma=sigma))
-
-small <- ggplot(df, aes(x = V1, y = V2)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = F) +
-  theme_minimal() +
-  ggtitle("Correlation = -.2")
-
-medium <- ggplot(df, aes(x = V2, y = V3)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = F) +
-  theme_minimal() +
-  ggtitle("Correlation = .6")
-
-large <- ggplot(df, aes(x = V1, y = V3)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = F) +
-  theme_minimal() +
-  ggtitle("Correlation = -.9")
-
-gridExtra::grid.arrange(small, medium, large, nrow = 1)
-
-```
-
----
-# Anscombe's Quartet
-
-...but, correlation is not everything. [Frank Anscombe (1973)](https://www.jstor.org/stable/2682899) first highlighted the following set of distributions, all with correlations $(r)$ of exactly 0.816.
-
-```{r, echo=T, out.width="80%", echo=F}
-include_graphics("anscombe.jpg")
-```
-
----
-
-# What correlation does(n't) mean
-
-Four datasets, each with two variables with (nearly) identical means and correlations
-
-```{r, echo=F}
-datasauRus::datasaurus_dozen %>% 
-  filter(dataset %in% c("circle", "h_lines", "slant_down", "dino")) %>%
-  group_by(dataset) %>%
-  summarise(
-    mean(x),
-    mean(y),
-    cor(x, y))
-```
-
-.blue[What's the correlation between x and y  across these four datasets?]
-
---
-
-All seem pretty similar, right? Let's take a look at their bivariate relationship...
-
----
-# What correlation does(n't) mean
-
-```{r, echo=F}
-
-datasauRus::datasaurus_dozen %>% 
-  filter(dataset %in% c("circle", "h_lines", "slant_down", "dino")) %>%
-  ggplot(aes(x=x, y=y, colour=dataset))+
-  geom_point()+
-  theme_minimal(base_size=14)+
-  theme(legend.position = "none")+
-  facet_wrap(~dataset, ncol=2)
-
-
-```
-
-
-
----
-# Why correlation $\neq$ causation?
-
-```{r, echo=F, fig.height=5}
-dag <- ggdag::dagify(x ~ y,
-                       y ~ x,
-              labels = c("x" = "Beef",
-                         "y" = "Divorce"))
-ggdag::ggdag(dag, layout="circle", use_labels = "label", text_size = 8) +
-  theme_void()
-```
-
----
-# Spurious correlation
-
-```{r, echo=F, fig.height=4}
-dag <- ggdag::dagify(x ~ y,
-                       y ~ z,
-                       x ~ z,
-                       y ~ z,
-                     labels = c("x" = "Beef",
-                         "y" = "Divorce",
-                         "z" = "Winter"))
-ggdag::ggdag(dag, layout="circle", use_labels = "label", text_size = 8) +
-  theme_void()
-```
-
-A third variable causes changes in X and also in Y. Sometimes called a .red[*confounder*].
-
-> .small[It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights. -George Bernard Shaw (1906)]
-
----
-# Why correlation $\neq$ causation?
-
-Other common problems include:
-- [Colliders](http://www.the100.ci/2017/03/14/that-one-weird-third-variable-problem-nobody-ever-mentions-conditioning-on-a-collider/): a third variable that is caused by both the predictor and outcome; controlling for this can make a true causal relationship disappear!
-- Reverse causation: X may cause Y **or** Y may cause X
-- Simpson's Paradox: a third variable may reverse the correlation
-- Also, **lack** of correlation $\neq$ **lack** of causality
-
-```{r, echo=F, out.width="40%"}
-include_graphics("causalinf.jpg")
-```
-h/t [@causalinf](https://twitter.com/causalinf)
-
-
-
----
-# From correlation to causality
-
-### Five criteria for establishing causality:<sup>1</sup>
+.pull-left[
 
 1. Cause must precede effect in time
 2. Identified mechanism
@@ -276,14 +219,644 @@ h/t [@causalinf](https://twitter.com/causalinf)
 4. Responsiveness
 5. No plausible alternative explanation
 
-Highest priority is establishing .red[**exogeneous variation**] in exposure to some "treatment."
+]
+
+
+.pull-right[
+```{r, echo=F, out.width="80%"}
+include_graphics("shadish.jpg")
+```
+]
+
+
+---
+class: middle, inverse
+
+# Experiments and potential outcomes
+
+---
+# Sliding doors
+
+.pull-left[
+
+* What if you missed your train (or didn't)?
+
+* What if you had never been born?
+
+* What if the Beatles never existed?
+
+* What if the Nazis won WWII?
+
+]
+
+.pull-right[
+```{r, echo=F}
+include_graphics("counterfactuals.jpg")
+```
+]
+
+---
+# An "ideal" experiment
+
+Hypothetically, we could draw a random sample from a defined population:
+.pull-left[
+```{r, echo=F, out.width="60%"}
+include_graphics("group-stick-people.jpg")
+```
+]
+
+.pull-right[
+
+- We could .blue[**implement the treatment**] for each participant
+- And also concurrently .blue[**NOT implement the treatment**]
+  - .small[We would need to be able to turn back time, and erase the impact and memory of the treatment in each case]
+
+]
 
 --
 
-Research design is critical. So too can be [Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629). We have whole classes dedicated to just this topic (EDLD 650, EDLD 679).
+While this is obviously impossible, we can imagine that each participant has a value of the outcome that could .blue[**potentially**] be revealed under the following experimental conditions:
 
-.footnote[[1] Derived from [Shadish, Cook and Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) and John Stuart Mill.]
+$Y_{i}^{1}$ = potential value of outcome for $i^{th}$ person, when treated $(D_{i} = 1)$
 
+$Y_{i}^{0}$ = potential value of outcome for $i^{th}$ person, when .blue[**NOT**] treated $(D_{i} = 0)$
+
+
+---
+# An "ideal" experiment
+
+
+$Y_{i}^{1}$ = potential value of outcome for $i^{th}$ person, when treated $(D_{i} = 1)$
+
+$Y_{i}^{0}$ = potential value of outcome for $i^{th}$ person, when .blue[**NOT**] treated $(D_{i} = 0)$
+
+
+The .blue[**Individual Treatment Effect (ITE)**] is the difference in potential outcome values between treatment and control conditions, for each individual:
+
+$$ITE_{i} = Y_{i}^{1} - Y_{i}^{0}$$
+
+--
+
+.red[**We never actually observe this!!!**]
+
+--
+
+
+The .blue[**Average Treatment Effect (ATE)**] is the average of the individual treatment effects across all participants:
+
+$$\hat{ATE}_{i} = \frac{1}{n}{\sum_{i}^n ITE_{i}}$$
+
+--
+
+If the ATE differed from zero, we could claim that the treatment *caused* the effect because there would be no other explanation for the differences detected between the treatment and control conditions!
+
+---
+# RCTs: the next best thing?
+
+An "ideal" experiment such as this one is impossible because the same group of people cannot concurrently receive and not receive treatment. .red[**We have a missing data problem**]. We cannot actually estimate .blue[individual treatment effects] in practice, but if we are willing to make a few reasonable assumptions, we can still estimate the the .blue[average treatment effect]. This is particularly true when we conduct a .blue[randomized control trial (RCT)].
+
+--
+
+.pull-left[
+```{r, echo=F, out.width="60%"}
+include_graphics("group-stick-people.jpg")
+```
+]
+
+.pull-right[
+We can draw our random sample, and randomly assign each participant to the .blue[**Treatment**] (where we measure their value of $Y_{i}^{1}$ ) or .red[**Control**] (where we measure their value of $Y_{i}^{0}$ ) condition. 
+
+]
+
+--
+
+$$\hat{ATE}_{i} = \frac{1}{n_{1}}{\sum_{i}^{n_1} ITE_{i}} - \frac{1}{n_{0}}{\sum_{i}^{n_0} ITE_{i}}$$
+---
+# The importance of exogeneity
+
+The big idea in a randomized experiment is that treatment variation is .blue[**exogenously and randomly assigned**]. An external (or "exogenous") agent, usually the researcher, determines who is treated $(D_{i} = 1)$ and who is not $(D_{i} = 0)$.
+
+.pull-left[
+
+- .small[Values of all observed and unobserved characteristics of the participants are randomized across treatment and control groups.]
+- .small[Members of the treatment and control groups are then equivalent, on average, in the population (.blue[“equal in expectation”]) before the experiment begins, on every possible dimension.]
+- .small[The values of treatment variable, D, will also be completely uncorrelated with all characteristics of participants, observed and unobserved, in the population.]
+
+]
+
+.pull-right[
+```{r, echo=F, out.width="70%"}
+include_graphics("researcher.jpg")
+```
+
+- Exogenous and random treatment variation validates the causal attribution of an experiment. This is referred to as the research design's .blue[**internal validity**].
+
+]
+
+---
+# A simple *t*-test
+
+The great thing about experiments is the cleaner the design, the simpler the analysis:
+
+Population average treatment effect: $\mu_{1} - \mu_{0}$
+
+Estimated by the sample mean difference: $\bar{Y_{1}} - \bar{Y_{0}}$
+
+To test for a treatment effect, conduct a two-sample *t*-test:
+
+$$t_{obs} = \frac{(\bar{Y_{1}} - \bar{Y_{0}})}{\sqrt{\frac{s^2}{n_1}+\frac{s^2}{n_0}}}$$ 
+
+$$s^2 = \frac{(n_1 - 1)s_{1}^2 + (n_{0} - 1)s_{0}^2}{n_1 + n_2 -2}$$
+$t_{crit} = t_{df = n_1 + n_2 -2}^{(\alpha = 0.05)}$ ; if $t_{obs} > t_{crit}$, then reject $H_0$!!!
+
+--
+
+No need for a pre-test, no need for controls, no need for complex statistical models!
+
+---
+# But OLS works too
+
+In an experiment, a critical assumption of the generalized linear model (the foundation for OLS) is automatically satisfied:
+
+$$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \varepsilon_{i}$$
+In a randomized experiment, the residuals are uncorrelated with the values of the treatment variable $(D_{i})$ because the values of the treatment variable are assigned at random, rendering them uncorrelated with everything, including the residuals.
+
+--
+
+.pull-left[*Reminder of key OLS assumption*: residuals must be .blue[**"independent and identically distributed" (i.i.d.)**]. By independent we mean residuals must be uncorrelated with everything else, including the predictor(s) in the model, otherwise our estimates of the regression parameters will be .red[**biased**].]
+
+.pull-right[
+```{r, echo=F, out.width="90%"}
+include_graphics("bias.jpg")
+```
+]
+
+---
+# But OLS works BETTER!
+
+Even in the most basic of well-executed RCTs, researchers will add covariates. 
+
+--
+
+.pull-left[
+```{r, echo=F, out.width="100%"}
+include_graphics("total_var.jpg")
+include_graphics("partial_var.jpg")
+```
+]
+
+.pull-right[
+
+$$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \color{red}{\varepsilon_{i}}$$
+
+.small[Once you add X, part of Y that is now predicted by X (but wasn't predicted by D by design), is no no longer part of residual]
+
+$$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \beta_{2}X_{i} + \color{purple}\varepsilon_{i}^{\prime}$$
+
+.small[Reduced residual variance means smaller standard errors, larger *t*-statistics and **MAWWR POWER**!!!]
+]
+
+---
+# Cold-calling
+.pull-left[
+#### .purple[Purpose]
+- Formative assessment
+- Equitable distribution of class participation
+- Shared accountability for deep understanding of complex and technical readings
+
+#### .purple[Norms]
+- Questions posted by Thursday PM
+- Preparation is expected
+- These are hard concepts; mistakes are expected
+- Judgments on accuracy of responses are about the responses, not the individual
+- Questions and response are about learning, not performance
+]
+
+.pull-right[
+#### .purple[Structure]
+- All cold calls will be telegraphed
+- Questions will come directly from question list
+- Random draw (w/ replacement) from class list
+- Teaching staff will identify incomplete or incorrect response and seek clarification
+- Extension questions on a volunteer basis
+]
+
+
+
+---
+class: middle, inverse
+
+# Class 1 Discussion Questions
+## Sections I and II
+
+
+---
+class: middle, inverse
+
+# More complexity
+
+---
+# Threats to experimental validity
+
+### 1. Contamination of treatment-control contrast
+ - violations of Stable Unit Treatment-Value Assumption (SUTVA)
+ - an important assumption: selection of others into an intervention should not affect your outcome
+ 
+### 2. Cross overs (aka non-compliance)
+
+### 3. Attrition
+
+### 4. Participation in experiment affects behavior
+ - Hawthorne and John Henry effects
+ 
+> There is a lot to explore in these threats to validity. We will address some in the Instrumental Variables unit, but these could form courses unto themselves.
+
+---
+# Keep it real
+
+Of course, in the real world, there are many reasons researchers are unable to conduct experiments:
+.pull-left[
+- Cost
+- Time
+- Willing partners
+- Ethics
+- Representativeness
+- Power
+- ...
+]
+
+.pull-right[
+```{r, echo=F, out.width="90%"}
+include_graphics("realworld.jpg")
+```
+]
+
+--
+
+Thus, in this course, we will primarily concern ourselves with the goal of .blue[**recovering credibly causal estimates of treatment effects in observational data**]. 
+
+--
+
+but this is **hard**.
+
+---
+# Correlation $\neq$ causation
+
+RQ: What is the relationship between Oregon's annual per capita divorce rate and the U.S. per capita annual beef consumption? 
+
+--
+```{r, echo = F, fig.height = 4, fig.width= 8}
+beef <- read_csv(here::here("data/divorce_beef.csv"))
+
+db <- ggplot(beef, aes(divorce_rate, beef_consumption, label=year)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  theme_minimal() +
+  ggtitle("Oregon Divorce Rate and U.S. Beef Consumption (2000-2009)")
+
+lm_eqn <- function(beef){
+    m <- lm(divorce_rate ~ beef_consumption, beef);
+    eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
+         list(a = format(unname(coef(m)[1]), digits = 2),
+              b = format(unname(coef(m)[2]), digits = 2),
+             r2 = format(summary(m)$r.squared, digits = 3)))
+    as.character(as.expression(eq));
+}
+
+db + geom_text(x = 4.5, y = 62, label = lm_eqn(beef), parse=TRUE)
+```
+
+*On the 10 o'clock news tonight: does U.S. beef consumption cause more "beefs" between Oregonians and their spouses?*
+
+---
+# Divorce and Beef
+
+Do increases in increases in beef consumption in Oregon **cause** increases in the U.S. divorce rate?
+
+--
+
+```{r, echo = F, fig.height = 4, fig.width= 8}
+db + geom_text(x = 4.5, y = 62, label = lm_eqn(beef), parse=TRUE) +
+  geom_text()
+```
+
+--
+
+This is a classic problem of a .blue[**confounder**]!<sup>1</sup>
+
+
+.footnote[[1] More fun with [spurious correlations](https://www.tylervigen.com/spurious-correlations)]
+
+---
+# Why correlation $\neq$ causation?
+
+Common barriers in attributing causality to observed co-relationships include:
+- .purple[Confounders]: a third variable causes changes in X and also in Y
+- [Colliders](http://www.the100.ci/2017/03/14/that-one-weird-third-variable-problem-nobody-ever-mentions-conditioning-on-a-collider/): a third variable that is caused by both the predictor and outcome; controlling for this can make a true causal relationship disappear!
+- .purple[Reverse causation]: X may cause Y **or** Y may cause X
+- .purple[Simpson's Paradox]: a third variable may reverse the correlation
+- Also, **lack** of correlation $\neq$ **lack** of causality
+
+```{r, echo=F, out.width="40%"}
+include_graphics("causalinf.jpg")
+```
+h/t [@causalinf](https://twitter.com/causalinf)
+
+---
+# Directed acyclic graphs (DAGs)
+
+[Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629) model causal relationships through graphical representation.
+
+
+```{r, echo=F, fig.height=5}
+dag <- ggdag::dagify(y ~ x,
+                     exposure = "x",
+                     outcome = "y",
+              labels = c("x" = "Beef",
+                         "y" = "Divorce"),
+              coords = list(x = c(x=1, y=3),
+                            y = c(x=2, y=2))
+                            )
+ggdag::ggdag(dag, use_labels = "label", text=F, text_size = 8) +
+  ggdag::theme_dag() + 
+   guides(fill = F, color=F)
+```
+
+---
+# Spurious correlation
+
+```{r, echo=F, fig.height=3.5}
+dag2 <- ggdag::dagify(y ~ x + z,
+                       x ~ z,
+                     exposure = "x",
+                     outcome = "y",
+                     labels = c("x" = "Beef",
+                         "y" = "Divorce",
+                         "z" = "Year"),
+                coords = list(x = c(x = 1, z = 2, y = 3),
+                              y = c(x = 2, z = 3, y = 2))
+                              )
+ggdag::ggdag_status(dag2, use_labels = "label", text=F, text_size=8) +
+  ggdag::theme_dag() + 
+  guides(fill = F, color=F)
+```
+
+--
+
+> .small[It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights. -George Bernard Shaw (1906)]
+
+---
+# A DAG-gone example
+
+```{r, echo=F, fig.height=3.5}
+dag0 <- ggdag::dagify(y ~ d ,
+                     exposure = "d",
+                     outcome = "y",
+                     labels = c("d" = "College",
+                         "y" = "Earnings"),
+                coords = list(x = c(d = 1, y = 3),
+                              y = c(d = 2, y = 2))
+                              )
+ggdag::ggdag_status(dag0, use_labels = "label", text=F, text_size = 8) +
+    guides(fill = F, color=F) +
+    ggdag::theme_dag() 
+```
+
+- Directed Acyclical Graphs (DAGs)] model causal relationships through graphical representation
+- Arrows represent directional causal effects; missing arrow implies lack of a causal path
+- Effects are either:
+   - direct $(D \rightarrow Y)$; i.e., the causal effect of D (college) on Y (earnings); **or**
+   
+---
+# A DAG-gone example
+
+```{r, echo=F, fig.height=3.5}
+dag3 <- ggdag::dagify(y ~ d + x,
+                       d ~ x,
+                     exposure = "d",
+                     outcome = "y",
+                     labels = c("d" = "College",
+                         "y" = "Earnings",
+                         "x" = "Family"),
+                coords = list(x = c(d = 1, x = 2, y = 3),
+                              y = c(d = 2, x = 3, y = 2))
+                              )
+ggdag::ggdag_status(dag3, use_labels = "label", text=F, text_size = 8) +
+    guides(fill = F, color=F) +
+    ggdag::theme_dag() 
+```
+
+- Directed Acyclical Graphs (DAGs)] model causal relationships through graphical representation
+- Arrows represent directional causal effects; missing arrow implies lack of a causal path
+- Effects are either:
+   - direct $(D \rightarrow Y)$; i.e., the causal effect of D (college) on Y (earnings); or
+   - indirect $(D \leftarrow X \rightarrow Y)$; i.e., a backdoor path created by a confounder
+- Here, conditioning on X (observed family characteristics) closes the backdoor and allows a causal estimate
+
+---
+# Confounders
+
+```{r, echo=F, fig.height=3.5}
+dag4 <- ggdag::dagify(y ~ d + i,
+                      i ~ pe,
+                      pe  ~ i + x,
+                       d ~ x + pe + i,
+                     exposure = "d",
+                     outcome = "y",
+                     labels = c("d" = "College",
+                         "y" = "Earnings",
+                         "x" = "Unobs. Family",
+                         "pe" = "Parent Ed",
+                         "i" = "Family income"),
+                coords = list(x = c(d = 2, x = 1, pe = 1, i = 2, y = 3),
+                              y = c(d = 2, x = 3, pe = 1, i = 1, y = 2))
+                              )
+ggdag::ggdag_status(dag4, use_labels = "label", text=F, text_size = 6) +
+    guides(fill = F, color=F) +
+    ggdag::theme_dag() 
+```
+
+We often hope that conditioning on the confounder closes **all** backdoor paths and thus allows us to estimate the direct effect of D on Y:
+- $D \rightarrow Y$: causal effect of D on Y
+- $D \leftarrow I \rightarrow Y$: income influences both college and earnings
+- $D \leftarrow PE \rightarrow I \rightarrow Y$: parental education influences family income which influences own earnings
+- $D \leftarrow X \rightarrow PE \rightarrow I \rightarrow Y$: .small[unobserved background characteristics influence parental education, family income, college attendance and own earnings]
+
+---
+# Confounders
+
+```{r, echo=F, fig.height=3.5}
+dag5 <- ggdag::dagify(y ~ d + i + x,
+                      i ~ pe,
+                      pe  ~ i + x,
+                       d ~ x + pe + i,
+                     exposure = "d",
+                     outcome = "y",
+                     labels = c("d" = "College",
+                         "y" = "Earnings",
+                         "x" = "Unobs. Family",
+                         "pe" = "Parent Ed",
+                         "i" = "Family income"),
+                coords = list(x = c(d = 2, x = 1, pe = 1, i = 2, y = 3),
+                              y = c(d = 2, x = 3, pe = 1, i = 1, y = 2))
+                              )
+ggdag::ggdag_status(dag5, use_labels = "label", text=F, text_size = 6) +
+    guides(fill = F, color=F) +
+    ggdag::theme_dag() 
+```
+
+We often hope that conditioning on the confounder closes **all** backdoor paths and thus allows us to estimate the direct effect of D on Y:
+- $D \rightarrow Y$: causal effect of D on Y
+- $D \leftarrow I \rightarrow Y$: income influences both college and earnings
+- $D \leftarrow PE \rightarrow I \rightarrow Y$: parental education influences family income which influences own earnings
+- $D \leftarrow X \rightarrow PE \rightarrow I \rightarrow Y$: .small[unobserved background characteristics influence parental education, family income, college attendance and own earnings]
+- .red[**BUT**] is it true that family background has no direct effect on earnings?
+
+# Colliders
+
+```{r, echo=F, fig.height=3.5}
+dag6 <- ggdag::dagify(y ~ d ,
+                       x ~ d + y,
+                     exposure = "d",
+                     outcome = "y",
+                     labels = c("d" = "College",
+                         "y" = "Earnings",
+                         "x" = "Career choice"),
+                coords = list(x = c(d = 1, x = 2, y = 3),
+                              y = c(d = 2, x = 1, y = 2))
+                              )
+ggdag::ggdag_status(dag6, use_labels = "label", text=F, text_size = 8) +
+    guides(fill = F, color=F) +
+    ggdag::theme_dag() 
+```
+
+- Career choice is a .blue[collider]. 
+- No need to condition on it as the backdoor path is already closed
+- .red[Leave colliders alone!] Beware of conditioning on them and therebery opening backdoors or (worse) introdicing bias.
+  - Here, doing so might underestimate the effect of going to college
+
+---
+# Where DAGs get tricky (for me)
+
+```{r, echo=F, fig.height=3.5}
+mosquito_dag <- ggdag::dagify(
+  malaria_risk ~ net + income + health + temperature + resistance,
+  net ~ income + health + temperature + eligible + household,
+  eligible ~ income + household,
+  health ~ income,
+  exposure = "net",
+  outcome = "malaria_risk",
+  coords = list(x = c(malaria_risk = 7, net = 3, income = 4, health = 5,
+                      temperature = 6, resistance = 8.5, eligible = 2, household = 1),
+                y = c(malaria_risk = 2, net = 2, income = 3, health = 1,
+                      temperature = 3, resistance = 2, eligible = 3, household = 2)),
+  labels = c(malaria_risk = "Risk of malaria", net = "Mosquito net", income = "Income",
+             health = "Health", temperature = "Nighttime temperatures", 
+             resistance = "Insecticide resistance",
+             eligible = "Eligible for program", household = "Number in household")
+)
+
+ggdag::ggdag_status(mosquito_dag, use_labels = "label", text = FALSE) + 
+  guides(fill = FALSE, color = FALSE) +  
+  ggdag::theme_dag()
+```
+
+.small[h/t [@andrewheiss](https://twitter.com/andrewheiss)]
+
+--
+
+.small[DAGs can be an intuitive and careful way of thinking through causal research design (see [Pearl, 2009](http://bayes.cs.ucla.edu/BOOK-2K/)). They also risk encouraging the researcher to believe she can solve by analysis what is broke by design (see [Imbens, 2020](https://arxiv.org/abs/1907.07271)).
+
+In this class, we'll use the .blue[**potential outcomes framework**] and rely on research designs in which we can credibly argue that .blue[**assignment to treatment is exogenous or based on observable characteristics**], but concepts such as confounders and colliders are valuable parts of your toolkits. You can learn much more about DAGs than I have presented here in our SEM sequence (EDLD 633/634)!]
+
+
+---
+class: middle, inverse
+
+# Break
+
+---
+class: middle, inverse
+
+# Panel Data
+
+
+---
+# Two common approaches
+
+### Random intercepts (aka random effects)
+
+$$WATTACK_{ij} = \gamma_{0} + \gamma_{1}SFA_{j} + (\varepsilon_{ij} + \nu_{j})$$
+
+You may also have seen this written as:
+
+$$WATTACK_{ij} = \gamma_{00} + \gamma_{01}SFA_{j} + (\varepsilon_{ij} + \nu_{0j})$$
+.red[**THESE ARE IDENTICAL!**]
+
+
+---
+# Two common approaches
+
+### Random intercepts (aka random effects)
+
+$$WATTACK_{ij} = \gamma_{0} + \gamma_{1}SFA_{j} + (\varepsilon_{ij} + \nu_{j})$$
+
+You may also have seen this written as:
+
+$$WATTACK_{ij} = \gamma_{00} + \gamma_{01}SFA_{j} + (\varepsilon_{ij} + \nu_{0j})$$
+
+### Fixed intercepts (aka fixed effects)
+
+$$WATTACK_{ij} = \sum_{1}^{J}\alpha_{j}S_{ij} + \gamma_{1}SFA_\color{red}{ij} + \varepsilon_{ij}$$
+.red[Notice the within-school variation in treatment in this hypothetical example]
+
+> A note on notation: fixed effects are often represented with capital Greek letters $(e.g., \Gamma_j, \Pi_t, \Delta_k)$. Vectors of covariates are often represented with vector notation $(e.g., \textbf{X}_{ij})$
+
+---
+# What is a fixed effect doing?
+
+```{r, echo=F, fig.height=5}
+df <- data.frame(Person = rep(1:4,50)) %>%
+  mutate(X = .5+.5*(Person-2.5) + rnorm(200)) %>%
+  mutate(Y = -.5*X + (Person-2.5) + 1 + rnorm(200),time="1") %>%
+  group_by(Person) %>%
+  mutate(mean_X=mean(X),mean_Y=mean(Y)) %>%
+  ungroup()
+
+#Calculate correlations
+before_cor <- paste("1. Start with raw data. Correlation between X and Y: ",round(cor(df$X,df$Y),3),sep='')
+after_cor <- paste("6. Analyze what's left! Within-Individual Correlation Between X and Y: ",round(cor(df$X-df$mean_X,df$Y-df$mean_Y),3),sep='')
+
+#Add step 2 in which X is demeaned, and 3 in which both X and Y are, and 4 which just changes label
+dffull <- rbind(
+  #Step 1: Raw data only
+  df %>% mutate(mean_X=NA,mean_Y=NA,time=before_cor),
+  #Step 2: Add x-lines
+  df %>% mutate(mean_Y=NA,time='2. Figure out any between-Individual differences in X'),
+  #Step 3: X de-meaned 
+  df %>% mutate(X = X - mean_X,mean_X=0,mean_Y=NA,time="3. Remove all between-Individual differences in X"),
+  #Step 4: Remove X lines, add Y
+  df %>% mutate(X = X - mean_X,mean_X=NA,time="4. Figure out any between-Individual differences in Y"),
+  #Step 5: Y de-meaned
+  df %>% mutate(X = X - mean_X,Y = Y - mean_Y,mean_X=NA,mean_Y=0,time="5. Remove all between-Individual differences in Y"),
+  #Step 6: Raw demeaned data only
+  df %>% mutate(X = X - mean_X,Y = Y - mean_Y,mean_X=NA,mean_Y=NA,time=after_cor))
+
+p <- ggplot(dffull,aes(y=Y,x=X,color=as.factor(Person)))+geom_point()+
+  geom_vline(aes(xintercept=mean_X,color=as.factor(Person)))+
+  geom_hline(aes(yintercept=mean_Y,color=as.factor(Person)))+
+  guides(color=guide_legend(title="Individual"))+
+  scale_color_colorblind()+
+  theme_minimal() +
+  labs(title = 'The Relationship between Y and X, with Individual Fixed Effects \n{next_state}')+
+  transition_states(time,transition_length=c(12,32,12,32,12,12),state_length=c(160,100,75,100,75,160),wrap=FALSE)+
+  ease_aes('sine-in-out')+
+  exit_fade()+enter_fade()
+
+animate(p,nframes=200)
+```
+
+.small[h/t [@nickchk](https://twitter.com/nickchk)]
 
 ---
 class: middle, inverse

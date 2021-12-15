@@ -6,7 +6,7 @@
     <meta name="author" content="David D. Liebowitz" />
     <script src="EDLD_650_1_intro_files/header-attrs-2.11/header-attrs.js"></script>
     <link href="EDLD_650_1_intro_files/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="EDLD_650_1_intro_files/remark-css-0.0.1/uo.css" rel="stylesheet" />
+    <link href="EDLD_650_1_intro_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_1_intro_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="my_custom.css" type="text/css" />
     <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
@@ -22,10 +22,102 @@ class: center, middle, inverse, title-slide
 ---
 
 
+&lt;style type="text/css"&gt;
+.inverse {
+  background-color : #2293bf;
+}
+&lt;/style&gt;
 
+
+# Why causal research? (I)
+
+.pull-left[
+&lt;img src="museum.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="museum2.jpg" width="110%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Why causal research? (II)
+- .large[**Abstract**]: We estimate the relationship between X and Y.
+- .large[**Intro**]: It would be important to know whether X causes Y.
+- .large[**Data and Analytic Strategy**]: Our data and research design are observational, and so we are unable to identify the causal impact of X on Y.
+- .large[**Results**]: We find that a one-percentage point difference in X is associated with a 4.5 percentage point difference in Y.
+- .large[**Discussion**]: A major limitation of our study is that we cannot rule out the possibility of confounders or reverse causality. Thus, while we cannot say whether X causes Y, our findings show this is a strong possibility and future research should explicitly explore it.
+- .large[**Conclusion**]: But really 😉, X causes Y.
+
+---
+# Why .red[*careful*] causal research?
+
+.pull-left[
+&lt;img src="cuddy.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="cuddy_art.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+&lt;img src="cuddy_art2.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+---
+# Descriptive and causal research
+
+&gt; **Quality causal research question**: Did the Success for All whole-school intervention improve students' reading achievement?
+
+--
+
+&gt; **Quality descriptive research question**&lt;sup&gt;1&lt;/sup&gt;: Do the teachers of English Learner students in self-contained classrooms have different pedagogical skill levels than teachers of non-English Learners?
+
+.footnote[[1] Helpful resource: Loeb et al. (2017). [Descriptive analysis in education: A guide for researchers.](./readings/Loeb et al 2017.pdf) (NCEE 2017-4023). Washington, DC: US DoE, IES]
+
+--
+
+.pull-left[
+.red[**Don't attempt to answer a question that is inherently (or implicitly) causal using a correlational approach!** .small[*We only care about the relationship between museum-going and mortality if it is a directionally causal one!*]]
+
+]
+
+.pull-right[
+&lt;img src="lanes.jpg" width="30%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.large[**The overarching goal of this course**]: To provide you with (some of) the tools to be effective consumers and producers of causal research
+
+
+---
 # Roadmap
 
 &lt;img src="causal_id.jpg" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Agenda
+1. **Introduction**
+  - Correlation `\(\neq\)` causality
+  - Roadmap
+  - Agenda/goals
+2. **A Causal Framework**
+  - Experiments and potential outcomes
+     - Class 1 Questions (Sections I and II)
+  - Complexificating it
+     - A word about DAGs
+3. **Break**
+4. **Panel data is panel data**
+  - Class 1 Questions (Section III)
+5. **Difference-in-differences**
+6. **Conclusions**
+  - Key course expectations &amp; logistics
+  - To-dos
+  - Plus/deltas
 
 
 ---
@@ -41,119 +133,12 @@ class: middle, inverse
 # Causal frameworks
 
 
-
 ---
-class: middle, inverse
+# Five conditions of causal claims
 
-# Correlation ...and causality
+[William Shadish, Donald Cook and Thomas Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) adapt John Stuart Mill's critical conditions that must exist in order to defend the claim that one thing causes another:
 
----
-# Correlations
-
-* Correlation coefficients `\((r)\)` describe the **strength** of a linear relationship between two variables. 
-
-* The concept was first developed by Karl Pearson a eugenics professor at the University College of London. He held many despicable [views](https://nautil.us/issue/92/frontiers/how-eugenics-shaped-statistics).
-
-* He (along with Francis Galton and RA Fisher) also pioneered many of the basic tools of modern statistics, including standard deviation, `\(\chi^2\)`, goodness of fit and correlation
-
-* Correlations are dimensionless measures that eliminate the metrics of any particular scale. To do so requires **standardizing** each variable.
-
----
-# Standardizing variables
-
-* Any variable can be standardized using a simple algorithm.
-
-Each observation `\((i)\)` is transformed into standardized form using the following formula:
-
-`$$z_{i} = \frac{X_{i} - \mu}{\sigma}$$`
-
-* The standardized value is calculated calculated by **subtracting the mean** from each value and **dividing by the standard deviation**.
-
-* The sample mean of the new variable is 0 and its standard deviation is 1
-
-* The new values represent an observation's distance from the mean in standard deviation units.
-
-* Values range from -1 to 1
-  + Positive Values - higher values of Y `\(\rightarrow\)` higher values of X (and vice-versa)
-  + Negative Values - higher values of Y `\(\rightarrow\)` lower values of X (and vice-versa)
-
-* **Doesn't change anyone's relative rank**
-
-* **Doesn't create a normally distributed variable**
-
----
-# Correlations visualized
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
-
----
-# Anscombe's Quartet
-
-...but, correlation is not everything. [Frank Anscombe (1973)](https://www.jstor.org/stable/2682899) first highlighted the following set of distributions, all with correlations `\((r)\)` of exactly 0.816.
-
-&lt;img src="anscombe.jpg" width="80%" style="display: block; margin: auto;" /&gt;
-
----
-
-# What correlation does(n't) mean
-
-Four datasets, each with two variables with (nearly) identical means and correlations
-
-
-```
-#&gt; # A tibble: 4 x 4
-#&gt;   dataset    `mean(x)` `mean(y)` `cor(x, y)`
-#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-#&gt; 1 circle          54.3      47.8     -0.0683
-#&gt; 2 dino            54.3      47.8     -0.0645
-#&gt; 3 h_lines         54.3      47.8     -0.0617
-#&gt; 4 slant_down      54.3      47.8     -0.0690
-```
-
-.blue[What's the correlation between x and y  across these four datasets?]
-
---
-
-All seem pretty similar, right? Let's take a look at their bivariate relationship...
-
----
-# What correlation does(n't) mean
-
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
-
-
-
----
-# Why correlation `\(\neq\)` causation?
-
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
-
----
-# Spurious correlation
-
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
-
-A third variable causes changes in X and also in Y. Sometimes called a .red[*confounder*].
-
-&gt; .small[It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights. -George Bernard Shaw (1906)]
-
----
-# Why correlation `\(\neq\)` causation?
-
-Other common problems include:
-- [Colliders](http://www.the100.ci/2017/03/14/that-one-weird-third-variable-problem-nobody-ever-mentions-conditioning-on-a-collider/): a third variable that is caused by both the predictor and outcome; controlling for this can make a true causal relationship disappear!
-- Reverse causation: X may cause Y **or** Y may cause X
-- Simpson's Paradox: a third variable may reverse the correlation
-- Also, **lack** of correlation `\(\neq\)` **lack** of causality
-
-&lt;img src="causalinf.jpg" width="40%" style="display: block; margin: auto;" /&gt;
-h/t [@causalinf](https://twitter.com/causalinf)
-
-
-
----
-# From correlation to causality
-
-### Five criteria for establishing causality:&lt;sup&gt;1&lt;/sup&gt;
+.pull-left[
 
 1. Cause must precede effect in time
 2. Identified mechanism
@@ -161,14 +146,441 @@ h/t [@causalinf](https://twitter.com/causalinf)
 4. Responsiveness
 5. No plausible alternative explanation
 
-Highest priority is establishing .red[**exogeneous variation**] in exposure to some "treatment."
+]
+
+
+.pull-right[
+&lt;img src="shadish.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+class: middle, inverse
+
+# Experiments and potential outcomes
+
+---
+# Sliding doors
+
+.pull-left[
+
+* What if you missed your train (or didn't)?
+
+* What if you had never been born?
+
+* What if the Beatles never existed?
+
+* What if the Nazis won WWII?
+
+]
+
+.pull-right[
+&lt;img src="counterfactuals.jpg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# An "ideal" experiment
+
+Hypothetically, we could draw a random sample from a defined population:
+.pull-left[
+&lt;img src="group-stick-people.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+- We could .blue[**implement the treatment**] for each participant
+- And also concurrently .blue[**NOT implement the treatment**]
+  - .small[We would need to be able to turn back time, and erase the impact and memory of the treatment in each case]
+
+]
 
 --
 
-Research design is critical. So too can be [Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629). We have whole classes dedicated to just this topic (EDLD 650, EDLD 679).
+While this is obviously impossible, we can imagine that each participant has a value of the outcome that could .blue[**potentially**] be revealed under the following experimental conditions:
 
-.footnote[[1] Derived from [Shadish, Cook and Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) and John Stuart Mill.]
+`\(Y_{i}^{1}\)` = potential value of outcome for `\(i^{th}\)` person, when treated `\((D_{i} = 1)\)`
 
+`\(Y_{i}^{0}\)` = potential value of outcome for `\(i^{th}\)` person, when .blue[**NOT**] treated `\((D_{i} = 0)\)`
+
+
+---
+# An "ideal" experiment
+
+
+`\(Y_{i}^{1}\)` = potential value of outcome for `\(i^{th}\)` person, when treated `\((D_{i} = 1)\)`
+
+`\(Y_{i}^{0}\)` = potential value of outcome for `\(i^{th}\)` person, when .blue[**NOT**] treated `\((D_{i} = 0)\)`
+
+
+The .blue[**Individual Treatment Effect (ITE)**] is the difference in potential outcome values between treatment and control conditions, for each individual:
+
+`$$ITE_{i} = Y_{i}^{1} - Y_{i}^{0}$$`
+
+--
+
+.red[**We never actually observe this!!!**]
+
+--
+
+
+The .blue[**Average Treatment Effect (ATE)**] is the average of the individual treatment effects across all participants:
+
+`$$\hat{ATE}_{i} = \frac{1}{n}{\sum_{i}^n ITE_{i}}$$`
+
+--
+
+If the ATE differed from zero, we could claim that the treatment *caused* the effect because there would be no other explanation for the differences detected between the treatment and control conditions!
+
+---
+# RCTs: the next best thing?
+
+An "ideal" experiment such as this one is impossible because the same group of people cannot concurrently receive and not receive treatment. .red[**We have a missing data problem**]. We cannot actually estimate .blue[individual treatment effects] in practice, but if we are willing to make a few reasonable assumptions, we can still estimate the the .blue[average treatment effect]. This is particularly true when we conduct a .blue[randomized control trial (RCT)].
+
+--
+
+.pull-left[
+&lt;img src="group-stick-people.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+We can draw our random sample, and randomly assign each participant to the .blue[**Treatment**] (where we measure their value of `\(Y_{i}^{1}\)` ) or .red[**Control**] (where we measure their value of `\(Y_{i}^{0}\)` ) condition. 
+
+]
+
+--
+
+`$$\hat{ATE}_{i} = \frac{1}{n_{1}}{\sum_{i}^{n_1} ITE_{i}} - \frac{1}{n_{0}}{\sum_{i}^{n_0} ITE_{i}}$$`
+---
+# The importance of exogeneity
+
+The big idea in a randomized experiment is that treatment variation is .blue[**exogenously and randomly assigned**]. An external (or "exogenous") agent, usually the researcher, determines who is treated `\((D_{i} = 1)\)` and who is not `\((D_{i} = 0)\)`.
+
+.pull-left[
+
+- .small[Values of all observed and unobserved characteristics of the participants are randomized across treatment and control groups.]
+- .small[Members of the treatment and control groups are then equivalent, on average, in the population (.blue[“equal in expectation”]) before the experiment begins, on every possible dimension.]
+- .small[The values of treatment variable, D, will also be completely uncorrelated with all characteristics of participants, observed and unobserved, in the population.]
+
+]
+
+.pull-right[
+&lt;img src="researcher.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+
+- Exogenous and random treatment variation validates the causal attribution of an experiment. This is referred to as the research design's .blue[**internal validity**].
+
+]
+
+---
+# A simple *t*-test
+
+The great thing about experiments is the cleaner the design, the simpler the analysis:
+
+Population average treatment effect: `\(\mu_{1} - \mu_{0}\)`
+
+Estimated by the sample mean difference: `\(\bar{Y_{1}} - \bar{Y_{0}}\)`
+
+To test for a treatment effect, conduct a two-sample *t*-test:
+
+`$$t_{obs} = \frac{(\bar{Y_{1}} - \bar{Y_{0}})}{\sqrt{\frac{s^2}{n_1}+\frac{s^2}{n_0}}}$$` 
+
+`$$s^2 = \frac{(n_1 - 1)s_{1}^2 + (n_{0} - 1)s_{0}^2}{n_1 + n_2 -2}$$`
+`\(t_{crit} = t_{df = n_1 + n_2 -2}^{(\alpha = 0.05)}\)` ; if `\(t_{obs} &gt; t_{crit}\)`, then reject `\(H_0\)`!!!
+
+--
+
+No need for a pre-test, no need for controls, no need for complex statistical models!
+
+---
+# But OLS works too
+
+In an experiment, a critical assumption of the generalized linear model (the foundation for OLS) is automatically satisfied:
+
+`$$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \varepsilon_{i}$$`
+In a randomized experiment, the residuals are uncorrelated with the values of the treatment variable `\((D_{i})\)` because the values of the treatment variable are assigned at random, rendering them uncorrelated with everything, including the residuals.
+
+--
+
+.pull-left[*Reminder of key OLS assumption*: residuals must be .blue[**"independent and identically distributed" (i.i.d.)**]. By independent we mean residuals must be uncorrelated with everything else, including the predictor(s) in the model, otherwise our estimates of the regression parameters will be .red[**biased**].]
+
+.pull-right[
+&lt;img src="bias.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# But OLS works BETTER!
+
+Even in the most basic of well-executed RCTs, researchers will add covariates. 
+
+--
+
+.pull-left[
+&lt;img src="total_var.jpg" width="100%" style="display: block; margin: auto;" /&gt;&lt;img src="partial_var.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+`$$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \color{red}{\varepsilon_{i}}$$`
+
+.small[Once you add X, part of Y that is now predicted by X (but wasn't predicted by D by design), is no no longer part of residual]
+
+`$$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \beta_{2}X_{i} + \color{purple}\varepsilon_{i}^{\prime}$$`
+
+.small[Reduced residual variance means smaller standard errors, larger *t*-statistics and **MAWWR POWER**!!!]
+]
+
+---
+# Cold-calling
+.pull-left[
+#### .purple[Purpose]
+- Formative assessment
+- Equitable distribution of class participation
+- Shared accountability for deep understanding of complex and technical readings
+
+#### .purple[Norms]
+- Questions posted by Thursday PM
+- Preparation is expected
+- These are hard concepts; mistakes are expected
+- Judgments on accuracy of responses are about the responses, not the individual
+- Questions and response are about learning, not performance
+]
+
+.pull-right[
+#### .purple[Structure]
+- All cold calls will be telegraphed
+- Questions will come directly from question list
+- Random draw (w/ replacement) from class list
+- Teaching staff will identify incomplete or incorrect response and seek clarification
+- Extension questions on a volunteer basis
+]
+
+
+
+---
+class: middle, inverse
+
+# Class 1 Discussion Questions
+## Sections I and II
+
+
+---
+class: middle, inverse
+
+# More complexity
+
+---
+# Threats to experimental validity
+
+### 1. Contamination of treatment-control contrast
+ - violations of Stable Unit Treatment-Value Assumption (SUTVA)
+ - an important assumption: selection of others into an intervention should not affect your outcome
+ 
+### 2. Cross overs (aka non-compliance)
+
+### 3. Attrition
+
+### 4. Participation in experiment affects behavior
+ - Hawthorne and John Henry effects
+ 
+&gt; There is a lot to explore in these threats to validity. We will address some in the Instrumental Variables unit, but these could form courses unto themselves.
+
+---
+# Keep it real
+
+Of course, in the real world, there are many reasons researchers are unable to conduct experiments:
+.pull-left[
+- Cost
+- Time
+- Willing partners
+- Ethics
+- Representativeness
+- Power
+- ...
+]
+
+.pull-right[
+&lt;img src="realworld.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+Thus, in this course, we will primarily concern ourselves with the goal of .blue[**recovering credibly causal estimates of treatment effects in observational data**]. 
+
+--
+
+but this is **hard**.
+
+---
+# Correlation `\(\neq\)` causation
+
+RQ: What is the relationship between Oregon's annual per capita divorce rate and the U.S. per capita annual beef consumption? 
+
+--
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+*On the 10 o'clock news tonight: does U.S. beef consumption cause more "beefs" between Oregonians and their spouses?*
+
+---
+# Divorce and Beef
+
+Do increases in increases in beef consumption in Oregon **cause** increases in the U.S. divorce rate?
+
+--
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+--
+
+This is a classic problem of a .blue[**confounder**]!&lt;sup&gt;1&lt;/sup&gt;
+
+
+.footnote[[1] More fun with [spurious correlations](https://www.tylervigen.com/spurious-correlations)]
+
+---
+# Why correlation `\(\neq\)` causation?
+
+Common barriers in attributing causality to observed co-relationships include:
+- .purple[Confounders]: a third variable causes changes in X and also in Y
+- [Colliders](http://www.the100.ci/2017/03/14/that-one-weird-third-variable-problem-nobody-ever-mentions-conditioning-on-a-collider/): a third variable that is caused by both the predictor and outcome; controlling for this can make a true causal relationship disappear!
+- .purple[Reverse causation]: X may cause Y **or** Y may cause X
+- .purple[Simpson's Paradox]: a third variable may reverse the correlation
+- Also, **lack** of correlation `\(\neq\)` **lack** of causality
+
+&lt;img src="causalinf.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+h/t [@causalinf](https://twitter.com/causalinf)
+
+---
+# Directed acyclic graphs (DAGs)
+
+[Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629) model causal relationships through graphical representation.
+
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Spurious correlation
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; .small[It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights. -George Bernard Shaw (1906)]
+
+---
+# A DAG-gone example
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+
+- Directed Acyclical Graphs (DAGs)] model causal relationships through graphical representation
+- Arrows represent directional causal effects; missing arrow implies lack of a causal path
+- Effects are either:
+   - direct `\((D \rightarrow Y)\)`; i.e., the causal effect of D (college) on Y (earnings); **or**
+   
+---
+# A DAG-gone example
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+- Directed Acyclical Graphs (DAGs)] model causal relationships through graphical representation
+- Arrows represent directional causal effects; missing arrow implies lack of a causal path
+- Effects are either:
+   - direct `\((D \rightarrow Y)\)`; i.e., the causal effect of D (college) on Y (earnings); or
+   - indirect `\((D \leftarrow X \rightarrow Y)\)`; i.e., a backdoor path created by a confounder
+- Here, conditioning on X (observed family characteristics) closes the backdoor and allows a causal estimate
+
+---
+# Confounders
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+
+We often hope that conditioning on the confounder closes **all** backdoor paths and thus allows us to estimate the direct effect of D on Y:
+- `\(D \rightarrow Y\)`: causal effect of D on Y
+- `\(D \leftarrow I \rightarrow Y\)`: income influences both college and earnings
+- `\(D \leftarrow PE \rightarrow I \rightarrow Y\)`: parental education influences family income which influences own earnings
+- `\(D \leftarrow X \rightarrow PE \rightarrow I \rightarrow Y\)`: .small[unobserved background characteristics influence parental education, family income, college attendance and own earnings]
+
+---
+# Confounders
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+
+We often hope that conditioning on the confounder closes **all** backdoor paths and thus allows us to estimate the direct effect of D on Y:
+- `\(D \rightarrow Y\)`: causal effect of D on Y
+- `\(D \leftarrow I \rightarrow Y\)`: income influences both college and earnings
+- `\(D \leftarrow PE \rightarrow I \rightarrow Y\)`: parental education influences family income which influences own earnings
+- `\(D \leftarrow X \rightarrow PE \rightarrow I \rightarrow Y\)`: .small[unobserved background characteristics influence parental education, family income, college attendance and own earnings]
+- .red[**BUT**] is it true that family background has no direct effect on earnings?
+
+# Colliders
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+
+- Career choice is a .blue[collider]. 
+- No need to condition on it as the backdoor path is already closed
+- .red[Leave colliders alone!] Beware of conditioning on them and therebery opening backdoors or (worse) introdicing bias.
+  - Here, doing so might underestimate the effect of going to college
+
+---
+# Where DAGs get tricky (for me)
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+
+.small[h/t [@andrewheiss](https://twitter.com/andrewheiss)]
+
+--
+
+.small[DAGs can be an intuitive and careful way of thinking through causal research design (see [Pearl, 2009](http://bayes.cs.ucla.edu/BOOK-2K/)). They also risk encouraging the researcher to believe she can solve by analysis what is broke by design (see [Imbens, 2020](https://arxiv.org/abs/1907.07271)).
+
+In this class, we'll use the .blue[**potential outcomes framework**] and rely on research designs in which we can credibly argue that .blue[**assignment to treatment is exogenous or based on observable characteristics**], but concepts such as confounders and colliders are valuable parts of your toolkits. You can learn much more about DAGs than I have presented here in our SEM sequence (EDLD 633/634)!]
+
+
+---
+class: middle, inverse
+
+# Break
+
+---
+class: middle, inverse
+
+# Panel Data
+
+
+---
+# Two common approaches
+
+### Random intercepts (aka random effects)
+
+`$$WATTACK_{ij} = \gamma_{0} + \gamma_{1}SFA_{j} + (\varepsilon_{ij} + \nu_{j})$$`
+
+You may also have seen this written as:
+
+`$$WATTACK_{ij} = \gamma_{00} + \gamma_{01}SFA_{j} + (\varepsilon_{ij} + \nu_{0j})$$`
+.red[**THESE ARE IDENTICAL!**]
+
+
+---
+# Two common approaches
+
+### Random intercepts (aka random effects)
+
+`$$WATTACK_{ij} = \gamma_{0} + \gamma_{1}SFA_{j} + (\varepsilon_{ij} + \nu_{j})$$`
+
+You may also have seen this written as:
+
+`$$WATTACK_{ij} = \gamma_{00} + \gamma_{01}SFA_{j} + (\varepsilon_{ij} + \nu_{0j})$$`
+
+### Fixed intercepts (aka fixed effects)
+
+`$$WATTACK_{ij} = \sum_{1}^{J}\alpha_{j}S_{ij} + \gamma_{1}SFA_\color{red}{ij} + \varepsilon_{ij}$$`
+.red[Notice the within-school variation in treatment in this hypothetical example]
+
+&gt; A note on notation: fixed effects are often represented with capital Greek letters `\((e.g., \Gamma_j, \Pi_t, \Delta_k)\)`. Vectors of covariates are often represented with vector notation `\((e.g., \textbf{X}_{ij})\)`
+
+---
+# What is a fixed effect doing?
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-28-1.gif" style="display: block; margin: auto;" /&gt;
+
+.small[h/t [@nickchk](https://twitter.com/nickchk)]
 
 ---
 class: middle, inverse
