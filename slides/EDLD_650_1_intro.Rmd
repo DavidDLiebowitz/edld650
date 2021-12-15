@@ -25,7 +25,7 @@ editor_options:
 ```{R, setup, include = F}
 library(pacman)
 
-p_load(here, MASS, tidyverse, ggplot2, xaringan, knitr, kableExtra, foreign, broom, xaringanthemer, gganimate, ggthemes)
+p_load(here, MASS, tidyverse, ggplot2, xaringan, knitr, kableExtra, foreign, broom, xaringanthemer, gganimate, ggthemes, lme4, haven)
 
 
 i_am("slides/EDLD_650_1_intro.rmd")
@@ -184,7 +184,7 @@ include_graphics("causal_id.jpg")
   - Complexificating it
      - A word about DAGs
 3. **Break**
-4. **Panel data is panel data**
+4. **Nested data**
   - Class 1 Questions (Section III)
 5. **Difference-in-differences**
 6. **Conclusions**
@@ -196,8 +196,13 @@ include_graphics("causal_id.jpg")
 ---
 # Goals for today
 
-1. Articulate in words (and using simple mathematical terms) a framework for identifying causal relationships
-2. Describe the conceptual approach to identifying causal effects using the difference-in-differences approach
+1. Articulate in words and simple graphical representations challenges in identifying causal relationships in quantitative data
+
+
+2. Articulate in words and using simple mathematical terms a framework for identifying causal relationships in quantitative data
+3. Describe (conceptually) unit fixed effects and their strengths (and limitations) in research designs seeking to identify causal relationships
+
+4. Describe the conceptual approach to identifying causal effects using the difference-in-differences framework
 
 
 ---
@@ -214,9 +219,13 @@ class: middle, inverse
 .pull-left[
 
 1. Cause must precede effect in time
+
 2. Identified mechanism
+
 3. Consistency
+
 4. Responsiveness
+
 5. No plausible alternative explanation
 
 ]
@@ -399,9 +408,8 @@ Even in the most basic of well-executed RCTs, researchers will add covariates.
 --
 
 .pull-left[
-```{r, echo=F, out.width="100%"}
-include_graphics("total_var.jpg")
-include_graphics("partial_var.jpg")
+```{r, echo=F, out.width="120%"}
+include_graphics("variation_expl.jpg")
 ```
 ]
 
@@ -469,7 +477,7 @@ class: middle, inverse
 ### 4. Participation in experiment affects behavior
  - Hawthorne and John Henry effects
  
-> There is a lot to explore in these threats to validity. We will address some in the Instrumental Variables unit, but these could form courses unto themselves.
+> There is much to explore in these threats to validity. We will address some in the Instrumental Variables unit, but could form entire courses.
 
 ---
 # Keep it real
@@ -500,7 +508,7 @@ Thus, in this course, we will primarily concern ourselves with the goal of .blue
 but this is **hard**.
 
 ---
-# Correlation $\neq$ causation
+# Correlation $\neq$ causation pt. 562
 
 RQ: What is the relationship between Oregon's annual per capita divorce rate and the U.S. per capita annual beef consumption? 
 
@@ -603,7 +611,7 @@ ggdag::ggdag_status(dag2, use_labels = "label", text=F, text_size=8) +
 
 --
 
-> .small[It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights. -George Bernard Shaw (1906)]
+> .small[*It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights.* -George Bernard Shaw (1906)]
 
 ---
 # A DAG-gone example
@@ -712,6 +720,7 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 - $D \leftarrow X \rightarrow PE \rightarrow I \rightarrow Y$: .small[unobserved background characteristics influence parental education, family income, college attendance and own earnings]
 - .red[**BUT**] is it true that family background has no direct effect on earnings?
 
+---
 # Colliders
 
 ```{r, echo=F, fig.height=3.5}
@@ -732,42 +741,39 @@ ggdag::ggdag_status(dag6, use_labels = "label", text=F, text_size = 8) +
 
 - Career choice is a .blue[collider]. 
 - No need to condition on it as the backdoor path is already closed
-- .red[Leave colliders alone!] Beware of conditioning on them and therebery opening backdoors or (worse) introdicing bias.
+- .red[Leave colliders alone!] Beware of conditioning on them and thereby opening backdoors or (worse) introducing bias.
   - Here, doing so might underestimate the effect of going to college
 
 ---
 # Where DAGs get tricky (for me)
 
 ```{r, echo=F, fig.height=3.5}
-mosquito_dag <- ggdag::dagify(
-  malaria_risk ~ net + income + health + temperature + resistance,
-  net ~ income + health + temperature + eligible + household,
-  eligible ~ income + household,
-  health ~ income,
-  exposure = "net",
-  outcome = "malaria_risk",
-  coords = list(x = c(malaria_risk = 7, net = 3, income = 4, health = 5,
-                      temperature = 6, resistance = 8.5, eligible = 2, household = 1),
-                y = c(malaria_risk = 2, net = 2, income = 3, health = 1,
-                      temperature = 3, resistance = 2, eligible = 3, household = 2)),
-  labels = c(malaria_risk = "Risk of malaria", net = "Mosquito net", income = "Income",
-             health = "Health", temperature = "Nighttime temperatures", 
-             resistance = "Insecticide resistance",
-             eligible = "Eligible for program", household = "Number in household")
+college_dag <- ggdag::dagify(
+  earnings ~ college + parentearn + testscore  + discrimination + labormarket + marriage,
+  college ~ parentearn + testscore + discrimination + affordability + highschool,
+  highschool ~ parentearn + discrimination,
+  testscore ~ parentearn,
+  marriage ~ college + labormarket,
+  labormarket ~ college,
+  affordability ~ parentearn,
+  exposure = "college",
+  outcome = "earnings",
+  labels = c(earnings = "Adult earnings", college = "College Attendance", parentearn = "Parental earnings",
+             testscore = "HS test scores", discrimination = "Societal discrimination", 
+             labormarket = "Labor market conditions", affordability = "College price",
+             highschool = "High-school quality", marriage = "Married by 30")
 )
 
-ggdag::ggdag_status(mosquito_dag, use_labels = "label", text = FALSE) + 
+ggdag::ggdag_status(college_dag, use_labels = "label", layout="nicely", text = FALSE) + 
   guides(fill = FALSE, color = FALSE) +  
   ggdag::theme_dag()
 ```
-
-.small[h/t [@andrewheiss](https://twitter.com/andrewheiss)]
 
 --
 
 .small[DAGs can be an intuitive and careful way of thinking through causal research design (see [Pearl, 2009](http://bayes.cs.ucla.edu/BOOK-2K/)). They also risk encouraging the researcher to believe she can solve by analysis what is broke by design (see [Imbens, 2020](https://arxiv.org/abs/1907.07271)).
 
-In this class, we'll use the .blue[**potential outcomes framework**] and rely on research designs in which we can credibly argue that .blue[**assignment to treatment is exogenous or based on observable characteristics**], but concepts such as confounders and colliders are valuable parts of your toolkits. You can learn much more about DAGs than I have presented here in our SEM sequence (EDLD 633/634)!]
+In this class, we'll use the .blue[**potential outcomes framework**] and rely on research designs in which we can credibly argue that .blue[**assignment to treatment is exogenous or based on observable characteristics**], but concepts such as confounders, colliders and controlling backdoors are valuable parts of your toolkits. You can learn much more about DAGs than I have presented here in our SEM sequence (EDLD 633/634)!]
 
 
 ---
@@ -778,7 +784,39 @@ class: middle, inverse
 ---
 class: middle, inverse
 
-# Panel Data
+# Nested Data
+
+---
+
+# What is nested data?
+Recall the Success for All evaluation from *Methods Matter*<sup>1</sup>
+```{r, echo=T}
+ch7_sfa <- read_dta(here("data/ch7_sfa.dta"))
+```
+
+```{r, echo=F, output.lines = -(1)}
+ch7_sfa$sfa <- as_factor(ch7_sfa$sfa)
+ch7_sfa$schid <- as_factor(ch7_sfa$schid)
+
+head(ch7_sfa, n=4)
+tail(ch7_sfa, n=4)
+```
+
+.footnote[[1] Most datasets from *MM* available from [UCLA stats site](https://stats.idre.ucla.edu/other/examples/methods-matter/).]
+
+---
+# Modeling nested data
+
+### Physical nesting
+- Our data can be nested in multiple units: students inside classrooms, classrooms inside schools, schools inside districts, districts inside states, etc.
+
+### Conceptual nesting
+- If we observe students across multiple years, we will have multiple observations nested inside students
+- If we administer assessments multiple times, we will have tests nested inside students
+
+.blue[Each of these forms of nesting have implications for how we model treatment effects (and on our standard errors).] 
+
+In the SfA example, we want to capture the effect of receiving the SfA treatment, .blue[**independent of the effect of the unobserved and observed qualities of the school the student attends**].
 
 
 ---
@@ -815,7 +853,7 @@ $$WATTACK_{ij} = \sum_{1}^{J}\alpha_{j}S_{ij} + \gamma_{1}SFA_\color{red}{ij} + 
 ---
 # What is a fixed effect doing?
 
-```{r, echo=F, fig.height=4.5}
+```{r, echo=F, fig.height=4}
 df <- data.frame(Person = rep(1:4,50)) %>%
   mutate(X = .5+.5*(Person-2.5) + rnorm(200)) %>%
   mutate(Y = -.5*X + (Person-2.5) + 1 + rnorm(200),time="1") %>%
@@ -853,18 +891,287 @@ p <- ggplot(dffull,aes(y=Y,x=X,color=as.factor(Person)))+geom_point()+
   ease_aes('sine-in-out')+
   exit_fade()+enter_fade()
 
-animate(p,nframes=200)
+animate(p,nframes=200, renderer = gifski_renderer(loop = FALSE))
 ```
 
 .small[h/t [@nickchk](https://twitter.com/nickchk)]
 
 ---
-class: middle, inverse
+# Random v. Fixed Effects
 
-# Difference-in-differences
+.small[
+|                     |                      Random effects       |                Fixed effects
+|-----------------------------------------------------------------------------------------------------------
+|  Strengths          |  - Minimal loss of power <br> - Preserves (almost all of) outcome variance                  | - Accounts for observed and unobserved, time-invariant, within-group differences <br> - Reduces outcome variance to only that relevant to estimating treatment effect
+| Limitations         | - Introduces bias if any correlation between predictors and group-level residuals <br> - Less transparent (more complex) interpretation     | - Sacrifices degrees of freedom <br> - Cannot have hierarchically nested fixed effects <br> - Cannot have fixed effect collinear with level of treatment <br> - Cannot include adjustments ("controls") that are invariant within unit
+]
+
+---
+# Random v. Fixed Effects
+
+### Some guidelines:
+
+- Preference should be informed by data structure, analytic strategy and context<sup>1</sup>
+
+- In both cases, need to pay attention to how you calculate standard errors
+
+- Often disciplinary preferences
+
+- Generally, with long panels (many w/in grouping unit observations) and in non-experimental settings where we seek to estimate treatment effects, fixed effects are preferable
+
+.footnote[[1] .small[See Clark & Linzer ([PSRM, 2015]((./readings/Clark Linzer 2015.pdf))) for a short, minimally technical, summary. *Note*: mixed models with both fixed- and random-intercepts are possible as well as are many other multi-level models (random slopes, random slopes and intercepts, etc.). Consider taking our multi-level modeling sequence (EDLD 628/629) to learn more.]]
 
 
 ---
+# Random intercepts application
+```{r, echo=T, output.lines = -(1:10)}
+sfa <- lme4::lmer(wattack ~ sfa + (1 | schid), data=ch7_sfa)
+summary(sfa)
+```
+
+---
+# Random intercepts application
+```{r, echo=F, output.lines = -(1:10), highlight.output=c(4:5, 10:11)}
+sfa <- lme4::lmer(wattack ~ sfa + (1 | schid), data=ch7_sfa)
+summary(sfa)
+```
+
+Compare the intra-class correlation (ICC) $(\hat{\rho})$ w/ Table 7.1 in *MM* (p. 114):
+
+$$\hat{\rho} = \frac{75.69}{75.69 + 314.23} = 0.194$$
+---
+class: middle, inverse
+
+# Class 1 Discussion Questions
+## Section III
+
+1. Review your answers to Section III
+2. Revise any of your answers based on the information from the past slides
+3. What is still unclear? Turn-and-talk with neighbor to see if you can gain clarity
+4. We will share out any outstanding questions for the group to answer
+
+---
+# Roadmap
+```{r, echo=F, out.width="110%"}
+include_graphics("causal_id.jpg")
+```
+---
+class: middle, inverse
+
+# Difference-in-differences (DD)
+
+---
+# S. London cholera outbreak 1854
+
+.pull-left[
+- Londed was a crowded, dirty city w/ waste disposed directly in Thames River
+- Disease poorly understood; cholera widely believed to be caused by miasma & contagion
+- Outbreak in S. London in summer of 1854 killing over 5,000
+  - Followed an earlier outbreak in 1849 that had killed >6,000
+- Physician John Snow had developed a theory that these illnesses were water-borne and set out to prove it
+]
+
+.pull-right[
+```{r, echo=F}
+include_graphics("snow.jpg")
+```
+]
+---
+# The "Grand Experiment" (I)
+
+.pull-left[
+- Water is supplied to households be competing private companies:
+  1. Southwark & Vauxhall
+  2. Lambeth
+- Southwark & Vauxhall water from Thames
+- Lambeth from Thames until 1852, then from Ditton (22 miles upstream)
+- Some portions of the city receive water from only one of companies; others from both
+]
+
+.pull-right[
+```{r, echo=F}
+include_graphics("london_water.jpg")
+```
+]
+
+---
+# The "Grand Experiment" (II)
+
+.pull-left[
+- When companies supply to same area, distributed quasi-randomly
+- Snow tallies the deaths in all districts supplied by one, the other, or both companies as well as the deaths in the 1849 outbreak
+]
+
+.pull-right[
+```{r, echo=F}
+include_graphics("mode_commun.jpg")
+```
+]
+
+.blue[**We will now pause this history lesson for a short methodological break**]
+
+---
+# So many differences!!!
+
+What is one approach by which we might estimate the effects of a policy change or intervention?
+
+|                     |        Treatment group         
+|------------------------------------------------------
+| Before              |   $Y_{0}$                       
+| After               |   $Y_{1}$                       
+
+--
+
+Could just subtract the mean value of "before" levels of the outcome from mean value of "after":
+
+$\Delta Y = \bar{Y_{1}} - \bar{Y_{0}}$
+
+.red[BUT], there could be lots of other things going on in between those two times!
+
+---
+# The "difference" in DD
+
+
+What is one approach by which we might estimate the effects of a policy change or intervention?
+
+|                     |        Treatment group               |        "Control" group
+|-------------------------------------------------------------------------------------------------
+| Before              |   $Y_{0}^{D=1}$                      |      $Y_{0}^{D=0}$
+| After               |   $Y_{1}^{D=1}$                      |      $Y_{1}^{D=0}$
+
+--
+
+Difference-in-difference (DD) estimates are the difference of two differences:
+
+$\hat{ATE} = \color{blue}{(Y_{1}^{D=1} - Y_{0}^{D=1})} - \color{purple}{(Y_{1}^{D=0} - Y_{0}^{D=0})}$
+
+---
+# Graphical DD
+
+```{r, echo=F, fig.height=5}
+data <- tibble(
+  Y = c(2, 6, 1, 2, 2, 3),
+  Unit = c("Treat", "Treat", "Control", "Control", "Counterfac T", "Counterfac T"),
+  T = c(0, 1, 0, 1, 0, 1)
+)
+
+data$T <- ordered(data$T,
+                  levels = c(0, 1),
+                  labels = c("Before", "After"))
+# plot
+data %>% 
+  ggplot(aes(x = T, y = Y, group = Unit, color=Unit, linetype=Unit)) + geom_line(size = 1.5) + 
+  scale_color_manual(values=c("red", "blue", "blue")) + 
+  scale_linetype_manual(values=c("solid", "dashed", "solid")) +
+  ggbrace::geom_brace(aes(x=c(2.1, 2.2), y=c(3,6), label="Treatment effect"), rotate=90, inherit.data=FALSE, labelsize=5) +
+  annotate("text", x=1.6, y=5.8, label="Observed change - Treatment", color="blue") +
+  annotate("text", x=2.3, y=2, label="Observed change - 'Control'", color="red") +
+  annotate("text", x=2.2, y=2.8, label="Hypothetical change - T IF not treated", color="blue") +
+  labs(x = "", y = "Outcome") + 
+  theme_minimal() +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 16),
+        legend.position = 'none')
+```
+
+---
+# John Snow's DD
+
+**Table XII**. Deaths per 10,000 in homes served by Lambeth and Southwark & Vauxhall, 1849 and 1854
+
+|                     |  Treatment = Lambeth    |  Control = S&V      | Diff-in-Diff
+|-------------------------------------------------------------------------------------------------
+| Before = 1849       |  85                     |   135               | 
+| After = 1854        |  19                     |   147               |
+| Difference          | -66                     |   12                | .blue[**-78**]
+
+--
+
+.pull-left[
+```{r, echo=F, out.height="60%"}
+include_graphics("table12.jpg")
+```
+]
+
+.pull-right[
+.small[Clients of Southwark & Vauxhall experienced more deaths per 10,000 in the 1854 cholera outbreak than in the 1849 one. The Lambeth clients, therefore, might have expected to have more also, but they had MANY fewer. The only thing that changed was the source of the Lambeth water. From this evidence, Snow claimed that **the only possible cause was the water!**]
+]
+
+---
+## DD by regression
+
+We can get the same results for a two-period DD in a regression framework, which allows us to:
+- Add statistical adjustments (see previous discussion on value in experiments)
+- Model various functional forms, and more!
+
+$Y_{it} = \beta_{0} + \beta_{1}TREAT_{it} + \beta_{2}AFTER_{it} + \color{purple}{\beta_{3}}TREAT \times AFTER_{it} + \varepsilon_{it}$
+
+where, *TREAT* = 1 if in treatment and = 0 if in control and ...
+
+*AFTER* = if after the treatment occurred (even if you didn't experience the treatment) and *AFTER* = 0 if before treatment; **OR**
+
+$CHOLERA_{it} = \beta_{0} + \beta_{1}LAMBETH_{it} + \beta_{2}1854_{it} + \color{purple}{\beta_{3}}LAMBETH \times 1854_{it} + \varepsilon_{it}$
+
+Here, $\color{purple}{\beta_{3}}$ is our causal parameter of interest. We can interpret it as the causal effect of living in a home that was served water from the Thames on the death rate of residents of those homes.
+---
 class: middle, inverse
 # Synthesis and wrap-up
+
+---
+# Goals for today
+
+1. Articulate in words and simple graphical representations challenges in identifying causal relationships in quantitative data
+
+2. Articulate in words and using simple mathematical terms a framework for identifying causal relationships in quantitative data
+
+3. Describe (conceptually) unit fixed effects and their strengths (and limitations) in research designs seeking to identify causal relationships
+
+4. Describe the conceptual approach to identifying causal effects using the difference-in-differences framework
+
+---
+# Key logistics
+
+- Review syllabus carefully
+
+- Prepare questions in advance (partner work encouraged)
+
+- Review session? (multi-level models? residuals/standard errors? notation?)
+
+- Data Analysis and Replication Exercises (DAREs)
+- Project proposal by January 28
+  - Meet w/ teaching staff to discuss at least once
+  - In class scholarly presentation (March 8)
+  - Written final research project (March 17; *optional feedback by March 10*)
+  
+---
+class: inverse
+# To-dos
+
+### Week 3: Difference-in-differences
+### Readings for next week:
+- Murnane & Willet, Chapter 8
+- Dynarski (2003), Does aid matter?
+- Further, MHE: Ch. 5; 'Metrics: Ch. 5, Mixtape: 245-285
+
+### Assignments Due
+- Complete student survey on Canvas (if not yet done) (Jan. 5)
+- DARE #1 due: 9:00am January 17
+
+
+---
+# Feedback
+
+## Plus/Deltas
+
+- On front of index card
+- What worked about today's class?
+- What could be improved or changed about the pedagogical process of today's class?
+
+## Clear/Murky
+
+- On back of index card
+- What substantively is most clear to you or got clarified during class today?
+- What is the muddiest substantive topic for you?
+
+- .blue[*For today only, could you please indicate (a) are you interested in attending a review session?; (b) if so, what topics would you like to see included in the review?; (c) what times are you available in the next two weeks?*]
 

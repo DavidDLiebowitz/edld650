@@ -111,7 +111,7 @@ class: center, middle, inverse, title-slide
   - Complexificating it
      - A word about DAGs
 3. **Break**
-4. **Panel data is panel data**
+4. **Nested data**
   - Class 1 Questions (Section III)
 5. **Difference-in-differences**
 6. **Conclusions**
@@ -123,8 +123,13 @@ class: center, middle, inverse, title-slide
 ---
 # Goals for today
 
-1. Articulate in words (and using simple mathematical terms) a framework for identifying causal relationships
-2. Describe the conceptual approach to identifying causal effects using the difference-in-differences approach
+1. Articulate in words and simple graphical representations challenges in identifying causal relationships in quantitative data
+
+
+2. Articulate in words and using simple mathematical terms a framework for identifying causal relationships in quantitative data
+3. Describe (conceptually) unit fixed effects and their strengths (and limitations) in research designs seeking to identify causal relationships
+
+4. Describe the conceptual approach to identifying causal effects using the difference-in-differences framework
 
 
 ---
@@ -141,9 +146,13 @@ class: middle, inverse
 .pull-left[
 
 1. Cause must precede effect in time
+
 2. Identified mechanism
+
 3. Consistency
+
 4. Responsiveness
+
 5. No plausible alternative explanation
 
 ]
@@ -314,7 +323,7 @@ Even in the most basic of well-executed RCTs, researchers will add covariates.
 --
 
 .pull-left[
-&lt;img src="total_var.jpg" width="100%" style="display: block; margin: auto;" /&gt;&lt;img src="partial_var.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="variation_expl.jpg" width="120%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -381,7 +390,7 @@ class: middle, inverse
 ### 4. Participation in experiment affects behavior
  - Hawthorne and John Henry effects
  
-&gt; There is a lot to explore in these threats to validity. We will address some in the Instrumental Variables unit, but these could form courses unto themselves.
+&gt; There is much to explore in these threats to validity. We will address some in the Instrumental Variables unit, but could form entire courses.
 
 ---
 # Keep it real
@@ -410,7 +419,7 @@ Thus, in this course, we will primarily concern ourselves with the goal of .blue
 but this is **hard**.
 
 ---
-# Correlation `\(\neq\)` causation
+# Correlation `\(\neq\)` causation pt. 562
 
 RQ: What is the relationship between Oregon's annual per capita divorce rate and the U.S. per capita annual beef consumption? 
 
@@ -463,7 +472,7 @@ h/t [@causalinf](https://twitter.com/causalinf)
 
 --
 
-&gt; .small[It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights. -George Bernard Shaw (1906)]
+&gt; .small[*It is easy to prove that the wearing of tall hats and the carrying of umbrellas enlarges the chest, prolongs life, and confers comparative immunity from disease...A university degree, a daily bath, the owning of thirty pairs of trousers, a knowledge of Wagner’s music, a pew in church, anything, in short, that implies more means and better nurture…can be statistically palmed off as a magic spell conferring all sorts of privileges...The mathematician whose correlations would fill a Newton with admiration, may, in collecting and accepting data and drawing conclusions from them, fall into quite crude errors by just such popular oversights.* -George Bernard Shaw (1906)]
 
 ---
 # A DAG-gone example
@@ -510,13 +519,14 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 - `\(D \leftarrow X \rightarrow PE \rightarrow I \rightarrow Y\)`: .small[unobserved background characteristics influence parental education, family income, college attendance and own earnings]
 - .red[**BUT**] is it true that family background has no direct effect on earnings?
 
+---
 # Colliders
 
 &lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
 
 - Career choice is a .blue[collider]. 
 - No need to condition on it as the backdoor path is already closed
-- .red[Leave colliders alone!] Beware of conditioning on them and therebery opening backdoors or (worse) introdicing bias.
+- .red[Leave colliders alone!] Beware of conditioning on them and thereby opening backdoors or (worse) introducing bias.
   - Here, doing so might underestimate the effect of going to college
 
 ---
@@ -524,13 +534,11 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 
 &lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 
-.small[h/t [@andrewheiss](https://twitter.com/andrewheiss)]
-
 --
 
 .small[DAGs can be an intuitive and careful way of thinking through causal research design (see [Pearl, 2009](http://bayes.cs.ucla.edu/BOOK-2K/)). They also risk encouraging the researcher to believe she can solve by analysis what is broke by design (see [Imbens, 2020](https://arxiv.org/abs/1907.07271)).
 
-In this class, we'll use the .blue[**potential outcomes framework**] and rely on research designs in which we can credibly argue that .blue[**assignment to treatment is exogenous or based on observable characteristics**], but concepts such as confounders and colliders are valuable parts of your toolkits. You can learn much more about DAGs than I have presented here in our SEM sequence (EDLD 633/634)!]
+In this class, we'll use the .blue[**potential outcomes framework**] and rely on research designs in which we can credibly argue that .blue[**assignment to treatment is exogenous or based on observable characteristics**], but concepts such as confounders, colliders and controlling backdoors are valuable parts of your toolkits. You can learn much more about DAGs than I have presented here in our SEM sequence (EDLD 633/634)!]
 
 
 ---
@@ -541,7 +549,53 @@ class: middle, inverse
 ---
 class: middle, inverse
 
-# Panel Data
+# Nested Data
+
+---
+
+# What is nested data?
+Recall the Success for All evaluation from *Methods Matter*&lt;sup&gt;1&lt;/sup&gt;
+
+```r
+ch7_sfa &lt;- read_dta(here("data/ch7_sfa.dta"))
+```
+
+
+```
+#&gt; # A tibble: 4 x 6
+#&gt;   schid    stuid wattack sfa    ppvt sch_ppvt
+#&gt;   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 1     10158087     469 1        89     90.6
+#&gt; 2 1     10217961     486 1        83     90.6
+#&gt; 3 1     10486718     501 1        90     90.6
+...
+```
+
+```
+#&gt; # A tibble: 4 x 6
+#&gt;   schid    stuid wattack sfa    ppvt sch_ppvt
+#&gt;   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 41    31957570     460 0        71     83.6
+#&gt; 2 41    31970410     488 0        94     83.6
+#&gt; 3 41    31979390     473 0        78     83.6
+...
+```
+
+.footnote[[1] Most datasets from *MM* available from [UCLA stats site](https://stats.idre.ucla.edu/other/examples/methods-matter/).]
+
+---
+# Modeling nested data
+
+### Physical nesting
+- Our data can be nested in multiple units: students inside classrooms, classrooms inside schools, schools inside districts, districts inside states, etc.
+
+### Conceptual nesting
+- If we observe students across multiple years, we will have multiple observations nested inside students
+- If we administer assessments multiple times, we will have tests nested inside students
+
+.blue[Each of these forms of nesting have implications for how we model treatment effects (and on our standard errors).] 
+
+In the SfA example, we want to capture the effect of receiving the SfA treatment, .blue[**independent of the effect of the unobserved and observed qualities of the school the student attends**].
 
 
 ---
@@ -578,19 +632,289 @@ You may also have seen this written as:
 ---
 # What is a fixed effect doing?
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-28-1.gif" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-30-1.gif" style="display: block; margin: auto;" /&gt;
 
 .small[h/t [@nickchk](https://twitter.com/nickchk)]
 
 ---
-class: middle, inverse
+# Random v. Fixed Effects
 
-# Difference-in-differences
+.small[
+|                     |                      Random effects       |                Fixed effects
+|-----------------------------------------------------------------------------------------------------------
+|  Strengths          |  - Minimal loss of power &lt;br&gt; - Preserves (almost all of) outcome variance                  | - Accounts for observed and unobserved, time-invariant, within-group differences &lt;br&gt; - Reduces outcome variance to only that relevant to estimating treatment effect
+| Limitations         | - Introduces bias if any correlation between predictors and group-level residuals &lt;br&gt; - Less transparent (more complex) interpretation     | - Sacrifices degrees of freedom &lt;br&gt; - Cannot have hierarchically nested fixed effects &lt;br&gt; - Cannot have fixed effect collinear with level of treatment &lt;br&gt; - Cannot include adjustments ("controls") that are invariant within unit
+]
+
+---
+# Random v. Fixed Effects
+
+### Some guidelines:
+
+- Preference should be informed by data structure, analytic strategy and context&lt;sup&gt;1&lt;/sup&gt;
+
+- In both cases, need to pay attention to how you calculate standard errors
+
+- Often disciplinary preferences
+
+- Generally, with long panels (many w/in grouping unit observations) and in non-experimental settings where we seek to estimate treatment effects, fixed effects are preferable
+
+.footnote[[1] .small[See Clark &amp; Linzer ([PSRM, 2015]((./readings/Clark Linzer 2015.pdf))) for a short, minimally technical, summary. *Note*: mixed models with both fixed- and random-intercepts are possible as well as are many other multi-level models (random slopes, random slopes and intercepts, etc.). Consider taking our multi-level modeling sequence (EDLD 628/629) to learn more.]]
 
 
 ---
+# Random intercepts application
+
+```r
+sfa &lt;- lme4::lmer(wattack ~ sfa + (1 | schid), data=ch7_sfa)
+summary(sfa)
+```
+
+```
+...
+#&gt; Random effects:
+#&gt;  Groups   Name        Variance Std.Dev.
+#&gt;  schid    (Intercept)  75.69    8.70   
+#&gt;  Residual             314.23   17.73   
+#&gt; Number of obs: 2334, groups:  schid, 41
+#&gt; 
+#&gt; Fixed effects:
+#&gt;             Estimate Std. Error t value
+#&gt; (Intercept)  475.302      2.035 233.616
+#&gt; sfa1           4.366      2.844   1.535
+#&gt; 
+#&gt; Correlation of Fixed Effects:
+#&gt;      (Intr)
+#&gt; sfa1 -0.715
+...
+```
+
+---
+# Random intercepts application
+
+```
+...
+#&gt; Random effects:
+#&gt;  Groups   Name        Variance Std.Dev.
+*#&gt;  schid    (Intercept)  75.69    8.70   
+*#&gt;  Residual             314.23   17.73   
+#&gt; Number of obs: 2334, groups:  schid, 41
+#&gt; 
+#&gt; Fixed effects:
+#&gt;             Estimate Std. Error t value
+*#&gt; (Intercept)  475.302      2.035 233.616
+*#&gt; sfa1           4.366      2.844   1.535
+#&gt; 
+#&gt; Correlation of Fixed Effects:
+#&gt;      (Intr)
+#&gt; sfa1 -0.715
+...
+```
+
+Compare the intra-class correlation (ICC) `\((\hat{\rho})\)` w/ Table 7.1 in *MM* (p. 114):
+
+`$$\hat{\rho} = \frac{75.69}{75.69 + 314.23} = 0.194$$`
+---
+class: middle, inverse
+
+# Class 1 Discussion Questions
+## Section III
+
+1. Review your answers to Section III
+2. Revise any of your answers based on the information from the past slides
+3. What is still unclear? Turn-and-talk with neighbor to see if you can gain clarity
+4. We will share out any outstanding questions for the group to answer
+
+---
+# Roadmap
+&lt;img src="causal_id.jpg" width="110%" style="display: block; margin: auto;" /&gt;
+---
+class: middle, inverse
+
+# Difference-in-differences (DD)
+
+---
+# S. London cholera outbreak 1854
+
+.pull-left[
+- Londed was a crowded, dirty city w/ waste disposed directly in Thames River
+- Disease poorly understood; cholera widely believed to be caused by miasma &amp; contagion
+- Outbreak in S. London in summer of 1854 killing over 5,000
+  - Followed an earlier outbreak in 1849 that had killed &gt;6,000
+- Physician John Snow had developed a theory that these illnesses were water-borne and set out to prove it
+]
+
+.pull-right[
+&lt;img src="snow.jpg" style="display: block; margin: auto;" /&gt;
+]
+---
+# The "Grand Experiment" (I)
+
+.pull-left[
+- Water is supplied to households be competing private companies:
+  1. Southwark &amp; Vauxhall
+  2. Lambeth
+- Southwark &amp; Vauxhall water from Thames
+- Lambeth from Thames until 1852, then from Ditton (22 miles upstream)
+- Some portions of the city receive water from only one of companies; others from both
+]
+
+.pull-right[
+&lt;img src="london_water.jpg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# The "Grand Experiment" (II)
+
+.pull-left[
+- When companies supply to same area, distributed quasi-randomly
+- Snow tallies the deaths in all districts supplied by one, the other, or both companies as well as the deaths in the 1849 outbreak
+]
+
+.pull-right[
+&lt;img src="mode_commun.jpg" style="display: block; margin: auto;" /&gt;
+]
+
+.blue[**We will now pause this history lesson for a short methodological break**]
+
+---
+# So many differences!!!
+
+What is one approach by which we might estimate the effects of a policy change or intervention?
+
+|                     |        Treatment group         
+|------------------------------------------------------
+| Before              |   `\(Y_{0}\)`                       
+| After               |   `\(Y_{1}\)`                       
+
+--
+
+Could just subtract the mean value of "before" levels of the outcome from mean value of "after":
+
+`\(\Delta Y = \bar{Y_{1}} - \bar{Y_{0}}\)`
+
+.red[BUT], there could be lots of other things going on in between those two times!
+
+---
+# The "difference" in DD
+
+
+What is one approach by which we might estimate the effects of a policy change or intervention?
+
+|                     |        Treatment group               |        "Control" group
+|-------------------------------------------------------------------------------------------------
+| Before              |   `\(Y_{0}^{D=1}\)`                      |      `\(Y_{0}^{D=0}\)`
+| After               |   `\(Y_{1}^{D=1}\)`                      |      `\(Y_{1}^{D=0}\)`
+
+--
+
+Difference-in-difference (DD) estimates are the difference of two differences:
+
+`\(\hat{ATE} = \color{blue}{(Y_{1}^{D=1} - Y_{0}^{D=1})} - \color{purple}{(Y_{1}^{D=0} - Y_{0}^{D=0})}\)`
+
+---
+# Graphical DD
+
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# John Snow's DD
+
+**Table XII**. Deaths per 10,000 in homes served by Lambeth and Southwark &amp; Vauxhall, 1849 and 1854
+
+|                     |  Treatment = Lambeth    |  Control = S&amp;V      | Diff-in-Diff
+|-------------------------------------------------------------------------------------------------
+| Before = 1849       |  85                     |   135               | 
+| After = 1854        |  19                     |   147               |
+| Difference          | -66                     |   12                | .blue[**-78**]
+
+--
+
+.pull-left[
+&lt;img src="table12.jpg" height="60%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+.small[Clients of Southwark &amp; Vauxhall experienced more deaths per 10,000 in the 1854 cholera outbreak than in the 1849 one. The Lambeth clients, therefore, might have expected to have more also, but they had MANY fewer. The only thing that changed was the source of the Lambeth water. From this evidence, Snow claimed that **the only possible cause was the water!**]
+]
+
+---
+## DD by regression
+
+We can get the same results for a two-period DD in a regression framework, which allows us to:
+- Add statistical adjustments (see previous discussion on value in experiments)
+- Model various functional forms, and more!
+
+`\(Y_{it} = \beta_{0} + \beta_{1}TREAT_{it} + \beta_{2}AFTER_{it} + \color{purple}{\beta_{3}}TREAT \times AFTER_{it} + \varepsilon_{it}\)`
+
+where, *TREAT* = 1 if in treatment and = 0 if in control and ...
+
+*AFTER* = if after the treatment occurred (even if you didn't experience the treatment) and *AFTER* = 0 if before treatment; **OR**
+
+`\(CHOLERA_{it} = \beta_{0} + \beta_{1}LAMBETH_{it} + \beta_{2}1854_{it} + \color{purple}{\beta_{3}}LAMBETH \times 1854_{it} + \varepsilon_{it}\)`
+
+Here, `\(\color{purple}{\beta_{3}}\)` is our causal parameter of interest. We can interpret it as the causal effect of living in a home that was served water from the Thames on the death rate of residents of those homes.
+---
 class: middle, inverse
 # Synthesis and wrap-up
+
+---
+# Goals for today
+
+1. Articulate in words and simple graphical representations challenges in identifying causal relationships in quantitative data
+
+2. Articulate in words and using simple mathematical terms a framework for identifying causal relationships in quantitative data
+
+3. Describe (conceptually) unit fixed effects and their strengths (and limitations) in research designs seeking to identify causal relationships
+
+4. Describe the conceptual approach to identifying causal effects using the difference-in-differences framework
+
+---
+# Key logistics
+
+- Review syllabus carefully
+
+- Prepare questions in advance (partner work encouraged)
+
+- Review session? (multi-level models? residuals/standard errors? notation?)
+
+- Data Analysis and Replication Exercises (DAREs)
+- Project proposal by January 28
+  - Meet w/ teaching staff to discuss at least once
+  - In class scholarly presentation (March 8)
+  - Written final research project (March 17; *optional feedback by March 10*)
+  
+---
+class: inverse
+# To-dos
+
+### Week 3: Difference-in-differences
+### Readings for next week:
+- Murnane &amp; Willet, Chapter 8
+- Dynarski (2003), Does aid matter?
+- Further, MHE: Ch. 5; 'Metrics: Ch. 5, Mixtape: 245-285
+
+### Assignments Due
+- Complete student survey on Canvas (if not yet done) (Jan. 5)
+- DARE #1 due: 9:00am January 17
+
+
+---
+# Feedback
+
+## Plus/Deltas
+
+- On front of index card
+- What worked about today's class?
+- What could be improved or changed about the pedagogical process of today's class?
+
+## Clear/Murky
+
+- On back of index card
+- What substantively is most clear to you or got clarified during class today?
+- What is the muddiest substantive topic for you?
+
+- .blue[*For today only, could you please indicate (a) are you interested in attending a review session?; (b) if so, what topics would you like to see included in the review?; (c) what times are you available in the next two weeks?*]
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
