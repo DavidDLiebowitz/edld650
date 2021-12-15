@@ -99,7 +99,7 @@ include_graphics("museum.jpg")
 --
 
 .pull-right[
-```{r, echo=F, out.width="110%"}
+```{r, echo=F, out.width="120%"}
 include_graphics("museum2.jpg")
 ```
 ]
@@ -815,7 +815,7 @@ $$WATTACK_{ij} = \sum_{1}^{J}\alpha_{j}S_{ij} + \gamma_{1}SFA_\color{red}{ij} + 
 ---
 # What is a fixed effect doing?
 
-```{r, echo=F, fig.height=5}
+```{r, echo=F, fig.height=4.5}
 df <- data.frame(Person = rep(1:4,50)) %>%
   mutate(X = .5+.5*(Person-2.5) + rnorm(200)) %>%
   mutate(Y = -.5*X + (Person-2.5) + 1 + rnorm(200),time="1") %>%
