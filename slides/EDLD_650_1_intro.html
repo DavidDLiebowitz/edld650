@@ -339,6 +339,7 @@ Even in the most basic of well-executed RCTs, researchers will add covariates.
 
 ---
 # Cold-calling
+
 .pull-left[
 #### .purple[Purpose]
 - Formative assessment
@@ -562,7 +563,7 @@ ch7_sfa &lt;- read_dta(here("data/ch7_sfa.dta"))
 
 
 ```
-#&gt; # A tibble: 4 x 6
+...
 #&gt;   schid    stuid wattack sfa    ppvt sch_ppvt
 #&gt;   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;    &lt;dbl&gt;
 #&gt; 1 1     10158087     469 1        89     90.6
@@ -572,12 +573,12 @@ ch7_sfa &lt;- read_dta(here("data/ch7_sfa.dta"))
 ```
 
 ```
-#&gt; # A tibble: 4 x 6
+...
 #&gt;   schid    stuid wattack sfa    ppvt sch_ppvt
 #&gt;   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1 41    31957570     460 0        71     83.6
-#&gt; 2 41    31970410     488 0        94     83.6
-#&gt; 3 41    31979390     473 0        78     83.6
+#&gt; 1 41    31970410     488 0        94     83.6
+#&gt; 2 41    31979390     473 0        78     83.6
+#&gt; 3 41    31989400     485 0        65     83.6
 ...
 ```
 
@@ -659,7 +660,7 @@ You may also have seen this written as:
 
 - Generally, with long panels (many w/in grouping unit observations) and in non-experimental settings where we seek to estimate treatment effects, fixed effects are preferable
 
-.footnote[[1] .small[See Clark &amp; Linzer ([PSRM, 2015]((./readings/Clark Linzer 2015.pdf))) for a short, minimally technical, summary. *Note*: mixed models with both fixed- and random-intercepts are possible as well as are many other multi-level models (random slopes, random slopes and intercepts, etc.). Consider taking our multi-level modeling sequence (EDLD 628/629) to learn more.]]
+.footnote[[1] .small[See Clark &amp; Linzer [(PSRM, 2015)](./readings/Clark Linzer 2015.pdf) for a short, minimally technical, summary. *Note*: mixed models with both fixed- and random-intercepts are possible as well as are many other multi-level models (random slopes, random slopes and intercepts, etc.). Consider taking our multi-level modeling sequence (EDLD 628/629) to learn more.]]
 
 
 ---

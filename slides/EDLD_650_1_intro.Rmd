@@ -426,6 +426,7 @@ $$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \beta_{2}X_{i} + \color{purple}\varepsilo
 
 ---
 # Cold-calling
+
 .pull-left[
 #### .purple[Purpose]
 - Formative assessment
@@ -794,12 +795,12 @@ Recall the Success for All evaluation from *Methods Matter*<sup>1</sup>
 ch7_sfa <- read_dta(here("data/ch7_sfa.dta"))
 ```
 
-```{r, echo=F, output.lines = -(1)}
+```{r, echo=F, output.lines = -(0:1)}
 ch7_sfa$sfa <- as_factor(ch7_sfa$sfa)
 ch7_sfa$schid <- as_factor(ch7_sfa$schid)
 
-head(ch7_sfa, n=4)
-tail(ch7_sfa, n=4)
+head(ch7_sfa, n=3)
+tail(ch7_sfa, n=3)
 ```
 
 .footnote[[1] Most datasets from *MM* available from [UCLA stats site](https://stats.idre.ucla.edu/other/examples/methods-matter/).]
@@ -919,7 +920,7 @@ animate(p,nframes=200, renderer = gifski_renderer(loop = FALSE))
 
 - Generally, with long panels (many w/in grouping unit observations) and in non-experimental settings where we seek to estimate treatment effects, fixed effects are preferable
 
-.footnote[[1] .small[See Clark & Linzer ([PSRM, 2015]((./readings/Clark Linzer 2015.pdf))) for a short, minimally technical, summary. *Note*: mixed models with both fixed- and random-intercepts are possible as well as are many other multi-level models (random slopes, random slopes and intercepts, etc.). Consider taking our multi-level modeling sequence (EDLD 628/629) to learn more.]]
+.footnote[[1] .small[See Clark & Linzer [(PSRM, 2015)](./readings/Clark Linzer 2015.pdf) for a short, minimally technical, summary. *Note*: mixed models with both fixed- and random-intercepts are possible as well as are many other multi-level models (random slopes, random slopes and intercepts, etc.). Consider taking our multi-level modeling sequence (EDLD 628/629) to learn more.]]
 
 
 ---
