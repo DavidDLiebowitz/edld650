@@ -48,11 +48,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 *Further readings:*
 
-1.  Murnane and Willett, Chapter 6
-2.	Angrist and Pischke (2009), pp. 1-110
-3.	Angrist and Pischke (2014), Chapters 1-2
-4.	Cunningham (2021), pp. 67-103
-5.  Clark, T.S. & Linzer, D.A. (2015). [Should I use fixed or random effects?](./readings/Clark Linzer 2015.pdf) *Political Science Research and Methods, 3*(2), 399-408.
+1. Murnane and Willett, Chapter 6
+2. Angrist and Pischke (2009), pp. 1-110
+3. Angrist and Pischke (2014), Chapters 1-2
+4. Cunningham (2021), pp. 67-103
+5. Clark, T.S. & Linzer, D.A. (2015). [Should I use fixed or random effects?](./readings/Clark Linzer 2015.pdf) *Political Science Research and Methods, 3*(2), 399-408.
 
 
 ## Unit 2: Differences-in-differences
@@ -82,9 +82,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 *Further readings:*
 
-1.	Angrist and Pischke (2009), Chapter 5
-2.	Angrist and Pischke (2014), Chapter 5
-3.	Cunningham (2021), 245-285
+1. Angrist and Pischke (2009), Chapter 5
+2. Angrist and Pischke (2014), Chapter 5
+3. Cunningham (2021), 245-285
 
 
 ### Week 3: January 18
@@ -111,6 +111,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Submit Research Project Proposal by 9:00am, January 28
 
 *Further readings:*
+
 1. Zeldow, B. & Hatfield, L. (2019). [Difference-in-differences](https://diff.healthpolicydatascience.org/).
 2. Baker, A. (2019). [Difference-in-differences methodology](https://andrewcbaker.netlify.app/2019/09/25/difference-in-differences-methodology/).
 3. de Chaisemartin, C. & d'Haultfoeuille, X. (2021). [Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey](./readings/deChaisemartin DHaultfoeuille 2021.pdf).
@@ -176,9 +177,10 @@ knitr::opts_chunk$set(echo = TRUE)
 - Work on research project
 
 *Further readings:*
+
 1. Lee, D. & Lemieux, T. (2010). [Regression discontinuity designs in economics.](./readings/Lee Lemieux 2010.pdf) *Journal of Economic Literature, 48*(June), 281-355.
 2. Calonico, S., Cattaneo, M., Farrell, M. & Titiunik, R. (2017). [rdrobust: Software for regression-discontinuity designs.](./readings/Calonico et al 2017.pdf) *The Stata Journal, 17*(2), 372-404.
-3. Pei, Z., Lee, D.S., Card, D. & Weber, A. (2021). [Local polynomial order in regression discontinuity designs.](./readings/Pei et al 2021.pdf) *Journal of Business and Economics Statistics, Online.
+3. Pei, Z., Lee, D.S., Card, D. & Weber, A. (2021). [Local polynomial order in regression discontinuity designs.](./readings/Pei et al 2021.pdf) *Journal of Business and Economics Statistics*, Online.
 
 ## Unit 4: Instrumental Variables
 
@@ -240,6 +242,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Work on research project
 
 *Further readings:*
+
 1. Lee, D.S., McCrary, J., Moreira, M.J. & Porter, J.R. (2021). [Valid *t*-ratio inference for IV.](./readings/Lee et al 2021.pdf) NBER Working Paper Series No. 29124.
 2. Baicker, K. et al. (2014). [The Oregon experiment --- Effects of Medicaid on clinical outcomes.](./readings/Baicker et al 2013.pdf) *The New England Journal of Medicine, 368*(18), 1713-1722.
 
@@ -303,6 +306,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Prepare to present Research Project Presentation in class on March 8
 
 *Further readings:*
+
 1.	King, G., Nielsen, R., Coberly, C., Pope, J.E. & Wells, A. (2011). Comparative effectiveness of matching methods for causal inference. Working Paper. http://j.mp/2nydGlv. 
 2.	King, G. & Nielsen, R. (2019). Why propensity scores should not be used for matching. *Political Analysis, 27*(4), 435-454. https://doi.org/10.1017/pan.2019.11. 
 
