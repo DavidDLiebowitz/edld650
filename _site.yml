@@ -34,7 +34,7 @@ navbar:
   - text: Assignments
     href: assignments.html
   - icon: fa-github
-    href: 
+    href: https://github.com/DavidDLiebowitz/edld650
 
 output:
   html_document:

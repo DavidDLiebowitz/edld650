@@ -89,9 +89,25 @@ Dataset: dta
 Answer Key: pdf | R script
 
 
+## Research Project Presentation
+
+Deadline: 9:00am, March 8
+
+Here are some helpful resources on academic presentations. There are some disciplinary conventions that vary and you have several degrees of freedom to decide what your own personal style is, so don't feel like there is a single formula. Some of the below resources are about the structure and substance of the presentation, others are about presentation style, and still others are about both.
 
 
+Jesse Shapiro's [Tips on an Applied Micro Talk](https://www.brown.edu/Research/Shapiro/pdfs/applied_micro_slides.pdf)
 
+John Willett's [Good Presentations Presentation](./assignments/Good Presentations.pptx)
+
+Alex Tabarrok's [How to Give a Great Seminar](./assignments/HowToGiveAGreatSeminar.pptx)
+
+Berthold Herrendorf [How to Make Academic Presentations](http://www.public.asu.edu/~bherrend/Various/PresentationTips.pdf)
+
+
+# Final Research Project
+
+Deadline: 9:00am, March 17
 
 
 
