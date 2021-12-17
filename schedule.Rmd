@@ -55,7 +55,7 @@ knitr::opts_chunk$set(echo = TRUE)
 5. Clark, T.S. & Linzer, D.A. (2015). [Should I use fixed or random effects?](./readings/Clark Linzer 2015.pdf) *Political Science Research and Methods, 3*(2), 399-408.
 
 
-## Unit 2: Differences-in-differences
+## Unit 2: Difference-in-differences
 
 ### Week 2: January 11
 
