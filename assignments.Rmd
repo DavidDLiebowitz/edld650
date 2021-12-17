@@ -89,7 +89,9 @@ Dataset: dta
 Answer Key: pdf | R script
 
 
-## Research Project Presentation
+# 4. Final Research Project 
+
+## Project Presentation
 
 Deadline: 9:00am, March 8
 
@@ -102,10 +104,10 @@ John Willett's [Good Presentations Presentation](./assignments/Good Presentation
 
 Alex Tabarrok's [How to Give a Great Seminar](./assignments/HowToGiveAGreatSeminar.pptx)
 
-Berthold Herrendorf [How to Make Academic Presentations](http://www.public.asu.edu/~bherrend/Various/PresentationTips.pdf)
+Berthold Herrendorf's [How to Make Academic Presentations](http://www.public.asu.edu/~bherrend/Various/PresentationTips.pdf)
 
 
-# Final Research Project
+## Written Project
 
 Deadline: 9:00am, March 17
 
