@@ -37,9 +37,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: [html](./slides/EDLD_650_1_intro.html) | pdf
+- Slides: [html](./slides/EDLD_650_1_intro.html) | [pdf](./slides/EDLD_650_1_intro.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 1 Questions.docx)
-- R Script: 
+- R Script: [Class 1](./code/EDLD_650_1_script.R)
 - Data: [dta](./data/ch7_sfa.dta)
 
 **Assignment:**
