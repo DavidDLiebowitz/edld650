@@ -228,7 +228,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Readings:**
 
-1.	Kim, J.S., Capotosto, L., Hartry, A. & Fitzegerald, R. (2011). [Can a mixed-method literacy intervention improve the reading achievement of low-performing elementary school students in an after-school program? Results from a randomized controlled trial of READ180 Enterprise](./readings/Kim et al 2011.pdf). *Educational Evaluation and Policy Analysis, 33*(2), 183-201. 
+1.	Kim, J.S., Capotosto, L., Hartry, A. & Fitzgerald, R. (2011). [Can a mixed-method literacy intervention improve the reading achievement of low-performing elementary school students in an after-school program? Results from a randomized controlled trial of READ180 Enterprise](./readings/Kim et al 2011.pdf). *Educational Evaluation and Policy Analysis, 33*(2), 183-201. 
 
 **Lecture:**
 
