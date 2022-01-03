@@ -115,6 +115,7 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Zeldow, B. & Hatfield, L. (2019). [Difference-in-differences](https://diff.healthpolicydatascience.org/).
 2. Baker, A. (2019). [Difference-in-differences methodology](https://andrewcbaker.netlify.app/2019/09/25/difference-in-differences-methodology/).
 3. de Chaisemartin, C. & d'Haultfoeuille, X. (2021). [Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey](./readings/deChaisemartin DHaultfoeuille 2021.pdf).
+4. Roth, J., Sant'Anna, P.H.C., Bilinski, A. & Poe, J. (2022). [What trending in difference-in-differences? A synthesis of the recent econometrics literature.](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf)
 
 ## Unit 3: Regression Discontinuity
 
