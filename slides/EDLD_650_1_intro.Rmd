@@ -1152,7 +1152,7 @@ class: inverse
 ### Readings for next week:
 - Murnane & Willet, Chapter 8
 - Dynarski (2003), Does aid matter?
-- Further, MHE: Ch. 5; 'Metrics: Ch. 5, Mixtape: 245-285
+- Further, MHE: Ch. 5; 'Metrics: Ch. 5, Mixtape: Chs. 8 & 9
 
 ### Assignments Due
 - Complete student survey on Canvas (if not yet done) (Jan. 5)

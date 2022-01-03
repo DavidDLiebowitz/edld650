@@ -51,7 +51,7 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Murnane and Willett, Chapter 6
 2. Angrist and Pischke (2009), pp. 1-110
 3. Angrist and Pischke (2014), Chapters 1-2
-4. Cunningham (2021), pp. 67-103
+4. Cunningham (2021), Chapters 1-4
 5. Clark, T.S. & Linzer, D.A. (2015). [Should I use fixed or random effects?](./readings/Clark Linzer 2015.pdf) *Political Science Research and Methods, 3*(2), 399-408.
 
 
@@ -84,7 +84,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Angrist and Pischke (2009), Chapter 5
 2. Angrist and Pischke (2014), Chapter 5
-3. Cunningham (2021), 245-285
+3. Cunningham (2021), Chapters 8-9
 
 
 ### Week 3: January 18
@@ -149,7 +149,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Angrist and Pischke (2009), Chapter 6
 2. Angrist and Pischke (2014), Chapter 4
-3. Cunningham (2021), pp. 153-204
+3. Cunningham (2021), Chapter 6
 
 
 ### Week 5: February 1
@@ -214,7 +214,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1.	Angrist and Pischke (2009), Chapter 4
 2.	Angrist and Pischke (2014), Chapter 3
-3.	Cunningham (2021), pp. 205-243
+3.	Cunningham (2021), Chapter 7
 
 
 ### Week 7: February 15
@@ -275,7 +275,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 *Further readings:*
 
-1.	Cunningham (2021), pp. 105-151.
+1.	Cunningham (2021), Chapter 5
 2.	Dehejia, R.H. & Wahba, S. (2002). Propensity score-matching methods for nonexperimental causal studies. *Review of Economics and Statistics, 84*(1), 151–161. https://doi.org/10.1162/003465302317331982. 
 3.	Iacus, S. M., King, G., & Porro, G. (2011). Causal inference without balance checking: Coarsened Exact Matching. *Political Analysis, 20*(1), 1–24. https://doi.org/10.1093/pan/mpr013. 
 
