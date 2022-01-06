@@ -71,7 +71,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: [html] | pdf
+- Slides: [html](./slides/EDLD_650_2_DD_1.html) | [pdf](./slides/EDLD650_2_DD_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 2 Questions.docx)
 - R Script: 
 - Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](.data/edld650_class_2_eepa_data.dta)

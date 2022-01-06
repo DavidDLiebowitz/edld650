@@ -40,9 +40,9 @@ Replication paper: Liebowitz, Porter & Bragg (2021)
 
 Deadline: 9:00am, January 17 (*note that this is MLK Jr. Day; feel free to submit earlier*)
 
-Assignment details: pdf
+Assignment details: [pdf](./assignments/DARE_1/DARE_1.pdf)
 
-Dataset: csv
+Dataset: [csv](./assignments/DARE_1/data/EDLD_650_DARE_1.csv)
 
 Answer Key: pdf | R script
 

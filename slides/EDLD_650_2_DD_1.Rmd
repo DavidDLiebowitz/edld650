@@ -91,9 +91,9 @@ knit_hooks$set(output = function(x, options) {
 # Agenda
 
 ### 1. Roadmap and Goals (9:00-10:10)
-### 2. Discussion of Difference-in-Differences (DD) strategy (9:10-10:30)
-### 3. Break (10:30-10:40)
-### 4. Estimating DD effects in data (10:40-11:40)
+### 2. Discussion of Difference-in-Differences (DD) strategy (9:10-10:20)
+### 3. Break (10:20-10:30)
+### 4. Estimating DD effects in data (10:30-11:40)
 ### 5. Wrap-up (11:40-11:50)
 - DARE #1
 - Plus/Deltas & Clear/Murky
