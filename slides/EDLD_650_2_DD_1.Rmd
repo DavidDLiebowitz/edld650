@@ -360,6 +360,22 @@ summary(est_dynarski)
 ```{r, results = 'asis', echo=TRUE}
 stargazer(est_dynarski, type='html', single.row = T)
 ```
+---
+# Central DD asssumptions
+
+In order to fully trust that the estimates produced by a DD analysis are unbiased by endogeneity, we need to make (and defend) the following two assumptions:
+
+1. Not-treated (or not-yet-treated) units are .blue[**valid counterfactuals**]
+  - Parallel trends?
+  - Selection into treatment?
+
+--
+2. There are no .blue[**simultaneous shocks**] or unobserved .blue[**secular trends**]
+  - Other observed and unobserved events or patterns?
+
+--
+
+We'll look at how to address some of these in the next section of the lecture, and you'll read more about how to do so in the readings and DARE for next week!
 
 ---
 class: middle, inverse
@@ -416,6 +432,10 @@ Take a minute to write down what this model does in words. Use the terms .blue[*
 --
 
 > The model takes advantage of **time series** data in which the black dropout rate in each district is observed at three points in time. The model regresses the black dropout rate in a **fixed effect** model in which observations are clustered in two dimensions: within district $(\Gamma_j)$ and also within time $(\Pi_t)$. Note: $\Gamma_j$ represents a vector of dummy indicators that take the value of one if observation *j* is equal to district *j* and zero otherwise. $\Pi_t$ represents a vector of dummy indicators that take the value of one if observation *j* is in time *t* (1990, 2000 or 2010). $\beta_{1}$ estimates the **mean effect** of being observed after being declared unitary and is the **causal parameter of interest** reflecting the effect of being released from a desegregation order $UNITARY_{jt}$ on the black dropout rate.
+
+--
+
+.small[In this case, the estimates rely on .blue[**repeated cross-sectional**] panel data. We could also implement the same framework in .blue[**longitudinal**] panel data.]
 
 ---
 # Estimate DD in panel data (2)
@@ -654,7 +674,7 @@ Think for a moment what this model does?
 
 This would permit a .blue[**fully flexible specification**], permitting us to both evaluate .blue[**violations of the PTA**] and assess potential .blue[**dynamic effects**] of the treatment:
 
-```{r, echo=F}
+```{r, echo=F, output.lines=c(2:15)}
 desegregation <- mutate(desegregation, r_10minus=ifelse(run_time<=-10,1,0))
 desegregation <- mutate(desegregation, r_10plus=ifelse(run_time>=10, 1, 0))
 
@@ -699,6 +719,9 @@ event_study <- feols(sd_dropout_prop_b ~ r_10minus + r_7to9minus + r_6to4minus +
                        vcov = ~leaid^year, weights=desegregation$sd_t_1619_b)
 summary(event_study)
 ```
+
+--
+*What has happened to our standard errors?* (think about .blue[**bias v. variance tradeoff**])
 
 ---
 # Event study visualized
@@ -756,6 +779,10 @@ ggplot(data=unit, aes(y=sd_dropout_prop_b, x=run_time, color=unitary)) +
 - Encourages over-fitting
 - Functional-form dependent
 - Risks generating unstable models
+
+--
+
+**Note that a fully-saturated C-ITS model (i.e., a model that estimates a coefficient on an indicator for each time period) is identical to an event study.**
 
 ---
 class: middle, inverse
