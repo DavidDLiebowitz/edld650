@@ -24,7 +24,7 @@ editor_options:
 ```{R, setup, include = F}
 library(pacman)
 
-p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, broom, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven)
+p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven)
 
 
 i_am("slides/EDLD_650_2_DD_1.rmd")

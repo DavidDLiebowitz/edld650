@@ -541,7 +541,7 @@ db + geom_text(x = 4.5, y = 62, label = lm_eqn(beef), parse=TRUE)
 ---
 # Divorce and Beef
 
-Do increases in increases in beef consumption in Oregon **cause** increases in the U.S. divorce rate?
+Do increases in beef consumption in Oregon **cause** increases in the U.S. divorce rate?
 
 --
 

@@ -73,7 +73,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Slides: [html](./slides/EDLD_650_2_DD_1.html) | [pdf](./slides/EDLD_650_2_DD_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 2 Questions.docx)
-- R Script: 
+- R Script: [Class 2](./code/EDLD_650_2_DD_script.R)
 - Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](.data/edld650_class_2_eepa_data.dta)
 
 **Assignment:**
@@ -115,7 +115,7 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Zeldow, B. & Hatfield, L. (2019). [Difference-in-differences](https://diff.healthpolicydatascience.org/).
 2. Baker, A. (2019). [Difference-in-differences methodology](https://andrewcbaker.netlify.app/2019/09/25/difference-in-differences-methodology/).
 3. de Chaisemartin, C. & d'Haultfoeuille, X. (2021). [Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey](./readings/deChaisemartin DHaultfoeuille 2021.pdf).
-4. Roth, J., Sant'Anna, P.H.C., Bilinski, A. & Poe, J. (2022). [What trending in difference-in-differences? A synthesis of the recent econometrics literature.](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf)
+4. Roth, J., Sant'Anna, P.H.C., Bilinski, A. & Poe, J. (2022). [What's trending in difference-in-differences? A synthesis of the recent econometrics literature.](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf)
 
 ## Unit 3: Regression Discontinuity
 
