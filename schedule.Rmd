@@ -97,12 +97,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Readings:**
 
-1. Liebowitz, D.D., Porter, L. & Bragg, D. (Online First). The effects of higher-stakes teacher evaluation on office disciplinary referrals. *Journal of Research on Educational Effectiveness*. [Online Appendix]
+1. Liebowitz, D.D., Porter, L. & Bragg, D. (Online First). [The effects of higher-stakes teacher evaluation on office disciplinary referrals](./readings/Liebowitz et al 2021 pre-print.pdf). *Journal of Research on Educational Effectiveness*.
 
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: doc
+- Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
 - R Script: 
 - Data: 
 
