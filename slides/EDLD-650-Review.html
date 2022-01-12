@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>EDLD 650 Review Session</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="David D. Liebowitz" />
+    <script src="EDLD-650-Review_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="EDLD-650-Review_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="EDLD-650-Review_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# EDLD 650 Review Session
+### David D. Liebowitz
+
+---
+
+&lt;style type="text/css"&gt;
+.inverse {
+  background-color : #2293bf;
+}
+&lt;/style&gt;
+
+
+
+
+# SAT score and income
+
+&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+---
+# A closer look
+
+&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+---
+# A closer look
+&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Graphical fixed effects
+
+
+```r
+df &lt;- df %&gt;% group_by(school) %&gt;% mutate(mean_SAT = mean(SAT))
+df &lt;- df %&gt;% mutate(demean_SAT = SAT - mean_SAT)
+```
+
+--
+
+&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Graphical fixed effects
+
+
+```r
+df &lt;- df %&gt;% group_by(school) %&gt;% mutate(mean_income=mean(income30))
+df &lt;- df %&gt;% mutate(demean_income = income30 - mean_income)
+```
+
+--
+
+&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Graphical fixed effects
+
+
+```r
+df &lt;- df %&gt;% group_by(school) %&gt;% mutate(mean_income=mean(income30))
+df &lt;- df %&gt;% mutate(demean_income = income30 - mean_income)
+```
+
+&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# A naive regression
+
+```r
+summary(lm(income30 ~ SAT, data=df))
+```
+
+```
+...
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = income30 ~ SAT, data = df)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -4815.2  -957.9   -64.6   961.1  5934.6 
+#&gt; 
+#&gt; Coefficients:
+#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept) 11769.532    573.360   20.53   &lt;2e-16 ***
+#&gt; SAT            76.573      1.146   66.83   &lt;2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+...
+```
+
+--
+
+`$$INCOME_{i} = \beta_{0} + \beta_{1} SAT_{i} + \varepsilon_{i}$$`
+
+---
+# Adjust for school
+
+```r
+summary(lm(income30 ~ SAT + school, data=df))
+```
+
+```
+...
+#&gt; lm(formula = income30 ~ SAT + school, data = df)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -3652.7  -720.8     9.6   701.0  4041.7 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)    48399.823    843.842  57.357   &lt;2e-16 ***
+#&gt; SAT               -1.761      1.777  -0.991    0.322    
+#&gt; schoolSchool 2  2494.792     66.184  37.695   &lt;2e-16 ***
+#&gt; schoolSchool 3  5078.168    101.285  50.137   &lt;2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+...
+```
+
+--
+
+`$$INCOME_{ij} = \beta_{0} + \beta_{1} SAT_{ij} + \beta_{2} SCHOOL2_{j} + \beta_{3} SCHOOL3_{j} + \varepsilon_{i}$$`
+---
+# Cluster-adjusted SEs
+
+```r
+summary(feols(income30 ~ SAT | school, data=df))
+```
+
+```
+#&gt; OLS estimation, Dep. Var.: income30
+#&gt; Observations: 3,000 
+#&gt; Fixed-effects: school: 3
+#&gt; Standard-errors: Clustered (school) 
+#&gt;     Estimate Std. Error   t value Pr(&gt;|t|) 
+#&gt; SAT -1.76127    1.81864 -0.968456  0.43498 
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; RMSE: 1,076.5     Adj. R2: 0.781517
+#&gt;                 Within R2: 3.28e-4
+```
+
+--
+
+**What happened to the standard errors? Is that right? Why or why not?**
+
+---
+# Fixed vs. random
+
+### Fixed:
+`$$INCOME_{ij} = \beta_{0} + \beta_{1} SAT_{ij} + \beta_{2} SCHOOL2_{j} + \beta_{3} SCHOOL3_{j} + \varepsilon_{ij}$$`
+
+--
+
+### Random:
+`$$INCOME_{ij} = \gamma_{0} + \gamma_{1} SAT_{ij} + (\nu_{j} + \varepsilon_{ij})$$`
+
+---
+### Random intercepts
+`$$INCOME_{ij} = \gamma_{0} + \gamma_{1} SAT_{ij} + \color{red}{(\nu_{j} + \varepsilon_{ij})}$$`
+
+There is now a composite residual that has parts *for each individual*. A school-level residual `\((\nu_{j})\)` and an individual-level residual `\((\varepsilon_{ij})\)`. Each residual term can be summarized by examining its variance/SD and correlated with other residual terms.
+
+--
+
+`\(\nu_{j}\)`: unique to school *j*; identical for all students in *jth* school; iid for every school
+
+`\(\varepsilon_{ij}\)`: unique to student i in school j. iid for every student
+
+--
+
+Can calculate the **intra-class correlation**, *a summary of the proportion of outcome variability attributable to differences across schools.*
+
+Random effects estimation procedures use iterative algorithms (Maximum Likelihood Estimation, restricted MLE, Gradient descent, etc.) to minimize the sum of the square errors at each hierarchical level of the model.
+
+---
+# Estimate random intercept model
+
+```r
+summary(lmer(income30 ~ SAT + (1 | school), data=df))
+```
+
+```
+#&gt; Linear mixed model fit by REML ['lmerMod']
+#&gt; Formula: income30 ~ SAT + (1 | school)
+#&gt;    Data: df
+#&gt; 
+#&gt; REML criterion at convergence: 50411
+#&gt; 
+#&gt; Scaled residuals: 
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -3.3911 -0.6687  0.0083  0.6518  3.7524 
+#&gt; 
+#&gt; Random effects:
+#&gt;  Groups   Name        Variance Std.Dev.
+#&gt;  school   (Intercept) 6440493  2538    
+#&gt;  Residual             1160413  1077    
+#&gt; Number of obs: 3000, groups:  school, 3
+#&gt; 
+#&gt; Fixed effects:
+#&gt;              Estimate Std. Error t value
+#&gt; (Intercept) 50892.981   1713.254  29.705
+#&gt; SAT            -1.699      1.776  -0.957
+#&gt; 
+#&gt; Correlation of Fixed Effects:
+#&gt;     (Intr)
+#&gt; SAT -0.518
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

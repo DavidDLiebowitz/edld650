@@ -564,8 +564,8 @@ DT::datatable(desegregation[c(7:9, 13:15,319:321),c(1:3, 7, 10, 24, 26)],
 # Map coefficients to graph
 $$
 \begin{aligned}
- \text{DROPOUT_BLACK} _{jt} = & \color{red}{\beta_1} \text{UNITARY} _{jt} + \color{blue}{\beta_2} (\text{UNITARY} \times \text{YEAR}) _{jt} + \\
-    & \color{orange}{\beta_3} \text{RUN_TIME} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+ \text{DROPOUT_BLACK} _{jt} = & \color{red}{\beta_1} \text{UNITARY} _{jt} + \color{orange}{\beta_2} (\text{UNITARY} \times \text{YEAR}) _{jt} + \\
+    & \color{blue}{\beta_3} \text{RUN_TIME} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
 \end{aligned}
 $$
 ```{r, echo=F, fig.height=5}
@@ -582,8 +582,8 @@ ggplot(data=ex) +
   expand_limits(y=c(-0.03, 0.15)) +
   geom_vline(aes(xintercept=0), col="black", lty="dashed", size=1) +
   ggbrace::geom_brace(aes(x=c(0, 0.4), y=c(0.01, 0.09)), rotate=90, color="red", inherit.data = F) +
-  annotate("text", x = -5, y = 0.03, label = "beta [2]", color = "blue", size = 8, parse=T) +
-  annotate("text", x = 5, y = 0.08, label = "beta [3]", color = "orange", size = 8, parse=T) +
+  annotate("text", x = -5, y = 0.03, label = "beta [3]", color = "blue", size = 8, parse=T) +
+  annotate("text", x = 5, y = 0.08, label = "beta [2]", color = "orange", size = 8, parse=T) +
   annotate("text", x = 1, y = 0.05, label = "beta [1]", color = "red", size = 8, parse=T) +
   labs(y="Black Dropout Rate", x="Relative Year") +
   theme_pander(base_size = 20)

@@ -1,0 +1,259 @@
+---
+title: "EDLD 650 Review Session"
+author: "David D. Liebowitz"
+output:
+  xaringan::moon_reader:
+  css: ['default', 'rladies', 'ki-fonts', 'my_custom.css', 'xaringanthemer.css']
+# self_contained: true
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+editor_options: 
+  
+  chunk_output_type: console
+---
+```{css, echo=F}
+.inverse {
+  background-color : #2293bf;
+}
+```
+
+```{R, setup, include = F}
+library(pacman)
+
+p_load(MASS, tidyverse, fixest, lme4, ggplot2, xaringan, knitr, xaringanthemer, ggthemes)
+
+# Define color
+extra_css <- list(
+  ".red"   = list(color = "red"),
+  ".blue"  =list(color = "blue"),
+  ".green" = list(color = "#8bb174"),
+  ".purple" = list(color = "#6A5ACD"),
+  ".red-pink" = list(color= "#e64173"),
+  ".grey-light" = list(color= "grey70"),
+  ".slate" = list(color="#314f4f"),
+  ".small" = list("font-size" = "90%"),
+  ".large" = list("font-size" = "120%"))
+write_extra_css(css = extra_css, outfile = "my_custom.css")
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 6.75,
+  fig.width = 10.5,
+  warning = F,
+  message = F
+)
+# opts_chunk$set(dev = "svg")
+# 
+# options(device = function(file, width, height) {
+#   svg(tempfile(), width = width, height = height)
+# })
+options(knitr.table.format = "html")
+hook_output <- knit_hooks$get("output")
+knit_hooks$set(output = function(x, options) {
+  lines <- options$output.lines
+  if (is.null(lines)) {
+    return(hook_output(x, options))  # pass to default hook
+  }
+  x <- unlist(strsplit(x, "\n"))
+  more <- "..."
+  if (length(lines)==1) {        # first n lines
+    if (length(x) > lines) {
+      # truncate the output, but add ....
+      x <- c(head(x, lines), more)
+    }
+  } else {
+    x <- c(more, x[lines], more)
+  }
+  # paste these lines together
+  x <- paste(c(x, ""), collapse = "\n")
+  hook_output(x, options)
+})
+
+
+
+
+```
+
+
+# SAT score and income
+
+```{r, echo=F, fig.height=5.5}
+set.seed(5)
+
+### build School1
+
+mu <- c(475,475)
+
+sigma <- rbind(c(100,0.3),c(0.3,100))
+
+g1 <- as.data.frame(mvrnorm(n=1000, mu=mu, Sigma=sigma))
+
+g1$school <- c("School 1")
+
+
+### build School 2
+
+mu <- c(500,500)
+
+sigma <- rbind(c(100,-0.7),c(-0.7,100) )
+
+g2<-as.data.frame(mvrnorm(n=1000, mu=mu, Sigma=sigma))
+
+g2$school <- c("School 2")
+
+
+
+### build School 3
+
+mu<-c(525,525)
+
+sigma<-rbind(c(150,-0.7),c(-0.7,150) )
+
+g3<-as.data.frame(mvrnorm(n=1000, mu=mu, Sigma=sigma))
+
+g3$school <- c("School 3")
+
+
+# the combined data of all three groups
+df<-rbind(g1,g2,g3)
+
+df <- df %>% mutate(income30 = 100*V2)
+df <- rename(df, SAT = V1)
+df$school <- as_factor(df$school)
+
+df %>% 
+  ggplot(aes(x=SAT, y=income30))+geom_point()+ geom_smooth(method='lm') +
+  theme_pander(base_size=18)
+```
+---
+# A closer look
+
+```{r, echo=F, fig.height=5.5}
+df %>%
+  ggplot(aes(x=SAT, y=income30, group=school, col=school))+geom_point() +
+  theme_pander(base_size=18)
+```
+---
+# A closer look
+```{r, echo=F, fig.height=5.5}
+df %>%
+  ggplot(aes(x=SAT, y=income30, group=school, col=school))+geom_point() + geom_smooth(method='lm', col='black') +
+  theme_pander(base_size=18)
+```
+
+---
+# Graphical fixed effects
+
+```{r, echo=T}
+df <- df %>% group_by(school) %>% mutate(mean_SAT = mean(SAT))
+df <- df %>% mutate(demean_SAT = SAT - mean_SAT)
+```
+
+--
+
+```{r, echo=F, fig.height=5.5}
+
+df %>%
+  ggplot(aes(x=demean_SAT, y=income30, group=school, col=school))+geom_point() + geom_smooth(method='lm', col='black') +
+  theme_pander(base_size=18)
+```
+
+---
+# Graphical fixed effects
+
+```{r, echo=T}
+df <- df %>% group_by(school) %>% mutate(mean_income=mean(income30))
+df <- df %>% mutate(demean_income = income30 - mean_income)
+```
+
+--
+
+```{r, echo=F, fig.height=5.5}
+df %>%
+  ggplot(aes(x=demean_SAT, y=demean_income, group=school, col=school))+geom_point() + 
+  theme_pander(base_size=18)
+
+```
+
+---
+# Graphical fixed effects
+
+```{r, echo=T}
+df <- df %>% group_by(school) %>% mutate(mean_income=mean(income30))
+df <- df %>% mutate(demean_income = income30 - mean_income)
+```
+
+```{r, echo=F, fig.height=5.5}
+df %>%
+  ggplot(aes(x=demean_SAT, y=demean_income, group=school, col=school))+geom_point() + 
+  geom_smooth(aes(x=demean_SAT, y=demean_income), method='lm', col='black', inherit.aes = F) +
+  theme_pander(base_size=18)
+
+```
+
+---
+# A naive regression
+```{r, echo=T, output.lines=c(1:14)}
+summary(lm(income30 ~ SAT, data=df))
+```
+
+--
+
+$$INCOME_{i} = \beta_{0} + \beta_{1} SAT_{i} + \varepsilon_{i}$$
+
+---
+# Adjust for school
+```{r, echo=T, output.lines=c(3:16)}
+summary(lm(income30 ~ SAT + school, data=df))
+```
+
+--
+
+$$INCOME_{ij} = \beta_{0} + \beta_{1} SAT_{ij} + \beta_{2} SCHOOL2_{j} + \beta_{3} SCHOOL3_{j} + \varepsilon_{i}$$
+---
+# Cluster-adjusted SEs
+```{r, echo=T}
+summary(feols(income30 ~ SAT | school, data=df))
+```
+
+--
+
+**What happened to the standard errors? Is that right? Why or why not?**
+
+---
+# Fixed vs. random
+
+### Fixed:
+$$INCOME_{ij} = \beta_{0} + \beta_{1} SAT_{ij} + \beta_{2} SCHOOL2_{j} + \beta_{3} SCHOOL3_{j} + \varepsilon_{ij}$$
+
+--
+
+### Random:
+$$INCOME_{ij} = \gamma_{0} + \gamma_{1} SAT_{ij} + (\nu_{j} + \varepsilon_{ij})$$
+
+---
+### Random intercepts
+$$INCOME_{ij} = \gamma_{0} + \gamma_{1} SAT_{ij} + \color{red}{(\nu_{j} + \varepsilon_{ij})}$$
+
+There is now a composite residual that has parts *for each individual*. A school-level residual $(\nu_{j})$ and an individual-level residual $(\varepsilon_{ij})$. Each residual term can be summarized by examining its variance/SD and correlated with other residual terms.
+
+--
+
+$\nu_{j}$: unique to school *j*; identical for all students in *jth* school; iid for every school
+
+$\varepsilon_{ij}$: unique to student i in school j. iid for every student
+
+--
+
+Can calculate the **intra-class correlation**, *a summary of the proportion of outcome variability attributable to differences across schools.*
+
+Random effects estimation procedures use iterative algorithms (Maximum Likelihood Estimation, restricted MLE, Gradient descent, etc.) to minimize the sum of the square errors at each hierarchical level of the model.
+
+---
+# Estimate random intercept model
+```{r, echo=T}
+summary(lmer(income30 ~ SAT + (1 | school), data=df))
+```
