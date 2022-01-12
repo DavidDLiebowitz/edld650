@@ -4,9 +4,9 @@
     <title>EDLD 650 Review Session</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD-650-Review_files/header-attrs-2.11/header-attrs.js"></script>
-    <link href="EDLD-650-Review_files/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="EDLD-650-Review_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="EDLD_650_Review_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="EDLD_650_Review_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="EDLD_650_Review_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -28,14 +28,14 @@ class: center, middle, inverse, title-slide
 
 # SAT score and income
 
-&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_Review_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # A closer look
 
-&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_Review_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # A closer look
-&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_Review_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Graphical fixed effects
@@ -48,7 +48,7 @@ df &lt;- df %&gt;% mutate(demean_SAT = SAT - mean_SAT)
 
 --
 
-&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_Review_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Graphical fixed effects
@@ -61,7 +61,7 @@ df &lt;- df %&gt;% mutate(demean_income = income30 - mean_income)
 
 --
 
-&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_Review_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Graphical fixed effects
@@ -72,7 +72,7 @@ df &lt;- df %&gt;% group_by(school) %&gt;% mutate(mean_income=mean(income30))
 df &lt;- df %&gt;% mutate(demean_income = income30 - mean_income)
 ```
 
-&lt;img src="EDLD-650-Review_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_Review_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # A naive regression
