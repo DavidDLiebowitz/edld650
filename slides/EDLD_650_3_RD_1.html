@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>DD and Regression Discontinuity</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="David D. Liebowitz" />
+    <script src="EDLD_650_3_RD_1_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="EDLD_650_3_RD_1_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="EDLD_650_3_RD_1_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
+    <link href="EDLD_650_3_RD_1_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my_custom.css" type="text/css" />
+    <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# DD and Regression Discontinuity
+## EDLD 650: Week 3
+### David D. Liebowitz
+
+---
+
+
+&lt;style type="text/css"&gt;
+.inverse {
+  background-color : #2293bf;
+}
+&lt;/style&gt;
+
+
+
+# Agenda
+
+.large[
+1. Roadmap and Goals (9:00-9:10)
+2. Analyzing Liebowitz, Porter &amp; Bragg (9:10-10:00)
+3. How DARE you! (10:00-10:50)
+  - Concepts and coding
+  - Debrief
+4. Break (10:50-11:00)
+5. Regression discontinuity (11:00-11:40)
+6. Wrap-up (11:40-11:50)
+  - Research project proposal
+  - Plus/Deltas &amp; Clear/Murky
+]
+---
+# Roadmap
+
+&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+
+---
+# Goals
+
+### 1. Describe threats to validity in difference-in-differences (DD) identification strategy and approaches to address these threats.
+
+### 2. Conduct applied difference-in-difference analysis and interpret these results.
+
+### 3. Describe conceptual approach to regression discontinuity analysis
+
+---
+class: middle, inverse
+# So random...
+
+---
+class: middle, inverse
+# How DARE you?!?!
+
+---
+# DARE 1 review process
+
+.large[
+1. Form groups of 2-3 (not your DARE partner)
+2. Independently review DARE #1 model response (10 min)
+  - Take notes on where answers differ from model
+  - Think about conceptual questions (modeling decisions, robustness checks, etc.) 
+  - Think about presentation and language (what to leave in, what to leave out? how to describe results?)
+3. Discuss in group conceptual and presentation questions (15 min)
+4. Independently review code posted on course website (5 min)
+5. Join partner (for solo authors join another author)
+6. Discuss coding choices and questions (10 min)
+7. Whole-group debrief (10 min)
+  - Lingering questions
+  - Process
+]
+
+---
+class: middle, inverse
+
+# Break
+---
+class: middle, inverse
+
+# Discontinuities everywhere!
+
+---
+
+# Recall the basic set up of DD
+
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+--
+
+.small[Time (literally the passage of years) can be considered a .blue[**forcing variable**]--a measure, movement along which in one direction or another "forces" participants into treatment or control status.]
+
+--
+.small[In this way, DD may just be a specific application of a causal identification framework known as the **Regression Discontinuity (RD)**] design.&lt;sup&gt;1&lt;/sup&gt;
+
+
+.footnote[[1] In fact, many believe that repeated measures over time (a discrete ordered variable) are not divisible in same way as true continuous forcing variables are (e.g., test score, height, draft number). .red[*This is crucial to determine the credibility of identification.*]]
+
+---
+# Failing (passing) graduation test
+
+.large[Massachusetts, like many other states (including Oregon until very recently) requires students to pass a test in order to graduate. **How does just passing (or failing affect students)?**]&lt;sup&gt;1&lt;/sup&gt;
+
+&lt;img src="PapayMurnaneWillett2016.jpg" width="45%" style="display: block; margin: auto;" /&gt;
+
+.footnote[[1] Papay, J.P., Murnane, R.J., &amp; Willett, J.B. (2016). [The impact of test-score labels on human capital investment decisions.](http://jhr.uwpress.org/content/51/2/357) *Journal of Human Resources, 51*(2), 357-388.]
+
+---
+# Failing a graduation test
+
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+---
+# Failing a graduation test
+
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+---
+# Failing a graduation test
+
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Failing a graduation test
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# A different effect?
+
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Education FTW!&lt;sup&gt;1&lt;/sup&gt;
+
+&lt;img src="original_rdd.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+
+.footnote[[1] Thistlethwaite, D. L., &amp; Campbell, D. T. (1960). [Regression-discontinuity analysis: An alternative to the ex post facto experiment](https://psycnet.apa.org/record/1962-00061-001). Journal of Educational Psychology, 51(6), 309–317]
+
+---
+# The benefits of being recognized
+
+&lt;img src="origin_rdd_2.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+# The basic set up in regression
+
+Given a continuous forcing variable `\(S_{i}\)` such that individuals receive a treatment `\((D_{i})\)` when `\(S_{i} \geq\)` a cutoff `\((C)\)`:  
+  
+
+
+`$$Y_i=\beta_{0} + \beta_{1} S_{i} + \mathbb{1}(S_{i} \geq C)\beta_{2} + \varepsilon_{i}$$`
+  
+--
+.blue[**Can you explain what is happening in this regression?**]
+
+--
+
+.blue[**What about applied in a specific context?**]
+  
+
+`$$p(COLL_{i}=1)= \beta_{0} + \beta_{1} TESTSCORE_{i} + 1(TESTSCORE_{i} \geq 60)\beta_{2} + \varepsilon_{i}$$`
+
+--
+&gt; This equation estimates a linear probability model, in which whether individuals attend college or not (expressed as a dichomotous indicator taking on the values of 0 or 1), is regressed on a linear measure of individual *i*'s test score `\((TESTSCORE_{i})\)` and a indicator variable that takes the value of 1 if individual *i* scored 60 or higher on the test. `\(\beta_{2}\)` is the causal parameter of interests and represents the discontinuous jump in the probability (p.p.) of attending college (adjusting for test score) of scoring just above the pass score.
+
+---
+
+class: middle, inverse
+# Wrap-up
+
+---
+
+# Goals
+
+### 1. Describe threats to validity in difference-in-differences (DD) identification strategy and approaches to address these threats.
+
+### 2. Conduct applied difference-in-difference analysis and interpret these results.
+
+### 3. Describe conceptual approach to regression discontinuity analysis
+
+---
+# To-Dos
+
+## Week 4: Regression Discontinuity
+
+## Readings: 
+- Murnane &amp; Willet, Ch. 9
+- Angrist &amp; Lavy (1999)
+- Ludwig &amp; Miller (2007)
+- *Further*: MHE: Ch. 6, 'Metrics: Ch. 4, Mixtape: Ch. 6
+
+## Research Project Proposal due 9am, 1/28
+- Talk to me!
+
+---
+# Feedback
+
+## Plus/Deltas
+
+Front side of index card
+
+## Clear/Murky
+
+On back
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

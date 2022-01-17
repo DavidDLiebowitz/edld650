@@ -15,7 +15,7 @@ navbar:
       - text: "Week 2: Difference-in-Differences (DD) I"
         href: ./slides/EDLD_650_2_DD_1.html
       - text: "Week 3: Difference-in-Differences (DD) II"
-        href: 
+        href: ./slides/EDLD_650_3_RD_1.html
       - text: "Week 4: Regression Discontinuity (RD) I"
         href: 
       - text: "Week 5: Regression Discontinuity (RD) II"
