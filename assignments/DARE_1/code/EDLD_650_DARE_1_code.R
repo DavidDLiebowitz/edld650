@@ -1,7 +1,7 @@
 #load necessary packages
 library(pacman)
 
-p_load(here, tidyverse, haven, ggplot2, fixest, modelsummary, broom, reshape2, stargazer)
+p_load(here, tidyverse, haven, ggplot2, fixest, modelsummary, kableExtra, broom, reshape2, stargazer)
 
 
 # I would suggest creating a project for the course. Within this project, create a folder entitled 'assignments' and a sub-folder entitled 'DARE_1'
@@ -17,7 +17,8 @@ p_load(here, tidyverse, haven, ggplot2, fixest, modelsummary, broom, reshape2, s
 i_am("assignments/DARE_1/code/EDLD_650_DARE_1_code.R")
 
 
-
+# Table format global option
+options(modelsummary_format_numeric_latex = "plain")
 
 
 #import data
@@ -54,21 +55,17 @@ for(i in 1:length(colnames(d))) {
 
 ##Generating policy predictor variables. 
 #This will be dichotomous variables for: 
-  #eval_year class_remove_year suspension_year 
+  
 
+#eval_year 
 d <- d %>% 
   mutate(eval = case_when(
     is.na(eval_year) ~ 0,
     school_year>=eval_year ~ 1,
     TRUE ~ 0
     ))
-d <- d %>% 
-  mutate(bargain = case_when(
-  is.na(bargain_year) ~ 0,
-  school_year>=bargain_year ~ 1,
-  TRUE ~ 0
-))
 
+#class_remove_year
 d <- d %>% 
   mutate(class_remove = case_when(
   is.na(class_remove_year) ~ 0,
@@ -76,6 +73,7 @@ d <- d %>%
   TRUE ~ 0
 ))
 
+# suspension_year 
 d <- d %>% 
   mutate(suspension = case_when(
   is.na(suspension_year) ~ 0,
@@ -83,13 +81,15 @@ d <- d %>%
   TRUE ~ 0
 ))
 
-#create running time variable, setting never-eval to -1
+#create centered time variable, setting never-eval to -1
 d <- d %>% 
   mutate(run_time= case_when(
     is.na(eval_year) ~ -1, 
     !is.na(eval_year) ~ (school_year-eval_year) 
   ))
 
+# In this case, I'm going to collapse periods more than 6 years pre and 3 years post into a single group
+# There is some debate about whether this is the right thing to do
 d <- d %>%
     mutate(run_time = case_when(
       run_time<=-6 ~ -6,
@@ -206,7 +206,10 @@ ungroup(descriptives)
                               "Pct. Asian/Pacific-Islander", "Pct. Black", "Pct. White Non-Hispanic", "Pct. Hispanic", "Pct. States by year Implementing PBIS",
                               "Daily Referalls per 500 students - Classroom", "Daily Referalls per 500 students - Other", "Daily Referalls per 500 students - Subjective", 
                               "Daily Referalls per 500 students - Objective"),
-           digits=2, digit.separator = ",", notes="Notes: This table presents state-year means and standard deviations from 2006-2018.", notes.append = F, title="Descriptive Statistics", out="assignments/DARE_1/tables/descriptives_table.tex")
+           digits=2, digit.separator = ",", notes="Notes: This table presents state-year means and standard deviations from 2006-2018.", notes.append = F, 
+           title="Summary statistics on School-Wide Information System data, 2006-2017",
+           label = "tab:descriptives",
+           out="assignments/DARE_1/tables/descriptives_table.tex")
 
 
 
@@ -304,7 +307,6 @@ ggsave(filename="assignments/DARE_1/figures/averages.png", width=15, height=12, 
 ols1 <- 
   feols(ODR_class ~ eval |
       state_id + school_year,                                           ##  fixed effects go here after the first "|"
-      vcov = ~ state_id,                                                ##  we can adjust our standard errors here or post-estimation
       data = d, weights = d$enroll)
 
 
@@ -312,7 +314,7 @@ ols1 <-
 ols2 <- 
   feols(ODR_class ~ eval + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-      state_id + school_year 
+      state_id + school_year, 
       data = d, weights = d$enroll)
 
 
@@ -320,7 +322,7 @@ ols2 <-
 ols3 <- 
   feols(ODR_class ~ eval + evalXyear + run_time + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-      state_id + school_year | 
+      state_id + school_year,
       data = d, weights = d$enroll)
 
 
@@ -328,35 +330,57 @@ ols3 <-
 ##Subjective
 ################################################
 
-#model 1 (w/o controls)
+#model 4 (w/o controls)
 ols4 <- 
-  feols(ODR_subj ~ eval |
+  feols(ODR_subjective ~ eval |
           state_id + school_year,                                           ##  fixed effects go here after the first "|"
-        vcov = ~ state_id,                                                ##  we can adjust our standard errors here or post-estimation
         data = d, weights = d$enroll)
 
 
-#model 2 (w/controls)
+#model 5 (w/controls)
 ols5 <- 
-  feols(ODR_subj ~ eval + 
+  feols(ODR_subjective ~ eval + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-          state_id + school_year 
+          state_id + school_year,
         data = d, weights = d$enroll)
 
 
-#model 3 
+#model 6 
 ols6 <- 
-  feols(ODR_subj ~ eval + evalXyear + run_time + 
+  feols(ODR_subjective ~ eval + evalXyear + run_time + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-          state_id + school_year | 
+          state_id + school_year,
           data = d, weights = d$enroll)
 
+row <- tribble(~term,          ~'(1)',  ~'(2)', ~'(3)', ~ '(4)', ~'(5)', ~'(6)',
+               'Covariates?', '',  'X', 'X', '', 'X', 'X')
+attr(row, 'position') <- c(7)
 
-stargazer(ols1, ols2, ols3, ols4, ols5, ols6, type='latex', out="Tables/main_DD_results.tex", dep.var.caption="", dep.var.labels = c(ODR_class="Classroom ODRs", ODR_subjective="Subjective ODRs"),
-          omit= c("FRPL_percent", "enroll_AM_prop", "enroll_WHITE_prop", "enroll_BLACK_prop", "enroll_HISP_prop", "enroll_ASIAN_prop"), omit.stat = c("ser", "adj.rsq"), notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report estimates and associated", 
-          "standard errors clustered at the state level in parentheses. Controls include", "proportion low-income and race/ethnicity. All models include state and year", "fixed-effects and are weighted by state enrollment"),
-          star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", 
-          covariate.labels=c("Implement evaluation", "Evaluation*Time Trend", "Time trend"), title="Main Difference-in-Differences estimates of the effects of teacher evaluation on Office Disciplinary Referrals (ODRs)")
+mods <- list()
+mods[['(1)']] <- ols1
+mods[['(2)']] <- ols2
+mods[['(3)']] <- ols3
+mods[['(4)']] <- ols4
+mods[['(5)']] <- ols5
+mods[['(6)']] <- ols6
+
+modelsummary(mods, 
+          title = "The effect of teacher evaluation reforms on Office Disciplinary Referrals, by location and subjectivity \\label{tab:mainDD}",
+          stars = T,
+          estimate = "{estimate}{stars}",
+          coef_omit = "FRPL|enroll",
+          coef_rename = c("ODR_class" = "Classroom ODRs", "ODR_subjective" ="Subjective ODRs", "eval" = "Implement evaluation", 
+                          "run_time" = "Pre-trend", "evalXyear" = "Eval x Relative-Year"),
+          vcov = ~ state_id^school_year,
+          gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std",
+          add_rows = row,
+          threeparttable= T,
+          type='latex', 
+          notes = c("Notes: $^{+}p<0.1, ^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$. The table displays coefficients from Equations 1 and 2 and state-by-year-clustered standard errors in parentheses. All models include fixed effects for year and state and are weighted by state enrollment. Models 2-3 and 5-6 adjust for the proportion of FRPL-eligible students and the proportion of students of different ethnoracial backgrounds."),  
+          output="assignments/DARE_1/tables/main_DD_results.tex"
+          )
+          
+
 
 
 ################################################
@@ -369,96 +393,107 @@ stargazer(ols1, ols2, ols3, ols4, ols5, ols6, type='latex', out="Tables/main_DD_
 ##CLASS
 
 
-ols1_c_rb1 <- 
-  feols(ODR_class ~ class_remove + 
+c_rb1 <- feols(ODR_class ~ class_remove + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-          state_id + school_year 
-        data = d, weights = d$enroll)
+          state_id + school_year, 
+          data = d, weights = d$enroll)
 
-ols_c_rb2 <- 
-  feols(ODR_class ~ suspension + 
+c_rb2 <- feols(ODR_class ~ suspension + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-          state_id + school_year 
-        data = d, weights = d$enroll)
+          state_id + school_year,
+          data = d, weights = d$enroll)
 
-feols(ODR_class ~ class_remove + suspension + eval +
-        FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-        state_id + school_year 
-      data = d, weights = d$enroll)
+c_rb3 <- feols(ODR_class ~ class_remove + suspension + eval +
+          FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
+          state_id + school_year, 
+          data = d, weights = d$enroll)
 
 ##############
 ##Subjective
 ##############
 
 
-ols1_c_rb1 <- 
-  feols(ODR_subj ~ class_remove + 
+s_rb1 <- feols(ODR_subjective ~ class_remove + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-          state_id + school_year 
-        data = d, weights = d$enroll)
+          state_id + school_year,
+          data = d, weights = d$enroll)
 
-ols_c_rb2 <- 
-  feols(ODR_subj ~ suspension + 
+s_rb2 <- feols(ODR_subjective ~ suspension + 
           FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-          state_id + school_year 
-        data = d, weights = d$enroll)
+          state_id + school_year, 
+          data = d, weights = d$enroll)
 
-feols(ODR_subj ~ class_remove + suspension + eval +
-        FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-        state_id + school_year 
-      data = d, weights = d$enroll)
+s_rb3 <- feols(ODR_subjective ~ class_remove + suspension + eval +
+          FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
+          state_id + school_year,
+          data = d, weights = d$enroll)
 
+### Although I introduced the modelsummary method for table generation in class, it was new to me, though others had recommended it strongly
+### In developing the model code, I found it to require a lot of customization. Instead, I'm going to show you a potentially simpler approach, 
+### using etable. First, you define the dictionary so variables are reported cleanly. Then the etable command follows.
 
-stargazer(ols_c_rb1, ols_c_rb2, ols_c_rb3, ols_s_rb1, ols_s_rb2, ols_s_rb3, type='latex', out="Tables/robustness_results_1.tex", dep.var.caption="", dep.var.labels = c(ODR_class="Classroom ODRs", ODR_subjective="Subjective ODRs"),
-          omit= c("FRPL_percent", "enroll_AM_prop", "enroll_WHITE_prop", "enroll_BLACK_prop", "enroll_HISP_prop", "enroll_ASIAN_prop", "school_year"), omit.stat = c("ser", "adj.rsq"), notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report estimates and associated", 
-          "standard errors clustered at the state level in parentheses. Controls include",
-          "proportion low-income and race/ethnicity. All models include state and year", "fixed-effects and are weighted by state enrollment"), star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", 
-          covariate.labels=c("Bargain reform", "Class Remove Reform", "Limit Suspension"), title="Alternative policy robustness checks")
+setFixest_dict(c(ODR_class = "Class", ODR_subjective = "Subjective", eval = "Implement Evaluation", run_time = "Pre-trend", evalXyear = "Eval x Relative-Year",
+                  state_id = "State", school_year = "Year", class_remove = "Class remove reform", suspension = "Limit suspension",
+                 PBIS = "Implement PBIS well", pbisXeval = "Eval x PBIS", pbisxevalxyear = "PBIS x Eval x Year"))
+
+etable(c_rb1, c_rb2, c_rb3, s_rb1, s_rb2, s_rb3, 
+       cluster = ~state_id^school_year, digits="r3", digits.stats = "r3", 
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05),
+       keep = c("Class remove reform", "Limit suspension", "Implement Evaluation"), 
+       title = "Alternative policy robustness checks", label = "tab:alt",
+       style.tex = style.tex("aer"), fitstat = ~ r2 + n, tex = TRUE, placement = c("!htbp"),
+       notes = c("$^{*}$p$<$0.05; $^{**}$p$<$0.01; $^{***}$p$<$0.001. Cells report coefficients and state-by-year clustered standard errors in parentheses. All models include fixed effects for year and state, are weighted by state enrollment, and adjust for the proportion of FRPL-eligible students and the proportion of students of different ethnoracial backgrounds."),
+       file = 'assignments/DARE_1/tables/robustness_results_1.tex', replace=TRUE)
 
 
 ##########################################################################
-###There are several other robustness checks one could conduct. Here is one example of the balanced panel and ever_eval approach
+### There are several other robustness checks one could conduct. Here is one example of the balanced panel and ever_eval approach
 
-###select states ever subject to evaluation
-
+# Create ever evaluation dataset
 d_ever <- filter(d, !is.na(eval_year))
-d_balance <-filter(d, run_time>=-5 & run_time<2)
+
+# Create balanced panel dataset
+d_balance <- filter(d,  run_time>=-5 & run_time<2)
 
 ############
 ##CLASS
 ############
 
-rb_c_ever <- 
-  felm(
-    ODR_class ~ eval + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-      state_id + school_year |  0 |   state_id, data = d_ever, weights = d_ever$enroll)
+rb_c_ever <- feols(ODR_class ~ eval + 
+                FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
+                state_id + school_year,
+                data = d_ever, weights = d_ever$enroll) 
 
-rb_c_balance <- 
-  felm(
-    ODR_class ~ eval + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-      state_id + school_year |  0 | state_id, data = d_balance, weights = d_balance$enroll)
+rb_c_balance <- feols(ODR_class ~ eval + 
+                        FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
+                        state_id + school_year,
+                        data = d_balance, weights = d_balance$enroll) 
 
 ############
 ##SUBJECTIVE
 ############
 
-rb_s_ever <- 
-  felm(
-    ODR_subjective ~ eval + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-      state_id + school_year |  0 | state_id,  data = d_ever, weights = d_ever$enroll)
+rb_s_ever <- feols(ODR_subjective ~ eval + 
+                    FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
+                    state_id + school_year,  
+                    data = d_ever, weights = d_ever$enroll)
 
-rb_s_balance <- 
-  felm(
-    ODR_subjective ~ eval + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
-      state_id + school_year |  0 |   state_id, data = d_balance, weights = d_balance$enroll)
+rb_s_balance <- feols(ODR_subjective ~ eval + 
+                        FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop |
+                        state_id + school_year, 
+                        data = d_balance, weights = d_balance$enroll)
 
 
-stargazer(rb_c_ever, rb_c_balance, rb_s_ever, rb_s_balance, type='latex', out="Tables/robustness_results_2.tex", dep.var.caption="", column.labels=c("Ever eval", "Bal. Panel", "Ever eval", "Bal. Panel"),
-          dep.var.labels = c(ODR_class="Classroom ODRs", ODR_subjective="Subjective ODRs"),
-          column.separate=c(1,1,1,1), omit= c("FRPL_percent", "enroll_AM_prop", "enroll_WHITE_prop", "enroll_BLACK_prop", "enroll_HISP_prop", "enroll_ASIAN_prop"), omit.stat = c("ser", "adj.rsq"), notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report estimates and associated", 
-"standard errors clustered at the state level in parentheses. Controls include",
-"proportion low-income and race/ethnicity. All models include state and year", "fixed-effects and are weighted by state enrollment"), star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", 
-          covariate.labels=c("Implement Evaluation"), title="Treated only and balanced panel robustness checks")
+etable(rb_c_ever, rb_c_balance, rb_s_ever, rb_s_balance, 
+       cluster = ~state_id^school_year, digits="r3", digits.stats = "r3", 
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05),
+       keep = c("Implement Evaluation"), 
+       title = "Treated-only and balanced-panel robustness checks", label = "tab:robust",
+       style.tex = style.tex("aer"), fitstat = ~ r2 + n, tex = TRUE, placement = c("!htbp"),
+       notes = c("$^{*}$p$<$0.05; $^{**}$p$<$0.01; $^{***}$p$<$0.001. Cells report coefficients and state-by-year clustered standard errors in parentheses. Models 1 and 3 are limited to states that ever implemented teacher evaluation reforms. Models 2 and 4 are estimated in balanced panels, restricted to state-year observations 5-years before and 1-year after evaluation reform. All models include fixed effects for year and state, are weighted by state enrollment, and adjust for the proportion of FRPL-eligible students and the proportion of students of different ethnoracial backgrounds."),
+       file = 'assignments/DARE_1/tables/robustness_results_2.tex', replace=TRUE)
+
+
 
 ################################
 ####      OPTIONAL C4   ########
@@ -484,43 +519,63 @@ d1 <- filter(d, run_time>=-5 & run_time<2)
 
 #regress outcome of interest 
 
-non_para_class <- 
-  felm(
-    ODR_class ~ r5min + r4min + r3min + r2min + reval + r1plus |  state_id + school_year | 
-      0 | state_id,  data = d1, weights=d1$enroll)
+event_study_c <- 
+  feols(
+    ODR_class ~ r5min + r4min + r3min + r2min + reval + r1plus |  
+    state_id + school_year,  
+    data = d1, weights=d1$enroll)
 
 
-ggcoefstats(x = non_para_class, point.color="red", stats.labels=F, caption.summary=F) +  
-  theme_minimal() + geom_hline(aes(yintercept = 4.5), col="blue", lty="dashed") +
-  labs(x="Change in ODR per 500 stu", y="Time to Evaluation Policy") +
-  scale_y_discrete(labels=c("-5", "-4", "-3", "-2", "Eval", "+1")) + coord_flip()
+# add the negative 1 "reference" year
+add_rows = data.frame(
+  term = "=1",
+  estimate = 0)
+attr(add_rows, "position") = 5
 
-ggsave("Graphs/event_study_class.png", width=15, height=12, units=c("cm"))
+
+# Plot the coefficients
+modelplot(event_study_c, color = "black", add_rows = add_rows, vcov=~state_id^school_year) +
+  geom_hline(aes(yintercept = 5.5), col="red", lty="dashed") +
+  geom_vline(aes(xintercept=0), col="blue", lty="dashed") +
+  labs(x="Change in ODR per 500 stu", y="Time to Evaluation Policy", title="") +
+  scale_y_discrete(labels=c("-5", "-4", "-3", "-2", "-1", "Eval", "+1")) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  coord_flip()
+
+
+ggsave("assignments/DARE_1/figures/event_study_class.png", width=15, height=12, units=c("cm"))
 
 ###############
 # Subjective ODRS
 ###############
 
-non_para_subj <- 
-  felm(
-    ODR_subjective ~ r5min + r4min + r3min + r2min + reval + r1plus | state_id + school_year | 
-      0 | state_id, data = d1, weights=d1$enroll)
+event_study_subj <- 
+  feols(
+    ODR_subjective ~ r5min + r4min + r3min + r2min + reval + r1plus | 
+    state_id + school_year, 
+    data = d1, weights=d1$enroll)
 
-ggcoefstats(x = non_para_subj, point.color="red", stats.labels=F, caption.summary=F) +  
-  theme_minimal() + geom_hline(aes(yintercept = 4.5), col="blue", lty="dashed") +
-  labs(x="Change in ODR per 500 stu", y="Time to Evaluation Policy") +
-  scale_y_discrete(labels=c("-5", "-4", "-3", "-2", "Eval", "+1")) + coord_flip()
 
-ggsave("Graphs/event_study_subjective.png", width=15, height=12, units=c("cm"))
 
+# Plot the coefficients
+modelplot(event_study_subj, color = "black", add_rows = add_rows, vcov=~state_id^school_year) +
+  geom_hline(aes(yintercept = 5.5), col="red", lty="dashed") +
+  geom_vline(aes(xintercept=0), col="blue", lty="dashed") +
+  labs(x="Change in ODR per 500 stu", y="Time to Evaluation Policy", title="") +
+  scale_y_discrete(labels=c("-5", "-4", "-3", "-2", "-1", "Eval", "+1")) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  coord_flip()
+
+ggsave("assignments/DARE_1/figures/event_study_subjective.png", width=15, height=12, units=c("cm"))
 
 
 ################################################
 ##            OPTIONAL Q5
 ################################################
 
-# make other vars 
-str(d)
+# make PBIS specific vars 
 d$pbisXeval <- d$PBIS * d$eval
 d$pbisXevalXyear <- d$pbisXeval * d$run_time
 
@@ -533,60 +588,66 @@ pbis_sample <- d %>%
 ############
 
 
-#model 1 (w/o controls)
-ols_pbis1 <- 
-  felm(
-    ODR_class ~ eval | state_id + school_year |  0 | state_id, data = pbis_sample, weights = pbis_sample$enroll)
+#model 1 (re-estimate main model on PBIS sub-sample)
+pbis1 <- 
+  feols(
+    ODR_class ~ eval | 
+    state_id + school_year,
+    data = pbis_sample, weights = pbis_sample$enroll)
 
 
-#model2
-ols_pbis2 <- 
-  felm(
-    ODR_class ~ eval + pbisXeval + PBIS | state_id + school_year |   0 | state_id,  data = pbis_sample, weights = pbis_sample$enroll)
-
-
-#model3
-ols_pbis3 <- 
-  felm(
+#model 2 (estimate main effect w PBIS as moderator)
+pbis2 <- 
+  feols(
     ODR_class ~ eval + pbisXeval + PBIS  + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop  |
-      state_id + school_year |  0 | state_id, data = pbis_sample, weights = pbis_sample$enroll)
+    state_id + school_year, 
+    data = pbis_sample, weights = pbis_sample$enroll)
 
-#model4
-ols_pbis4 <- 
-  felm(
-    ODR_class ~ eval + pbisXeval + PBIS  + pbisXevalXyear + evalXyear + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop  |
-      state_id + school_year |  0 | state_id, data = pbis_sample, weights = pbis_sample$enroll)
+#model 3 (estimate time-varying effect w PBIS as moderator)
+pbis3 <- 
+  feols(
+    ODR_class ~ eval + pbisXeval + PBIS  + pbisXevalXyear + evalXyear + run_time +
+    FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop  |
+    state_id + school_year, 
+    data = pbis_sample, weights = pbis_sample$enroll)
 
 ################################################
 ##Subjective
 ################################################
-#model 5 (w/o controls)
-ols_pbis5 <- 
-  felm(
-    ODR_subjective ~ eval | state_id + school_year| 0 | state_id, data = pbis_sample, weights = pbis_sample$enroll)
 
-#model6
-ols_pbis6 <- 
-  felm(ODR_subjective ~ eval + pbisXeval  + PBIS | state_id + school_year | 0 | state_id, data = pbis_sample, weights = pbis_sample$enroll)
+#model 4
+pbis4 <- 
+  feols(
+    ODR_subjective ~ eval | 
+    state_id + school_year, 
+    data = pbis_sample, weights = pbis_sample$enroll)
 
-#model7
-ols_pbis7 <- 
-  felm(
+#model 5
+pbis5 <- 
+  feols(
     ODR_subjective ~ eval + pbisXeval + PBIS + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop  |
-      state_id + school_year |  0 | state_id, data = pbis_sample, weights = pbis_sample$enroll)
+    state_id + school_year, 
+    data = pbis_sample, weights = pbis_sample$enroll)
 
 
-#model8
-ols_pbis8 <- 
-  felm(
-    ODR_subjective ~ eval + pbisXeval + PBIS + pbisXevalXyear + evalXyear + FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop  |
-      state_id + school_year | 0 |   state_id, data = pbis_sample, weights = pbis_sample$enroll)
+#model 6
+pbis6 <- 
+  feols(
+    ODR_subjective ~ eval + pbisXeval + PBIS + pbisXevalXyear + evalXyear + run_time +
+    FRPL_percent + enroll_AM_prop + enroll_WHITE_prop + enroll_BLACK_prop + enroll_HISP_prop + enroll_ASIAN_prop  |
+    state_id + school_year, 
+    data = pbis_sample, weights = pbis_sample$enroll)
 
 
-stargazer(ols_pbis1, ols_pbis2, ols_pbis3, ols_pbis4, ols_pbis5, ols_pbis6, ols_pbis7, ols_pbis8, type='latex', out="Tables/pbis.tex", dep.var.caption="", 
-          dep.var.labels = c(ODR_class="Classroom ODRs", ODR_subjective="Subjective ODRs"),
-          omit= c("FRPL_percent", "enroll_AM_prop", "enroll_WHITE_prop", "enroll_BLACK_prop", "enroll_HISP_prop", "enroll_ASIAN_prop"), omit.stat = c("ser", "adj.rsq"), notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report estimates and associated", 
-        "standard errors clustered at the state level in parentheses. Controls include",
-        "proportion low-income and race/ethnicity. All models include state and year", "fixed-effects and are weighted by state enrollment"), star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", 
-          covariate.labels=c("Implement Evaluation", "Implement EvalxPBIS", "Implement PBIS", "PBISxEVALxYEAR", "Eval x Time Trend"), title="Difference-in-differences estimates of moderating effects of successul PBIS implementation")
+
+etable(pbis1, pbis2, pbis3, pbis4, pbis5, pbis6, 
+       cluster = ~state_id^school_year, digits="r3", digits.stats = "r3", 
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05),
+       keep = c("Implement Evaluation", "PBIS x Eval", "Implement PBIS well", "PBIS x Eval x Year", "Eval x Relative-Year", "Pre-trend"), 
+       title = "Difference-in-differences estimates of moderating effects of successful PBIS implementation", label = "tab:pbis",
+       style.tex = style.tex("aer"), fitstat = ~ r2 + n, tex = TRUE, placement = c("!htbp"),
+       notes = c("$^{*}$p$<$0.05; $^{**}$p$<$0.01; $^{***}$p$<$0.001. Cells report coefficients and state-by-year clustered standard errors in parentheses. Models 1 and 3 are limited to states that ever implemented teacher evaluation reforms. Models 2 and 4 are estimated in balanced panels, restricted to state-year observations 5-years before and 1-year after evaluation reform. All models include fixed effects for year and state, are weighted by state enrollment, and adjust for the proportion of FRPL-eligible students and the proportion of students of different ethnoracial backgrounds."),
+       file = 'assignments/DARE_1/tables/pbis.tex', replace=TRUE)
+
+
 
