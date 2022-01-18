@@ -101,13 +101,42 @@ class: middle, inverse
 
 --
 
-.small[Time (literally the passage of years) can be considered a .blue[**forcing variable**]--a measure, movement along which in one direction or another "forces" participants into treatment or control status.]
+Time (literally the passage of years) can be considered a .blue[**forcing variable**]--a measure, movement along which in one direction or another "forces" participants into treatment or control status.
+
+---
+# DD's cousin: C-ITS
+
+**The Comparative-Interrupted Time Series approach:**
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
 
 --
 .small[In this way, DD may just be a specific application of a causal identification framework known as the **Regression Discontinuity (RD)**] design.&lt;sup&gt;1&lt;/sup&gt;
 
 
 .footnote[[1] In fact, many believe that repeated measures over time (a discrete ordered variable) are not divisible in same way as true continuous forcing variables are (e.g., test score, height, draft number). .red[*This is crucial to determine the credibility of identification.*]]
+
+---
+# C-ITS considered
+
+### Strengths
+- Takes advantage of full range of data
+- Compared to mean-effect-only DD, allows differentiation of discontinuous jump vs. post-trend
+- Permits modeling of fully flexible functional form (can include quadratic, cubic, quartic relationships, interactions and more!)
+- Data-responsive approach
+
+--
+
+### Weaknesses
+- Units on each side of discontinuity not .blue[*equal-in-expectation*] w/o other assumptions
+- Encourages over-fitting; risks generating unstable models
+- Estimates are functional-form dependent
+
+--
+
+.small[**Note that a fully-saturated C-ITS model (i.e., a model that estimates a coefficient on an indicator for each time period) is identical to an event study.**]
+
+
 
 ---
 # Failing (passing) graduation test
@@ -121,24 +150,24 @@ class: middle, inverse
 ---
 # Failing a graduation test
 
-&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
----
-# Failing a graduation test
-
 &lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # Failing a graduation test
 
 &lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+---
+# Failing a graduation test
+
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Failing a graduation test
-&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # A different effect?
 
-&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_3_RD_1_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Education FTW!&lt;sup&gt;1&lt;/sup&gt;

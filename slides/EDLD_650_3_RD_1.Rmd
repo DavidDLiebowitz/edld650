@@ -187,13 +187,63 @@ dd
 
 --
 
-.small[Time (literally the passage of years) can be considered a .blue[**forcing variable**]--a measure, movement along which in one direction or another "forces" participants into treatment or control status.]
+Time (literally the passage of years) can be considered a .blue[**forcing variable**]--a measure, movement along which in one direction or another "forces" participants into treatment or control status.
+
+---
+# DD's cousin: C-ITS
+
+**The Comparative-Interrupted Time Series approach:**
+```{r, echo=F, fig.height=3.75}
+
+desegregation <- read_dta(here("data/edld_650_class_2_eepa_data.dta"))
+desegregation <- desegregation %>%
+  mutate(run_time = case_when(
+   !is.na(yrdiss) ~ (year - yrdiss),
+   is.na(yrdiss) ~ -1 ## <-- this is funky, let's talk about it
+  ))
+
+unit <- filter(desegregation, !is.na(yrdiss) & !is.na(sd_dropout_prop_b))
+
+ggplot(data=unit, aes(y=sd_dropout_prop_b, x=run_time, color=unitary)) +
+  geom_point() +
+  geom_smooth(data=subset(unit, unitary==0), method = lm, formula = y ~ x,  mapping = aes(weight = sd_t_1619_b)) +
+  geom_smooth(data=subset(unit, unitary==1), method = lm, formula = y ~ poly(x, 2), mapping = aes(weight = sd_t_1619_b)) +
+  geom_vline(aes(xintercept=0), col="black", lty="dashed", size=1) +
+  coord_cartesian(ylim=c(-0.02, 0.45), expand=F) +
+  labs(y="Black Dropout Rate", x="Relative Year") +
+  theme_pander(base_size=20) +
+  theme(legend.position = "none")
+
+```
+
 
 --
 .small[In this way, DD may just be a specific application of a causal identification framework known as the **Regression Discontinuity (RD)**] design.<sup>1</sup>
 
 
 .footnote[[1] In fact, many believe that repeated measures over time (a discrete ordered variable) are not divisible in same way as true continuous forcing variables are (e.g., test score, height, draft number). .red[*This is crucial to determine the credibility of identification.*]]
+
+---
+# C-ITS considered
+
+### Strengths
+- Takes advantage of full range of data
+- Compared to mean-effect-only DD, allows differentiation of discontinuous jump vs. post-trend
+- Permits modeling of fully flexible functional form (can include quadratic, cubic, quartic relationships, interactions and more!)
+- Data-responsive approach
+
+--
+
+### Weaknesses
+- Units on each side of discontinuity not .blue[*equal-in-expectation*] w/o other assumptions
+- Encourages over-fitting; risks generating unstable models
+- Estimates are functional-form dependent
+
+--
+
+.small[**Note that a fully-saturated C-ITS model (i.e., a model that estimates a coefficient on an indicator for each time period) is identical to an event study.**]
+
+
 
 ---
 # Failing (passing) graduation test
