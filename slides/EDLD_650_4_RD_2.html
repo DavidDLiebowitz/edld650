@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Regression Discontinuity</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="David D. Liebowitz" />
+    <script src="EDLD_650_4_RD_2_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
+    <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
+    <script src="EDLD_650_4_RD_2_files/kePrint-0.0.1/kePrint.js"></script>
+    <link href="EDLD_650_4_RD_2_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my_custom.css" type="text/css" />
+    <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Regression Discontinuity
+## EDLD 650: Week 4
+### David D. Liebowitz
+
+---
+
+
+&lt;style type="text/css"&gt;
+.inverse {
+  background-color : #2293bf;
+}
+&lt;/style&gt;
+
+
+
+# Agenda
+
+#### 1. Roadmap and Goals (9:00-9:10)
+#### 2. Discussion Questions (9:10-10:20)
+- Angrist and Lavy
+- Ludwig and Miller
+- Murnane and Willett
+
+#### 3. Break (10:20-10:30)
+#### 4. Applied regression discontinuity (10:30-11:40)
+#### 5. Wrap-up (11:40-11:50)
+- DARE #2 prep
+
+
+---
+# Roadmap
+
+&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+
+---
+# Goals
+
+### 1. Describe conceptual approach to regression discontinuity analysis
+
+### 2. Assess validity of RD assumptions in applied context
+
+### 3. Conduct and interpret RD analysis in simplified data
+
+---
+class: middle, inverse
+# So random...
+
+---
+class: middle, inverse
+
+# Break
+---
+# Recall the basic set up of the RD
+
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Failing a graduation test
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Failing a graduation test
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Failing a graduation test
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# The basic set up in regression
+
+Given a continuous forcing variable `\(S_{i}\)` such that individuals receive a treatment `\((D_{i})\)` when `\(S_{i} \geq\)` a cutoff `\((C)\)`:  
+  
+
+`$$Y_i=\beta_{0} + \beta_{1} S_{i} + \mathbb{1}(S_{i} \geq C)\beta_{2} + \varepsilon_{i}$$`
+  
+--
+.blue[**Can you explain what is happening in this regression?**]
+
+--
+
+.blue[**What about applied in a specific context?**]
+  
+
+`$$p(COLL_{i}=1)= \beta_{0} + \beta_{1} TESTSCORE_{i} + 1(TESTSCORE_{i} \geq 60)\beta_{2} + \varepsilon_{i}$$`
+
+--
+&gt; This equation estimates a linear probability model, in which whether individuals attend college or not (expressed as a dichomotous indicator taking on the values of 0 or 1), is regressed on a linear measure of individual *i*'s test score `\((TESTSCORE_{i})\)` and a indicator variable that takes the value of 1 if individual *i* scored 60 or higher on the test. `\(\beta_{2}\)` is the causal parameter of interests and represents the discontinuous jump in the probability (p.p.) of attending college (adjusting for test score) of scoring just above the pass score.
+
+---
+# Let's practice!
+
+Let's read in the modified Angrist &amp; Lavy data and look at its characteristics:  
+
+
+
+```r
+maimonides &lt;- read_dta(here("data/ch9_angrist.dta"))
+d &lt;- select(maimonides, 
+            read, size, intended_classize, observed_classize)
+summary(d)
+```
+
+```
+#&gt;       read            size        intended_classize observed_classize
+#&gt;  Min.   :34.80   Min.   :  8.00   Min.   : 8.00     Min.   : 8.00    
+#&gt;  1st Qu.:69.86   1st Qu.: 50.00   1st Qu.:27.00     1st Qu.:26.00    
+#&gt;  Median :75.38   Median : 72.00   Median :31.67     Median :31.00    
+#&gt;  Mean   :74.38   Mean   : 77.74   Mean   :30.96     Mean   :29.94    
+#&gt;  3rd Qu.:79.84   3rd Qu.:100.00   3rd Qu.:35.67     3rd Qu.:35.00    
+#&gt;  Max.   :93.86   Max.   :226.00   Max.   :40.00     Max.   :44.00
+```
+
+```r
+sapply(d, sd, na.rm=TRUE)
+```
+
+```
+#&gt;              read              size intended_classize observed_classize 
+#&gt;          7.678460         38.810731          6.107924          6.545885
+```
+
+---
+# Variation in the treatment?
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Maimonides Rule Redux
+
+Angrist, J. Lavy, V. Leder-Luis, J. &amp; Shany, A. (2019). Maimonides' rule redux. *American Economic Review: Insights, 1*(3), 1-16.
+
+.pull-left[
+ &lt;img src="angrist_sort.jpg" width="1479" style="display: block; margin: auto;" /&gt;
+ 
+.blue[What does the picture on the left tell you about class size in Israel from 2002-2011?]
+ ]
+--
+  
+.pull-right[
+&lt;img src="angrist_2019_results.jpg" width="1388" style="display: block; margin: auto;" /&gt;
+
+.blue[What does the picture on the right tell you about the effects of class size in Israel from 2002-2011?]
+]
+
+
+---
+# Are RD assumptions met?
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Are RD assumptions met?
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Are RD assumptions met?
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+# Let's see if there's an effect
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Let's refresh on how RD works
+
+`$$READSCORE_{i} = \beta_{0} + \beta_{1} COHORTSIZE_{i} + 1(COHORTSIZE_{i} \geq 41)\beta_{2} + \varepsilon_{i}$$`
+--
+
+Could also write this as:
+`$$READSCORE_{i} = \beta_{0} + \beta_{1} COHORTSIZE_{i} + \beta_{2} SMALLCLASS_{i} + \varepsilon_{i}$$`
+
+
+Can you explain the identification strategy as you would in your methods section (using *secular trend, forcing variable, equal in expectation, projecting across the discontinuity, ITT*)?
+
+---
+# Let's refresh on how RD works
+
+&gt; We estimate the effects of class size on individual *i*'s reading score. Specifically, we regress their test score outcome on whether the size of their grade cohort predicts that they will be assigned to a small class. We account for the secular relationship between test scores and cohort size by adjusting our estimates for the linear relationship between cohort size and test scores.
+
+&gt; Our identification strategy relies on the assumption that cohorts that differ in size by only a few students are equal in expectation prior to the exogenous assignment to a small class size `\((D_{i}=1)\)`. Our modeling approach depends on our ability to project a smooth relationship between reading scores and cohort size across the discontinuity and then estimate the discontinuous effect of being quasi-randomly assigned to learn in smaller classes. Given that compliance with Maimonides Rule is imperfect, our approach models Intent-to-Treat estimates. Specifically, what is the effect on reading scores of being assigned by rule to a smaller class size? 
+
+---
+# Let's see if there's an effect
+
+### Raw data:
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Let's see if there's an effect
+
+### Binned data:
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Let's see if there's an effect
+
+### Fitted lines:
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Let's see if there's an effect 
+
+### Different slopes:
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Let's see if there's an effect
+
+### Change the bandwidth:
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Let's see if there's an effect
+
+### Formal-ish:
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# But it could be non-linear
+
+### Formal-ish:
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+---
+# In regression
+&lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Model 1 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Model 2 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Model 3 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 75.825*** &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 96.046*** &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 68.334*** &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (4.202) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (8.621) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (1.516) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; size &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -0.139 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -0.725** &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (0.119) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (0.248) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I(size &amp;gt; 40.5)TRUE &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.953* &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -24.346* &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5.894** &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (1.800) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (10.708) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (1.990) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; size × I(size &amp;gt; 40.5)TRUE &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.757** &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (0.282) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; poly(size, 2)1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -33.987+ &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (17.666) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; poly(size, 2)2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 22.716* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;box-shadow: 0px 1px"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;box-shadow: 0px 1px"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;box-shadow: 0px 1px"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;box-shadow: 0px 1px"&gt; (10.154) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Num.Obs. &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 423 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 423 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 423 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; R2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.015 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.031 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.026 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; R2 Adj. &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.010 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.024 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.019 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AIC &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3081.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3076.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3078.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; BIC &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3097.3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3096.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3098.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Log.Lik. &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -1536.578 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -1532.982 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -1534.066 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.103 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4.494 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.757 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
+&lt;/table&gt;
+---
+# Can you explain these results?
+
+&gt; We estimate an effect of being assigned to a small class of between roughly 4 and 6 scale score points, depending on our assumptions about the nature of the underlying secular relationship between cohort size and reading performance. At the lower bound, these represent effects of around one half of a standard deviation (*SD*) unit. At the upper bound, these effects are as large as three-quarters of a standard deviation in the full sample.  These estimates are Local Average Treatment Effects (LATE), specific to being a member of a cohort whose size is just above or below the threshold for being divided into a smaller class.
+
+---
+# Extensions
+
+1. Bandwidth variation (bias v. variance tradeoff)
+  - Manual
+  - Cross-fold validation (leave-one-out)
+  - Imbens-Kalyanaraman (2009) Optimal Bandwidth Calculation
+2. Higher-order polynomials
+3. Non-parametric estimates
+  - Local-linear approaches (LOESS)
+  - Kernel (how to value points closest to cutoff)
+  - Machine learning
+4. Binning for visualizations
+5. Diff-in-RD
+6. Packages
+  - R: `rddapp`, `rdd`, `rddtools`, `rdrobust`
+
+---
+# Just for fun...
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: middle, inverse
+
+# Wrap-up
+
+---
+# Goals
+
+### 1. Describe conceptual approach to regression discontinuity analysis
+
+### 2. Assess validity of RD assumptions in applied context
+
+### 3. Conduct RD analysis in simplified data
+
+---
+# To-Dos
+
+## Week 5: Regression Discontinuity
+
+## Readings: 
+- Holden (2016)
+
+## DARE #2
+- Give me another chance!
+
+---
+# Feedback
+
+.large[.red[Midterm Student Experience Survey]]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -32,7 +32,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Readings:**
 
-1. Murnane and Willet. (2011). *Methods Matter*, Chapters 1-5, 7 
+1. Murnane and Willett. (2011). *Methods Matter*, Chapters 1-5, 7 
 2. Hoxby, C. (2016). The immensity of the Coleman data project. *Education Next, 16*(2), 64-69. [https://www.educationnext.org/the-immensity-of-the-coleman-data-project/](https://www.educationnext.org/the-immensity-of-the-coleman-data-project/).
 
 **Lecture:**
@@ -129,7 +129,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Readings:**
 
-1.	Murnane and Willet, Chapter 9
+1.	Murnane and Willett, Chapter 9
 2. Angrist, J.D. & Lavy, V. (1999). [Using Maimonides’ Rule to estimate the effect of class size on scholastic achievement](./readings/Angrist Lavy 1999.pdf). *Quarterly Journal of Economics, 114*(2), 533-575. 
 3. Ludwig, J. & Miller, D. (2007). [Does Head Start improve children’s life chances? Evidence from a regression discontinuity design](./readings/Ludwig Miller 2007.pdf). *Quarterly Journal of Economics, 122*(1), 159-208.
 	 
@@ -137,7 +137,7 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: 
+- Class Questions: [doc](./questions/EDLD 650 Class 4 Questions.docx)
 - R Script: 
 - Data: 
 
@@ -195,7 +195,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Readings:**
 
-1. Murnane and Willet, Chapters 10 and 11
+1. Murnane and Willett, Chapters 10 and 11
 2. Dee, T.S. (2004). [Are there civic returns to education?](./readings/Dee 2004.pdf) *Journal of Public Economics, 118*(4) 1495-1532.
 3. Angrist, J.D., Cohodes, S.R., Dynarski, S.M., Pathak, P.A. & Walters, C.R. (2016). [Stand and deliver: Effects of Boston’s charter high schools on college preparation, entry, and choice](readings/Angrist et al 2016.pdf). *Journal of Labor Economics, 34*(2), 275-318. 
 	 
