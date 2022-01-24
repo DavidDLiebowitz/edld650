@@ -52,12 +52,12 @@ sapply(d, sd, na.rm=TRUE)
 
 
 ##################################
-## "The Big Three"
+## "The Big Three (plus one)"
 ###################################
 
 
 #################################
-### 1. Examine variation in treatment likelihood by forcing variable
+### 0. Examine variation in treatment likelihood by forcing variable
 ###    Does the forcing variable predict (some) change in the probability of treatment?
 
 treat <- ggplot() +
@@ -70,8 +70,8 @@ treat
 
 
 ################################
-### 2. Examine whether there is evidence of manipulation at the discontinuity
-###    One issue is bunching: examine whether there is bunching at the discontinuity
+### 1. Examine whether there is evidence of manipulation at the discontinuity
+###    Bunching: examine whether there is bunching at the discontinuity (density of observations aroudn discontinuity)
 
 
 # Zoom in on just the first cut (above/below 40)
@@ -87,8 +87,9 @@ bunch <- ggplot() +
 bunch
 
 
-### 2 (cont): another issue is manipulation
-###           examine whether pre-treatment characteristics differ around the policy discontinuity
+###################################
+### 2. Manipulation:
+###    Examine whether pre-treatment characteristics differ around the policy discontinuity (binned scatterplot of covariates around discontinuity)
 
 # Differences in Family SES
 sort <- ggplot() +
@@ -108,8 +109,9 @@ quantile <- ggplot() +
 
 quantile
 
-######################################################################################
+##################################
 ### 3. Does treatment predict change in the outcome in some discontinuous fashion?
+###    (binned scatterplot of outcome against forcing variable)
 
 fx <- ggplot() +
   geom_point(data=d, aes(x=size, y=read), color=blue, alpha=0.8, shape=16) +
