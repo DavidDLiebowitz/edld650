@@ -136,10 +136,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: html | pdf
+- Slides: [html](./slides/EDLD_650_4_RD_2.html) | pdf
 - Class Questions: [doc](./questions/EDLD 650 Class 4 Questions.docx)
-- R Script: 
-- Data: 
+- R Script: [Class 4](./code/EDLD_650_3_RD_script.R)
+- Data: [Angrist](./data/ch9_angrist.dta)
 
 
 **Assignment:** 

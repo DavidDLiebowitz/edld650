@@ -54,9 +54,9 @@ Replication paper: Holden (2016)
 
 Deadline: 9:00am, January 31
 
-Assignment details: pdf
+Assignment details: [pdf](./assignments/DARE_2/DARE_2.pdf)
 
-Dataset: dta
+Dataset: [dta](./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta)
 
 Answer Key: pdf | R script
 

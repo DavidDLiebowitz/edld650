@@ -35,6 +35,7 @@ class: center, middle, inverse, title-slide
 # Agenda
 
 #### 1. Roadmap and Goals (9:00-9:10)
+- Final thoughts on DARE #1
 #### 2. Discussion Questions (9:10-10:20)
 - Angrist and Lavy
 - Ludwig and Miller
@@ -44,6 +45,24 @@ class: center, middle, inverse, title-slide
 #### 4. Applied regression discontinuity (10:30-11:40)
 #### 5. Wrap-up (11:40-11:50)
 - DARE #2 prep
+
+---
+# DARE #1: Last words
+
+- You *all* did a good job; many of you have stellar skills in writing functions and/or familiarity with the `tidyverse`
+- All DARE exemplars will be substantively consistent in sign/magnitude with paper. Sometimes identical.
+  - If you see your results are different, you know that misalignment exists; .red[**that's okay!**]
+  - Try to solve it, but if you can't write up what you have, note and interpret the differences
+
+--
+- For DARE #1, almost all errors were the result of either (a) creation of predictor variables or (b) model mis-specification
+  - The first is going to happen, review and learn from your mistake
+  - In the second case, review the model structure and think through what led to the different magnitude of the results
+      + In the DD case, how does the TWFE structure result in the estimation of a series of 2x2 pre/post and treat/not comparisons?
+      + What happens when you do not include year or state fixed effects?
+
+--
+- Non-causal and causal estimates shouldn't appear side-by-side in tables (w/o very good reason)
 
 
 ---
@@ -147,6 +166,10 @@ sapply(d, sd, na.rm=TRUE)
 
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
+--
+
+.blue[*Note that we are plotting the receipt of treatment (actual class size) against the forcing variable (cohort size). What assumption are we testing?*]
+
 ---
 # Maimonides Rule Redux
 
@@ -168,20 +191,40 @@ Angrist, J. Lavy, V. Leder-Luis, J. &amp; Shany, A. (2019). Maimonides' rule red
 
 ---
 # Are RD assumptions met?
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
----
-# Are RD assumptions met?
+
+
+```r
+bunch &lt;- ggplot() +
+    geom_histogram(data=d, aes(size), fill=blue, binwidth = 1) 
+```
 
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Are RD assumptions met?
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+
+```r
+sort &lt;- ggplot() +
+  geom_boxplot(data=d, aes(x=as.factor(size), y=ses), 
+  fill=red_pink, alpha=0.4)
+```
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Are RD assumptions met?
+
+```r
+quantile &lt;- ggplot() +
+  geom_quantile(data=filter(d, size&lt;41), aes(size, ses), quantiles=0.5, color=purple) + 
+  geom_quantile(data=filter(d, size&gt;=41), aes(size, ses), quantiles=0.5, color=red_pink)
+```
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
 # Let's see if there's an effect
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's refresh on how RD works
@@ -205,50 +248,92 @@ Can you explain the identification strategy as you would in your methods section
 ---
 # Let's see if there's an effect
 
-### Raw data:
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+```r
+d &lt;- d %&gt;% mutate(small = ifelse(size &gt;= 41,TRUE,FALSE))
+
+fx2 &lt;- ggplot() + 
+  geom_point(data=d, aes(x=size, y=read, colour=small), alpha=0.8, shape=16) 
+```
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect
 
-### Binned data:
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+```r
+bin&lt;- d %&gt;% group_by(size) %&gt;% summarise(across(c("read", "small"), mean))
+
+binned_plot &lt;- ggplot() + 
+  geom_point(data=bin, aes(x=size, y=read, colour=as.factor(small)), alpha=0.8, shape=16, size=3) 
+```
+
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect
 
 ### Fitted lines:
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect 
 
 ### Different slopes:
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect
 
 ### Change the bandwidth:
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect
 
 ### Formal-ish:
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # But it could be non-linear
 
 ### Formal-ish:
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+
 ---
-# In regression
+# Regression RD
+
+Let's fit three different intent-to-treat (ITT) RD models, each of which assumes a different functional form for the forcing variable:
+
+**Linear trend, same slope**
+$$
+`\begin{aligned}
+(1) READSCORE_i=\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \epsilon_i
+\end{aligned}`
+$$
+
+**Linear trend, different slope**
+$$
+`\begin{aligned}
+(2) READSCORE_i= &amp;\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \\
+&amp;\beta_3 COHORTSIZE \times SMALLCLASS_i + \epsilon_i
+\end{aligned}`
+$$
+
+**Quadratic trend, same slope**
+$$
+`\begin{aligned}
+(3) READSCORE_i= &amp;\beta_0 + \beta_1 COHORTSIZE_i + \beta_2 \text{COHORTSIZE}_{i}^2 + \\
+&amp; \beta_3SMALLCLASS_i + \epsilon_i
+\end{aligned}`
+$$
+
+
+---
+# Results
 &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -260,7 +345,7 @@ Can you explain the identification strategy as you would in your methods section
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Intercept &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 75.825*** &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 96.046*** &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 68.334*** &lt;/td&gt;
@@ -272,19 +357,19 @@ Can you explain the identification strategy as you would in your methods section
    &lt;td style="text-align:center;"&gt; (1.516) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; size &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Intended size &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; -0.139 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; -0.725** &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -33.987+ &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; (0.119) &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; (0.248) &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; (17.666) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; I(size &amp;gt; 40.5)TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .red[**Intended small class**] &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 3.953* &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; -24.346* &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 5.894** &lt;/td&gt;
@@ -296,7 +381,7 @@ Can you explain the identification strategy as you would in your methods section
    &lt;td style="text-align:center;"&gt; (1.990) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; size × I(size &amp;gt; 40.5)TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Size x Small &lt;/td&gt;
    &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0.757** &lt;/td&gt;
    &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
@@ -308,19 +393,7 @@ Can you explain the identification strategy as you would in your methods section
    &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; poly(size, 2)1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -33.987+ &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; (17.666) &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; poly(size, 2)2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Intended size)^2 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 22.716* &lt;/td&gt;
@@ -343,42 +416,71 @@ Can you explain the identification strategy as you would in your methods section
    &lt;td style="text-align:center;"&gt; 0.031 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0.026 &lt;/td&gt;
   &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; R2 Adj. &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.010 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.024 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.019 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; AIC &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3081.2 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3076.0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3078.1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; BIC &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3097.3 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3096.2 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3098.4 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Log.Lik. &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -1536.578 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -1532.982 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -1534.066 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.103 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 4.494 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.757 &lt;/td&gt;
-  &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;
 &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
 &lt;/table&gt;
 ---
 # Can you explain these results?
+
+Models 1 and 3 seem sensibly connected to the graphical evidence, but Model 2 suggest that the effect of an offer of small class size is negative and an estimated whopping .red[-24.3 points lower reading scores]. What gives?
+
+--
+
+Recall the three models we fit:
+
+
+$$
+`\begin{aligned}
+(1) READSCORE_i=\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \epsilon_i
+\end{aligned}`
+$$
+$$
+`\begin{aligned}
+(2) READSCORE_i= &amp;\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \\
+&amp;\beta_3 COHORTSIZE \times SMALLCLASS_i + \epsilon_i
+\end{aligned}`
+$$
+$$
+`\begin{aligned}
+(3) READSCORE_i= &amp;\beta_0 + \beta_1 COHORTSIZE_i + \beta_2 \text{COHORTSIZE}_{i}^2 + \\
+&amp; \beta_3SMALLCLASS_i + \epsilon_i
+\end{aligned}`
+$$
+
+.small[We need to project the fitted values that our regression results predict *at the discontinuity*. The most straightforward way is to plug in the values for grade cohorts that are just under and over the threshold for being split in two by Maimonides' Rule using the estimated coefficients from the table on the previous slide.] .blue[Take Eq. 2 and try doing this for cohorts of 40 and 41, respectively.]
+
+---
+# Can you explain these results?
+
+**Big class, grade cohort = 40**
+$$
+`\begin{aligned}
+\hat{READSCORE_i} = &amp; 96.046 + (-0.725)(40) + (-24.346)(0) + (0.757)(40)(0) \\
+&amp; 96.046 + (-29) + 0 + 0 \\
+&amp; 67.046
+\end{aligned}`
+$$
+
+--
+
+**Small Class, grade cohort=41**
+$$
+`\begin{aligned}
+\hat{READSCORE_i} = &amp; 96.046 + (-0.725)(41) + (-24.346)(1) + (0.757)(41)(1) \\
+&amp; 96.046 + (-29.725) + (-24.346) + 31.037 \\
+&amp; 73.012
+\end{aligned}`
+$$
+--
+
+So the predicted effect of being assigned to receive a smaller class when we allow the slopes to vary around the discontinuity is `\(73.012 - 67.046 = 5.9766\)`, or slightly larger than either the linear, constant slope or the quadratic specifications.
+
+---
+# Can you explain these results?
+
+Now that we've harmonized our findings, can you explain these results in technically accurate and substantively clear ways?
+--
 
 &gt; We estimate an effect of being assigned to a small class of between roughly 4 and 6 scale score points, depending on our assumptions about the nature of the underlying secular relationship between cohort size and reading performance. At the lower bound, these represent effects of around one half of a standard deviation (*SD*) unit. At the upper bound, these effects are as large as three-quarters of a standard deviation in the full sample.  These estimates are Local Average Treatment Effects (LATE), specific to being a member of a cohort whose size is just above or below the threshold for being divided into a smaller class.
 
@@ -401,7 +503,7 @@ Can you explain the identification strategy as you would in your methods section
 
 ---
 # Just for fun...
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 ---
 class: middle, inverse
 
@@ -419,18 +521,22 @@ class: middle, inverse
 ---
 # To-Dos
 
-## Week 5: Regression Discontinuity
+### Week 5: Regression Discontinuity II
 
-## Readings: 
+### Readings: 
 - Holden (2016)
 
-## DARE #2
+### DARE #2
 - Give me another chance!
+- Due 1/31, 9:00am
+
+### Project proposal
+- Due 1/28, 9:00am
 
 ---
 # Feedback
 
-.large[.red[Midterm Student Experience Survey]]
+.large[.red[**Midterm Student Experience Survey**]]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

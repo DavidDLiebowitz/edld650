@@ -102,6 +102,7 @@ knit_hooks$set(output = function(x, options) {
 # Agenda
 
 #### 1. Roadmap and Goals (9:00-9:10)
+- Final thoughts on DARE #1
 #### 2. Discussion Questions (9:10-10:20)
 - Angrist and Lavy
 - Ludwig and Miller
@@ -111,6 +112,24 @@ knit_hooks$set(output = function(x, options) {
 #### 4. Applied regression discontinuity (10:30-11:40)
 #### 5. Wrap-up (11:40-11:50)
 - DARE #2 prep
+
+---
+# DARE #1: Last words
+
+- You *all* did a good job; many of you have stellar skills in writing functions and/or familiarity with the `tidyverse`
+- All DARE exemplars will be substantively consistent in sign/magnitude with paper. Sometimes identical.
+  - If you see your results are different, you know that misalignment exists; .red[**that's okay!**]
+  - Try to solve it, but if you can't write up what you have, note and interpret the differences
+
+--
+- For DARE #1, almost all errors were the result of either (a) creation of predictor variables or (b) model mis-specification
+  - The first is going to happen, review and learn from your mistake
+  - In the second case, review the model structure and think through what led to the different magnitude of the results
+      + In the DD case, how does the TWFE structure result in the estimation of a series of 2x2 pre/post and treat/not comparisons?
+      + What happens when you do not include year or state fixed effects?
+
+--
+- Non-causal and causal estimates shouldn't appear side-by-side in tables (w/o very good reason)
 
 
 ---
@@ -313,6 +332,10 @@ treat
 
 ```
 
+--
+
+.blue[*Note that we are plotting the receipt of treatment (actual class size) against the forcing variable (cohort size). What assumption are we testing?*]
+
 ---
 # Maimonides Rule Redux
 
@@ -338,23 +361,30 @@ Angrist, J. Lavy, V. Leder-Luis, J. & Shany, A. (2019). Maimonides' rule redux. 
 
 ---
 # Are RD assumptions met?
-```{r, echo=F, fig.height=5.5}
-first_cut <- filter(maimonides, size>=29 & size<=53)
+```{r, echo=F}
+d <- filter(maimonides, size>=29 & size<=53)
+```
 
+```{r, echo=T}
 bunch <- ggplot() +
+    geom_histogram(data=d, aes(size), fill=blue, binwidth = 1) 
+```
+
+```{r, echo=F, fig.height=5.5}
+
+bunch_polish <- bunch +
             geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +       
-            stat_count(data=first_cut, aes(size), fill=blue, geom="bar") +
             theme_pander(base_size = 18) + 
             scale_x_continuous("Cohort size", breaks=seq(29, 53, by = 1)) 
-bunch
+bunch_polish
 
 ```
 
 ---
 # Are RD assumptions met?
-```{r, echo=F, fig.height=5.5}
+```{r, echo=T, fig.height=5.5}
 sort <- ggplot() +
-  geom_boxplot(data=first_cut, aes(x=as.factor(size), y=ses), 
+  geom_boxplot(data=d, aes(x=as.factor(size), y=ses), 
   fill=red_pink, alpha=0.4)
 ```
 ```{r, echo=F, fig.height=5.5}
@@ -366,22 +396,26 @@ sort_polish
 
 ---
 # Are RD assumptions met?
-```{r, echo=F, fig.height=5.5}
+```{r, echo=T, fig.height=5.5}
 quantile <- ggplot() +
-  geom_quantile(data=filter(first_cut, size<41), aes(size, ses), quantiles=0.5, color=purple) + 
-  geom_quantile(data=filter(first_cut, size>=41), aes(size, ses), quantiles=0.5, color=red_pink) +
+  geom_quantile(data=filter(d, size<41), aes(size, ses), quantiles=0.5, color=purple) + 
+  geom_quantile(data=filter(d, size>=41), aes(size, ses), quantiles=0.5, color=red_pink)
+```
+
+```{r, echo=F, fig.height=5.5}
+quantile_polish <- quantile +
   geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) +
   xlab("Cohort size") + scale_y_continuous("Family income") + expand_limits(y=c(-3,3))
 
-quantile
+quantile_polish
 ```
 ---
 
 # Let's see if there's an effect
 ```{r, echo=F, fig.height=5.5}
 fx <- ggplot() +
-  geom_point(data=first_cut, aes(x=size, y=read), color=blue, alpha=0.8, shape=16) +
+  geom_point(data=d, aes(x=size, y=read), color=blue, alpha=0.8, shape=16) +
   geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) +
   xlab("Cohort size") + ylab("Verbal score") 
@@ -411,39 +445,42 @@ Can you explain the identification strategy as you would in your methods section
 ---
 # Let's see if there's an effect
 
-### Raw data:
-
-```{r, echo=F, fig.height=5.5}
-first_cut <- mutate(first_cut, small = ifelse(size >= 41,TRUE,FALSE))
+```{r, echo=T, fig.height=5}
+d <- d %>% mutate(small = ifelse(size >= 41,TRUE,FALSE))
 
 fx2 <- ggplot() + 
-  geom_point(data=first_cut, aes(x=size, y=read, colour=small), alpha=0.8, shape=16) + 
+  geom_point(data=d, aes(x=size, y=read, colour=small), alpha=0.8, shape=16) 
+```
+
+```{r, echo=F, fig.height=5}
+fx2_polish <- fx2 + 
   geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) + xlab("Cohort size") + ylab("Verbal score") + 
   scale_color_manual(values = c(purple, red_pink)) +
   theme(legend.position = "none")
 
-fx2
+fx2_polish
 ```
 
 ---
 # Let's see if there's an effect
 
-### Binned data:
-
-```{r, echo=F, fig.height=5.5}
-binned <- first_cut %>% group_by(size) %>% summarise_at(c("read", "small"), mean)
+```{r, echo=T, fig.height=5}
+bin<- d %>% group_by(size) %>% summarise(across(c("read", "small"), mean))
 
 binned_plot <- ggplot() + 
-  geom_point(data=binned, aes(x=size, y=read, colour=as.factor(small)), alpha=0.8, shape=16, size=3) + 
+  geom_point(data=bin, aes(x=size, y=read, colour=as.factor(small)), alpha=0.8, shape=16, size=3) 
+```
+
+```{r, echo=F, fig.height=5}
+binned_polish <- binned_plot + 
   geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) + 
   theme_pander(base_size = 18) + xlab("Cohort size") + ylab("Verbal score") + 
-  scale_color_manual(values = c(purple, red_pink), name="Small") +
+  scale_color_manual(values = c(purple, red_pink)) +
   expand_limits(y=c(35,90)) +
   theme(legend.position = "none")
 
-
-binned_plot
+binned_polish
 
 ```
 
@@ -455,10 +492,10 @@ binned_plot
 ```{r, echo=F, fig.height=5.5}
 
 #The predicted values approach:
-lm_tmp <- lm(read ~ size + I(size>40.5), data = first_cut)
+lm_tmp <- lm(read ~ size + I(size>40.5), data = d)
 lm_fun <- function(size) predict(lm_tmp, data.frame(size = size))
 
-binned_plot +
+binned_polish +
 stat_function(
   data = data.frame(x = c(29, 53)),
   aes(size = size),
@@ -482,8 +519,8 @@ stat_function(
 ### Different slopes:
 
 ```{r, echo=F, fig.height=5.5}
-linear_fx <- fx2 + 
-    geom_smooth(data=first_cut, aes(x=size, y=read, colour=small), method = lm, se=FALSE)
+linear_fx <- fx2_polish + 
+    geom_smooth(data=d, aes(x=size, y=read, colour=small), method = lm, se=FALSE)
 
 linear_fx
 
@@ -494,8 +531,8 @@ linear_fx
 
 ### Change the bandwidth:
 ```{r, echo=F, fig.height=5.5}
-linear_fx_band <- fx2 + 
-  geom_smooth(data=filter(first_cut, size>=36 & size<=46), aes(x=size, y=read, colour=small), method = lm, se=FALSE)
+linear_fx_band <- fx2_polish + 
+  geom_smooth(data=filter(d, size>=36 & size<=46), aes(x=size, y=read, colour=small), method = lm, se=FALSE)
 
 linear_fx_band
 ```
@@ -505,8 +542,8 @@ linear_fx_band
 
 ### Formal-ish:
 ```{r, echo=F, fig.height=5.5}
-linear_fx_se <- fx2 + 
-  geom_smooth(data=first_cut, aes(x=size, y=read, colour=small), method = lm, se=TRUE)
+linear_fx_se <-fx2_polish + 
+  geom_smooth(data=d, aes(x=size, y=read, colour=small), method = lm, se=TRUE)
 
 linear_fx_se
 ```
@@ -516,23 +553,118 @@ linear_fx_se
 
 ### Formal-ish:
 ```{r, echo=F, fig.height=5.5}
-non_linear_fx <- fx2 + 
-  geom_smooth(data=first_cut, aes(x=size, y=read, colour=small), method = lm, formula=y ~ poly(x,2), se=TRUE)
+non_linear_fx <- fx2_polish + 
+  geom_smooth(data=d, aes(x=size, y=read, colour=small), method = lm, formula=y ~ poly(x,2), se=TRUE)
 
 non_linear_fx
 ```
----
-# In regression
-```{r, results='asis', echo=F}
-linear_const <- lm(read ~ size + I(size>40.5), data = first_cut)
-linear_diff <- lm(read ~ size * I(size>40.5), data = first_cut)
-quadratic <- lm(read ~ poly(size,2) + I(size>40.5), data = first_cut)
 
-modelsummary(list(linear_const, linear_diff, quadratic), stars=T)
-#stargazer(linear_const, linear_diff, quadratic, type='html', omit.stat = c("ser", "adj.rsq", "f"), single.row=T, dep.var.caption="", dep.var.labels.include=F, intercept.bottom=F, star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l")
+---
+# Regression RD
+
+Let's fit three different intent-to-treat (ITT) RD models, each of which assumes a different functional form for the forcing variable:
+
+**Linear trend, same slope**
+$$
+\begin{aligned}
+(1) READSCORE_i=\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \epsilon_i
+\end{aligned}
+$$
+
+**Linear trend, different slope**
+$$
+\begin{aligned}
+(2) READSCORE_i= &\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \\
+&\beta_3 COHORTSIZE \times SMALLCLASS_i + \epsilon_i
+\end{aligned}
+$$
+
+**Quadratic trend, same slope**
+$$
+\begin{aligned}
+(3) READSCORE_i= &\beta_0 + \beta_1 COHORTSIZE_i + \beta_2 \text{COHORTSIZE}_{i}^2 + \\
+& \beta_3SMALLCLASS_i + \epsilon_i
+\end{aligned}
+$$
+
+
+---
+# Results
+```{r, results='asis', echo=F}
+linear_const <- lm(read ~ size + I(size>40.5), d)
+linear_diff <- lm(read ~ size * I(size>40.5), d)
+quadratic <- lm(read ~ poly(size,2) + I(size>40.5), d)
+
+modelsummary(list(linear_const, linear_diff, quadratic), 
+             stars=T,
+             coef_rename = c("(Intercept)" = "Intercept", "size" = "Intended size", "I(size > 40.5)TRUE" = ".red[**Intended small class**]",
+                             "size:I(size > 40.5)TRUE" = "Size x Small", 
+                             "poly(size, 2)1" = "Intended size", "poly(size, 2)2" = "(Intended size)^2"),
+             gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|F"
+             )
+
 ```
 ---
 # Can you explain these results?
+
+Models 1 and 3 seem sensibly connected to the graphical evidence, but Model 2 suggest that the effect of an offer of small class size is negative and an estimated whopping .red[-24.3 points lower reading scores]. What gives?
+
+--
+
+Recall the three models we fit:
+
+
+$$
+\begin{aligned}
+(1) READSCORE_i=\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \epsilon_i
+\end{aligned}
+$$
+$$
+\begin{aligned}
+(2) READSCORE_i= &\beta_0 + \beta_1 COHORTSIZE_i + \beta_2SMALLCLASS_i + \\
+&\beta_3 COHORTSIZE \times SMALLCLASS_i + \epsilon_i
+\end{aligned}
+$$
+$$
+\begin{aligned}
+(3) READSCORE_i= &\beta_0 + \beta_1 COHORTSIZE_i + \beta_2 \text{COHORTSIZE}_{i}^2 + \\
+& \beta_3SMALLCLASS_i + \epsilon_i
+\end{aligned}
+$$
+
+.small[We need to project the fitted values that our regression results predict *at the discontinuity*. The most straightforward way is to plug in the values for grade cohorts that are just under and over the threshold for being split in two by Maimonides' Rule using the estimated coefficients from the table on the previous slide.] .blue[Take Eq. 2 and try doing this for cohorts of 40 and 41, respectively.]
+
+---
+# Can you explain these results?
+
+**Big class, grade cohort = 40**
+$$
+\begin{aligned}
+\hat{READSCORE_i} = & 96.046 + (-0.725)(40) + (-24.346)(0) + (0.757)(40)(0) \\
+& 96.046 + (-29) + 0 + 0 \\
+& 67.046
+\end{aligned}
+$$
+
+--
+
+**Small Class, grade cohort=41**
+$$
+\begin{aligned}
+\hat{READSCORE_i} = & 96.046 + (-0.725)(41) + (-24.346)(1) + (0.757)(41)(1) \\
+& 96.046 + (-29.725) + (-24.346) + 31.037 \\
+& 73.012
+\end{aligned}
+$$
+--
+
+So the predicted effect of being assigned to receive a smaller class when we allow the slopes to vary around the discontinuity is $73.012 - 67.046 = 5.9766$, or slightly larger than either the linear, constant slope or the quadratic specifications.
+
+---
+# Can you explain these results?
+
+Now that we've harmonized our findings, can you explain these results in technically accurate and substantively clear ways?
+--
 
 > We estimate an effect of being assigned to a small class of between roughly 4 and 6 scale score points, depending on our assumptions about the nature of the underlying secular relationship between cohort size and reading performance. At the lower bound, these represent effects of around one half of a standard deviation (*SD*) unit. At the upper bound, these effects are as large as three-quarters of a standard deviation in the full sample.  These estimates are Local Average Treatment Effects (LATE), specific to being a member of a cohort whose size is just above or below the threshold for being divided into a smaller class.
 
@@ -556,7 +688,7 @@ modelsummary(list(linear_const, linear_diff, quadratic), stars=T)
 ---
 # Just for fun...
 ```{r, echo=F, fig.height=5.5}
-fx2 + geom_smooth(data=first_cut, aes(x=size, y=read, colour=small), 
+fx2_polish + geom_smooth(data=d, aes(x=size, y=read, colour=small), 
       method = loess, se=TRUE, linetype="dashed")
 
 ```
@@ -577,15 +709,19 @@ class: middle, inverse
 ---
 # To-Dos
 
-## Week 5: Regression Discontinuity
+### Week 5: Regression Discontinuity II
 
-## Readings: 
+### Readings: 
 - Holden (2016)
 
-## DARE #2
+### DARE #2
 - Give me another chance!
+- Due 1/31, 9:00am
+
+### Project proposal
+- Due 1/28, 9:00am
 
 ---
 # Feedback
 
-.large[.red[Midterm Student Experience Survey]]
+.large[.red[**Midterm Student Experience Survey**]]
