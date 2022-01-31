@@ -168,10 +168,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: html | pdf
+- Slides: [html](./slides/EDLD_650_5_IV_1.html) | [pdf](./slides/EDLD_650_5_IV_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 5 Questions.docx)
-- R Script: 
-- Data: 
 
 **Assignment:** 
 
