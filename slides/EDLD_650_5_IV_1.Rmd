@@ -125,6 +125,8 @@ knit_hooks$set(output = function(x, options) {
 - Accountability
 - Well organized class materials and meaningful content
 
+--
+
 ### Concerns and shifts
 - Inappropriate level of challenge (though some signs of improvement)
 - Insufficient scaffolding for DAREs
