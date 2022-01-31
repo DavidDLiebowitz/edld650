@@ -58,7 +58,7 @@ Assignment details: [pdf](./assignments/DARE_2/DARE_2.pdf)
 
 Dataset: [dta](./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta)
 
-Answer Key: pdf | R script
+Answer Key: [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R)
 
 ## DARE #3 
 
@@ -66,7 +66,7 @@ Answer Key: pdf | R script
 
 Replication paper: Kim, Capotosto, Hartry & Fitzgerald (2011)
 
-Deadline: 9:00am, January 31
+Deadline: 9:00am, February 14
 
 Assignment details: pdf
 
@@ -80,7 +80,7 @@ Answer Key: pdf | R script
 
 Replication paper: Umansky & Dumont (2021)
 
-Deadline: 9:00am, January 31
+Deadline: 9:00am, February 28
 
 Assignment details: pdf
 
