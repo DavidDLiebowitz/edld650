@@ -201,9 +201,9 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: 
+- Class Questions: [doc](./questions/EDLD 650 Class 6 Questions.docx)
 - R Script: 
-- Data: 
+- Data: [PACES](./data/ch11_PACES.csv)
 
 **Assignment:**
 
@@ -232,7 +232,7 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: 
+- Class Questions: [doc](./questions/EDLD 650 Class 7 Questions.docx)
 - R Script: 
 - Data: 
 
