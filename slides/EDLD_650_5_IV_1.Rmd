@@ -378,10 +378,10 @@ The .blue[**exclusion restriction**] states that the path by which the instrumen
 
 | Outcome             |  Intervention (treatment)  |  Omitted variables         | Instrument
 |-------------------------------------------------------------------------------------------------
-| Health              |  Smoking cigarettes        |  Other neg health behaviors| Tobacco taxes 
-| Labor market success|  Assimilation              |  Ability; motivation       | Scrabble score of name
-| Crime rate          |  Patrol hours              |  # of criminals            | Election cycles
-| Female labor market |  Number of children        |  Family preferences; religiosity | First two children same-sex; twin births
+| Health              |  Smoking cigarettes        |  Other neg health behaviors| [Tobacco taxes](https://www.sciencedirect.com/science/article/pii/S0047272798000905)
+| Labor market success|  Assimilation              |  Ability; motivation       | [Scrabble score of name](https://www.journals.uchicago.edu/doi/10.1086/692531)
+| Crime rate          |  Patrol hours              |  # of criminals            | [Election cycles](https://www.jstor.org/stable/2951346)
+| Female labor market |  Number of children        |  Family preferences; religiosity | [First two children same-sex](https://www.jstor.org/stable/116844); [twin births](https://www.jstor.org/stable/2117765)
 | Conflicts           |  Economic growth           |  Simultaneous causality    | Rainfall `r emo::ji("smile")`
 
 --
