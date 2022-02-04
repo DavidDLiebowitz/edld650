@@ -1,9 +1,9 @@
 ######################################################
-## Script Name: EDLD_650_3_RD_script.R
+## Script Name: EDLD_650_4_RD_script.R
 ## Project Title: EDLD 650 Winter 2022
 ## Author: David Liebowitz
-## Created: 1/24/21
-## Last update: 1/24/21
+## Created: 1/24/22
+## Last update: 2/4/22
 ## Purpose: This script imports the Angrist and Lavy data and does light variable cleaning. It conducts descriptive analysis to test the 
 ##          big three assumptions for RD and then estimates the intent-to-treat (ITT) effects of being assigned to a small class 
 ## Inputs: ch9_angrist.dta 
@@ -33,7 +33,7 @@ p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, 
 # Finally, save this R script within the code folder
 
 # This command tells R where your script is and allows you to point it to other folders within the directory
-i_am("code/EDLD_650_3_RD_script.R")
+i_am("code/EDLD_650_4_RD_script.R")
 
 ####################################
 ## The Angrist and Lavy Maimonides' Rule data

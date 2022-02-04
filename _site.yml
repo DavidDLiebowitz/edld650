@@ -21,7 +21,7 @@ navbar:
       - text: "Week 5: Regression Discontinuity (RD) II"
         href: ./slides/EDLD_650_5_IV_1.html
       - text: "Week 6: Instrumental Variables (IV) I"
-        href:
+        href: ./slides/EDLD_650_6_IV_2.html
       - text: "Week 7: Instrumental Variables (IV) II"
         href: 
       - text: "Week 8: Matching I"

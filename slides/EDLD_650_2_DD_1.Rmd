@@ -477,7 +477,7 @@ $\tau_{k}$ is **asymptotically** correct as number of clusters increase. Current
 ---
 # Clustered standard errors (1)
 
-```{r, echo=T, highlight.outout=c(4:6)}
+```{r, echo=T, highlight.output=c(4:6)}
 ols_unitary2 <- feols(sd_dropout_prop_b ~ unitary | leaid + year, 
                  data=desegregation, 
                  weights=desegregation$sd_t_1619_b)
@@ -492,7 +492,7 @@ Default behavior in `fixest` is to cluster standard errors on the first fixed ef
 ---
 # Clustered standard errors (2)
 
-```{r, echo=T, highlight.outout=c(4:6)}
+```{r, echo=T, highlight.output=c(4:6)}
 ols_unitary3 <- feols(sd_dropout_prop_b ~ unitary | leaid + year, 
                  data=desegregation, 
                  vcov = ~ leaid^year,
