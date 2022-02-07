@@ -68,11 +68,11 @@ Replication paper: Kim, Capotosto, Hartry & Fitzgerald (2011)
 
 Deadline: 9:00am, February 14
 
-Assignment details: pdf
+Assignment details: [pdf](./assignments/DARE_3/DARE_3.pdf)
 
-Dataset: dta
+Dataset: [csv](./assignments/DARE_3/data/EDLD_650_DARE_3.csv)
 
-Answer Key: pdf | R script
+Answer Key: pdf | tex | R script
 
 ## DARE #4 
 
@@ -86,7 +86,7 @@ Assignment details: pdf
 
 Dataset: dta
 
-Answer Key: pdf | R script
+Answer Key: pdf | tex| R script
 
 
 # 4. Final Research Project 
