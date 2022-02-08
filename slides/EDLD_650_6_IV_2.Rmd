@@ -216,6 +216,13 @@ stargazer(ols1, ols2, type='html', omit.stat = c("ser", "adj.rsq", "f"),
 > Only about 90 percent of lottery winners used the private school voucher to pay for private school and 24 percent of lotter losers found other sources of scholarships for which to pay for private school. There are endogenous differences in the expected outcomes of children from families who chose to both use the voucher and those who secured scholarship funding from sources outside the voucher lottery. The policy relevant question is how a public subsidy of private school might affect educational attainment for children from low-income families in Bogota, Colombia. The na&iuml;ve approach does not identify these effects but rather the combination of voucher subsidy and endogenous unobservables across families and individuals. 
 
 ---
+# Some differences
+
+```{r, results='asis', echo=T}
+not_random <- arsenal::tableby(use_fin_aid ~ male + base_age, paces)
+summary(not_random)
+```
+---
 # How could IV address?
 
 
