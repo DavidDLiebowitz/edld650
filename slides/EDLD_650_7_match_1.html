@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Instrumental Variables and Matching</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="David D. Liebowitz" />
+    <script src="EDLD_650_7_match_1_files/header-attrs-2.11.22/header-attrs.js"></script>
+    <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
+    <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my_custom.css" type="text/css" />
+    <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Instrumental Variables and Matching
+## EDLD 650: Week 7
+### David D. Liebowitz
+
+---
+
+
+&lt;style type="text/css"&gt;
+.inverse {
+  background-color : #2293bf;
+}
+&lt;/style&gt;
+
+
+
+# Agenda
+
+### 1. Roadmap and goals (9:00-9:10)
+### 2. The Kim et al paper and DARE #3 (9:10-10:20)
+### 3. Break (10:20-10:30)
+### 4. Marching (10:30-11:35)
+### 5. Wrap-up (11:35-11:50)
+  - To-dos and Plus/deltas
+
+---
+# Roadmap
+
+&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Goals
+
+### 1. Conduct IV analysis in simplified data and interpret results
+
+### 2. Assess basic assumptions of IV design in an experimental setting with imperfect compliance
+
+### 3. Describe the conceptual approach of using selection on observables to defend causal inferences about the effects of a treatment
+
+---
+class: middle, inverse
+# Class 7 Discussion Questions
+
+---
+# DARE-d to do it!
+
+Student examples in class...
+
+---
+class: middle, inverse
+
+# Break
+
+---
+class: middle, inverse
+
+# Matching
+
+---
+# Core causal inference challenge
+
+### What is basic problem of drawing causal inferences from non-experimental (observational) data or data from a non-random subset within an experiment?
+
+--
+
+1. Treatment and non treatment groups are not .blue[*equal in expectation*], so it is difficult to claim .blue[*variation in treatment condition*] is driving .blue[*observed differences in outcomes*]
+2. Sample is .blue[*no longer representative*] of the population (as originally defined)
+
+--
+
+`\(\rightarrow\)` .red[**Biased estimate of treatment effect**]
+
+--
+
+Up until now, we have relied on being able to find an arguably .blue[*exogenous*] source of variation in likelihood of receiving the treatment...
+
+--
+.red[**but what if we can't find this???!!?**]
+
+---
+# Selection bias
+
+Imagine: outcome `\(Y\)` is a measure of later life success that depends on an earlier education attainment, `\(X\)`; *AND* that this is the actual, causal relationship between X and Y:
+
+.pull-left[
+**Hypothetical causal relation**
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+**Observed relationship**
+]
+
+--
+
+.small[
+- but...in addition to the underlying causal relationship between X and Y, society consistently favors one group of individuals over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment X.
+- so...one group of individuals would consistently experience higher levels of attainment X *and* later life success Y
+]
+
+---
+# Selection bias
+
+Imagine: outcome `\(Y\)` is a measure of later life success that depends on an earlier education attainment, `\(X\)`; *AND* that this is the actual, causal relationship between X and Y:
+
+.pull-left[
+**Hypothetical causal relation**
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+**Observed relationship**
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+
+.small[
+- but...in addition to the underlying causal relationship between X and Y, society consistently favors one group of individuals over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment X.
+- so...one group of individuals would consistently experience higher levels of attainment X *and* later life success Y
+]
+
+---
+# Selection bias
+
+Imagine: outcome `\(Y\)` is a measure of later life success that depends on an earlier education attainment, `\(X\)`; *AND* that this is the actual, causal relationship between X and Y:
+
+.pull-left[
+**Hypothetical causal relation**
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+**Observed relationship**
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+
+.small[
+- however...we would not necessarily observe this constraint or know what this group is, and so we would only observe a .red[*biased*] relationship between X and Y
+]
+
+---
+# A possible solution?
+
+**Big idea**: if we were sure we knew that the only factor driving selection into treatment was individuals' membership in this group:
+- We can ignore overall point cloud and refuse to estimate the biased Y|X slope
+- Instead, conduct analysis within each subsidiary point clouds
+  + Obtain estimates of treatment effect within each point cloud
+  + Average to obtain overall *unbiased* estimate of treatment effect of more educational attainment
+
+--
+
+.pull-left[
+**Ignore biased observed relationship**
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+**Estimate treatment effect absent bias**
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Selection on observables
+
+.large[This is the key conceptual basis for approaches such as: **stratification, weighting and matching**. They are used to remove "observed bias" from treatment effects estimated in observational data.]
+
+.pull-left[ .small[
+- This family of approaches relies on .blue[**selection on observables**] into treatment (*more on this later*)
+- It is not a magical way of getting causal estimates when you don't have an identification strategy
+- Like all the other methods we have studied, it requires a deep substantive understanding of why some are treated and others aren't
+]
+]
+
+.pull-right[
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+]
+---
+# Stratification
+
+&lt;img src="stratification.jpg" width="2436" style="display: block; margin: auto;" /&gt;
+
+--
+
+.pull-left[ .small[
+.blue[**Emerging issues:**]
+
+Diminishing sample size within stratum
+- Imprecise estimates
+- Reduced power
+
+In extreme, group may have no observations in a strata
+- Lack of common support
+- Can't estimate treatment effect
+]
+]
+
+.pull-right[
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Matching approach
+
+The .blue[**conditional independence assumption (CIA)**] ([Rosenbaum &amp; Rubin, 1983](https://www.jstor.org/stable/2335942?seq=1#metadata_info_tab_contents)) states that treatment is as-good-as random conditional on a known set of covariates. 
+
+If .blue["selection on observables"] in fact happens, matching estimators take this literally. 
+
+The basic idea: estimate a treatment effect only using observations with (nearly?) identical values of `\(\textbf{X}_{i}\)`. The CIA allows us to make a claim about causality within these groups.
+
+We match untreated observations to treated observations using `\(\textbf{X}_{i}\)` and calculate the average treatment effect by comparing `\(Y_{i}(1)\)`  to outcomes for "matched" untreated individuals `\(Y_{i}(0)\)`.
+
+
+---
+# The classic tradeoff
+
+&lt;img src="tradeoff.jpg" width="2088" style="display: block; margin: auto;" /&gt;
+
+We want to minimize bias in our estimates by finding a match that most closely approximates each treated unit but we don’t want to overly restrict the definition of matching so as to require excluding too many units or producing a sample that does not reflect our originally defined population.
+
+---
+# Propensity scores (I)
+### Phase I:
+
+1. Investigate the selection process explicitly by fitting a "selection model":
+  - Fit a logistic model, with treatment group membership as outcome, and predictors you believe describe the process of selection explicitly:
+  
+`$$D_{i} = \frac{1}{1+e^{-\textbf{X}_{i} \theta_{i}}}$$`
+--
+2. Use selection model to estimate fitted probability of selection into treatment `\((\hat{p})\)` for each participant
+  - Output these “propensity scores” into your dataset
+  - They summarize the probability that each participant will be selected into the treatment, given their values on the covariates.
+  - They are the best non-linear composite of the covariates for describing selection into experimental conditions, given your choice of covariates.
+
+---
+# Propensity scores (II)
+### Phase II:
+
+1. Stratify the sample using the propensity scores:
+    - Enforce overlap:
+        + Drop control units with `\(\hat{p}\)` below the minimum propensity score in the treatment group
+        + Drop treated units with `\(\hat{p}\)` above the maximum propensity score in the control group
+    - Rule of thumb: as few as five strata may remove up to 90% of the observed bias
+2. Within each stratum, check the balancing condition has been satisfied:
+   - On the propensity scores themselves
+   - On each of the covariates separately
+3. If the balancing condition has not been met:
+   - Re-stratify, combining or splitting strata, until balancing condition is met
+   - If this fails, re-specify the selection model (nonlinear terms, interactions?) and start again
+4. Once you have achieved balance, estimate treatment effect within each stratum, and average up
+
+---
+# Difference from OLS?
+
+.pull-left[
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[ .small[
+1. It's not that different
+2. Regression approaches make strong assumptions about the equivalence of treatment effects across different groups (can be solved with interactions or non-parametric approaches)...
+3. including groups **for which there is no common support** (a case of predicting outside of data range and cannot be solved for with interactions)
+4. Each additional covariate makes additional assumptions about equivalence of effects across groups (results in X-factorial potential interactions)
+5. We’ve assumed that errors are homoscedastic across groups and pooled all of that variation to obtain a common standard error
+]
+]
+
+---
+# Good/bad candidates?
+
+.large[**Remember, the only reason any of this is worth doing is if there is a clear case where (a) selection on the observables has occurred; and (b) the source of the selection can not be modeled via exogenous variation in treatment**]
+
+.blue[ With a partner:
+- Identify 2-3 examples of situations in which selection into treatment or the sample can be addressed via an approach from the matching family
+- Identify 2-3 examples in which a matching approach would be suspect to persistent bias in estimates
+]
+
+---
+# Two princes
+
+&lt;img src="ozzy.png" width="521" style="display: block; margin: auto;" /&gt;
+
+.footnote[credit: not sure where original is from?]
+---
+# A family affair
+
+### Matching approaches include:
+- Stratification
+- Propensity-Score Matching (PSM)
+   + Nearest neighbor (Euclidian or Mahalanobis distance)
+   + Kernel matching
+   + Machine learning assisted matching
+   + Calipers
+   + With or without replacement
+- Inverse Probability Weighting (IPW)
+- Coarsened Exact Matching (CEM)
+- Inexact Matching
+- Synthetic controls in DD strategies
+- Doubly-robust (e.g., matching and weighted) estimates
+- And combinations of these and more…
+
+--
+
+...**the approach matters and requires close attention to procedure**
+
+---
+## Strengths/limitations of approaches
+.small[
+
+| Approach             |  Strengths                     |  Limitations
+|------------------------------------------------------------------------
+| Propensity-score nearest &lt;br&gt; neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment &lt;br&gt; - Limits dimensionality problem &lt;br&gt; - Calipers restrict poor matches &lt;br&gt; - Replacement takes maximal advantage of available data | - May generate poor matches &lt;br&gt; - Model dependent &lt;br&gt; Lacks transparency; PS in aribtrary units &lt;br&gt; - Potential for bias [(King &amp; Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
+| Propensity-score stratification | - Simulates block-randomized experiment &lt;br&gt; - Limits dimensionality problem | - May produce worse matches than nearest neighbor &lt;br&gt; - Lacks transparency; stratum arbitrary
+| Inverse probablity &lt;br&gt; (PS) matching | - Retains all original sample data &lt;br&gt; - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
+| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) &lt;br&gt; - Matching substantively driven &lt;br&gt; Transparent matching process &lt;br&gt; - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are &lt;br&gt; - May lead to disgarding large portions of sample
+
+]
+---
+class: middle, inverse
+# Synthesis and wrap-up
+
+
+---
+# Goals
+
+### 1. Conduct IV analysis in simplified data and interpret results
+
+### 2. Assess basic assumptions of IV design in an experimental setting with imperfect compliance
+
+### 3. Describe the conceptual approach of using selection on observables to defend causal inferences about the effects of a treatment
+
+
+---
+# Roadmap
+
+&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+
+---
+# To-Dos
+
+### Week 8: Matching
+
+**Readings: **
+- Murnane and Willett, Chapter 12
+- Diaz &amp; Handa - evaluation of Mexico's PROGRESA program
+- Additional readings: Cunningham, Ch. 5; Dehejia &amp; Wahba (2002); Iacus, King &amp; Porro (2011); King et al. (2011); King &amp; Nielsen (2019)
+
+**Assignments Due**
+- **DARE 4** (last one!!!)
+    + Due 9:00am, Feb. 28
+
+- **Final Research Project**
+    + Presentation, March 8
+    + Paper, March 18 (submit early [March 10] for feedback)
+
+---
+# Feedback
+
+## Plus/Deltas
+
+Front side of index card
+
+## Clear/Murky
+
+On back
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

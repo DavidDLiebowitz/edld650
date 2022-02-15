@@ -232,10 +232,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: html | pdf
+- Slides: [html](./slides/EDLD_650_7_match_1.html) | [pdf](./slides/EDLD_650_7_match_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 7 Questions.docx)
-- R Script: 
-- Data: 
+ 
 
 **Assignment:**
 
