@@ -264,9 +264,9 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: 
+- Class Questions: [doc](./questions/EDLD 650 Class 8 Questions.docx)
 - R Script: 
-- Data: 
+- Data: [dta](./data/ch12_catholic.dta)
 
 **Assignment:**
 

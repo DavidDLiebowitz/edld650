@@ -333,6 +333,11 @@ ggplot(ed, aes(x, y2, color=factor(c))) +
   geom_smooth(method=lm, se=F)
 ```
 ]
+
+--
+
+.purple[**Let's take a quick look at how to stratify and generate propensity scores to provide some intuition for what these methods do...**]
+
 ---
 # Stratification
 
