@@ -27,7 +27,7 @@ library(pacman)
 p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, arsenal)
 
 
-i_am("slides/EDLD_650_5_IV_1.rmd")
+i_am("slides/EDLD_650_7_match_1.rmd")
 
 # Define graphing colors
 red_pink <- "#e64173"

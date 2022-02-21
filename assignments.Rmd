@@ -82,11 +82,11 @@ Replication paper: Umansky & Dumont (2021)
 
 Deadline: 9:00am, February 28
 
-Assignment details: pdf
+Assignment details: [pdf](./assignments/DARE_4/DARE_4.pdf)
 
-Dataset: dta
+Dataset: [dta](./assignments/DARE_4/data/dumont_umansky_ECLSK.dta)
 
-Answer Key: pdf | tex| R script
+Answer Key: pdf | tex | R script
 
 
 # 4. Final Research Project 

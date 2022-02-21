@@ -263,9 +263,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: html | pdf
+- Slides: [html](./slides/EDLD_650_8_match_2.html) | [pdf](./slides/EDLD_650_8_match_2.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 8 Questions.docx)
-- R Script: 
+- R Script: [Class 8](./code/EDLD_650_8_matching_script.R) 
 - Data: [dta](./data/ch12_catholic.dta)
 
 **Assignment:**
@@ -296,9 +296,7 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: 
-- R Script: 
-- Data: 
+- Class Questions: [doc]
 
 **Assignment:**
 

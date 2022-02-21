@@ -1,0 +1,625 @@
+---
+title: "Matching"
+subtitle: "EDLD 650: Week 8"
+author: "David D. Liebowitz"
+output:
+  xaringan::moon_reader:
+    css: ['default', 'rladies', 'ki-fonts', 'my_custom.css', 'xaringanthemer.css']
+    # self_contained: true
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  
+  chunk_output_type: console
+---
+
+```{css, echo=F}
+.inverse {
+  background-color : #2293bf;
+}
+```
+
+```{R, setup, include = F}
+library(pacman)
+
+p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, arsenal, MatchIt, cem, gtools)
+
+
+i_am("slides/EDLD_650_8_match_2.rmd")
+
+# Define graphing colors
+red_pink <- "#e64173"
+turquoise <- "#20B2AA"
+orange <- "#FFA500"
+red <- "#fb6107"
+blue <- "#3b3b9a"
+green <- "#8bb174"
+grey_light <- "grey70"
+grey_mid <- "grey50"
+grey_dark <- "grey20"
+purple <- "#6A5ACD"
+slate <- "#314f4f"
+
+# Define text color
+extra_css <- list(
+  ".red"   = list(color = "red"),
+  ".blue"  =list(color = "blue"),
+  ".green" = list(color = "#8bb174"),
+  ".purple" = list(color = "#6A5ACD"),
+  ".red-pink" = list(color= "#e64173"),
+  ".grey-light" = list(color= "grey70"),
+  ".slate" = list(color="#314f4f"),
+  ".small" = list("font-size" = "90%"),
+  ".large" = list("font-size" = "120%"))
+
+
+write_extra_css(css = extra_css, outfile = "my_custom.css")
+
+
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 6.75,
+  fig.width = 10.5,
+  warning = F,
+  message = F
+)
+# opts_chunk$set(dev = "svg")
+# 
+# options(device = function(file, width, height) {
+#   svg(tempfile(), width = width, height = height)
+# })
+
+options(knitr.table.format = "html")
+
+hook_output <- knit_hooks$get("output")
+knit_hooks$set(output = function(x, options) {
+  lines <- options$output.lines
+  if (is.null(lines)) {
+    return(hook_output(x, options))  # pass to default hook
+  }
+  x <- unlist(strsplit(x, "\n"))
+  more <- "..."
+  if (length(lines)==1) {        # first n lines
+    if (length(x) > lines) {
+      # truncate the output, but add ....
+      x <- c(head(x, lines), more)
+    }
+  } else {
+    x <- c(more, x[lines], more)
+  }
+  # paste these lines together
+  x <- paste(c(x, ""), collapse = "\n")
+  hook_output(x, options)
+})
+```
+
+# Agenda
+### 1. Roadmap and Goals (9:00-9:10)
+### 2. Discussion Questions (9:10-10:20)
+- Diaz & Handa
+- Murnane & Willett, Ch. 12
+
+### 3. Break (10:20-10:30)
+### 4. Applied matching (10:30-11:40)
+- PSM and CEM
+
+### 5. Wrap-up (11:40-11:50)
+
+---
+# Roadmap
+
+```{r, echo=F}
+include_graphics("causal_id.jpg")
+```
+---
+# Goals
+
+### 1. Describe conceptual approach to matching analysis
+
+### 2. Assess validity of matching approach and what selection on observable assumptions implies
+
+### 3. Conduct matching analysis in simplified data using both propensity-score matching and coarsened-exact matching (CEM)
+
+---
+class: middle, inverse
+
+# So random...
+
+---
+class: middle, inverse
+
+# Break
+
+---
+class: middle, inverse
+
+# Matching:
+## Propensity scores
+
+---
+# Recall the Catholic school data
+
+```{r, echo= F}
+catholic <- read_dta(here("./data/ch12_catholic.dta"))
+datatable(catholic[c(1,17,51,143,1101),c(1, 3, 6, 8, 17)], fillContainer = FALSE, options = 
+                list(pageLength = 5))
+
+```
+
+---
+## Are Catholic HSers higher-performing?
+```{r, echo= T}
+catholic %>% group_by(catholic) %>%
+  summarise(n_students = n(),
+   mean_math = mean(math12), SD_math = sd(math12))
+```
+
+---
+## Are Catholic HSers higher-performing?
+```{r, echo=F, fig.height=4}
+raw_diff <- catholic %>% group_by(catholic) %>% summarise(n_students = n(), mean_math=mean(math12), se_math = sd(math12)/sqrt(n_students))
+
+ggplot(raw_diff, aes(x=as.factor(catholic), y=mean_math, ymin=mean_math-se_math, ymax=mean_math+se_math)) + geom_col(fill=red_pink, alpha=0.4) + 
+  geom_linerange() + theme_pander(base_size = 16) +
+        xlab("Catholic HS attendance") + scale_y_continuous("Grade 12 math score")
+```
+---
+## Are Catholic HSers higher-performing?
+
+```{r, output.lines=-c(1:7), echo=T}
+ols1 <- lm(math12 ~ catholic, data=catholic)
+summary(ols1)
+```
+
+--
+
+.blue[**What is wrong with all of these approaches?**]
+
+---
+## Are Catholic HS attendees different?
+
+```{r, results='asis', echo=T}
+table <- tableby(catholic ~ faminc8 + math8 + white + female, 
+        numeric.stats=c("meansd"), cat.stats=c("N", "countpct"), 
+        digits=2, data=catholic)
+mylabels <- list(faminc8 = "Family income level in 8th grade", 
+        math8 = "8th grade math score")
+summary(table, labelTranslations = mylabels)
+```
+
+---
+# Implementing matching
+### Reminder of key assumptions/issues:
+
+.pull-left[ .large[
+1. Selection on observables
+2. Treatment is as-good-as-random, conditional on known set of observables
+3. Tradeoff between bias, variance and generalizability
+]
+]
+.pull-right[
+```{r, fig.height=5, echo=F}
+
+set.seed(123)
+
+x <- rnorm(1000, mean = 12, sd=2)
+y <- 1000*x + rnorm(length(x), sd = 5000)
+
+ed <- as.data.frame(cbind(x,y))
+ed <- ed %>% mutate(c = ifelse(x <11, 0, 1))
+
+ed <- ed %>% mutate(y = case_when(y>0 ~ y,
+                                  y<=0 ~ abs(y)))
+
+ed <- ed %>% mutate(y2 = case_when(c==0 ~ y,
+                                   c==1 ~ y + 7500))
+
+
+ggplot(ed) + 
+  geom_point(aes(x, y2, color=factor(c))) +
+  geom_smooth(aes(x, y2, color=factor(c)), method=lm, se=F) +
+  ylim(0, 40000) +
+  theme_pander(base_size = 16) +
+  scale_discrete_manual(aesthetics = c("color"), values = c(purple, red_pink)) +
+  theme(legend.position = "") +
+  geom_smooth(aes(x, y2), method=lm, se=F, linetype="dashed", color=grey_mid)
+
+
+```
+]
+---
+# Practical considerations
+Can implement this various ways. Pedagogically, we'll implement matching using a combination of the `MatchIt` package (which is similar to the `cem` package for Coarsened Exact Matching), the `fixest` implementation of logistic regression and data manipulation by hand.<sup>[1]</sup> 
+
+```{r, echo=T}
+# install.packages("MatchIt")
+# install.packages("gtools")
+```
+
+.footnote[[1] Most of the coarsening we'll do can be done directly within the `MatchIt` package, but it's good to get your hands into the data to truly understand what it is you're doing!]
+---
+# Phase I: Generate propensities
+## Step 1: Estimate selection model
+```{r, echo=T}
+pscores <- feglm(catholic ~ inc8 + math8 + mathfam, 
+                 family=c("logit"), data=catholic)
+summary(pscores)
+```
+---
+# Phase I: Generate propensities
+## Step 2: Predict selection likelihood
+```{r, echo=T}
+pscore_df <- data.frame(p_score = predict(pscores, type="response"),
+                     catholic = catholic$catholic)
+head(pscore_df)
+```
+
+--
+
+*Note*: to apply Inverse-Probability Weights (IPW), you would take these propensities and assign weights of $1/\hat{p}$ to treatment and $1/(1-\hat{p})$ to control units.
+
+---
+# Phase I: Generate propensities
+## Step 3: Common support (pre-match)
+```{r, echo=F, fig.height=4.5}
+ggplot(pscore_df, aes(p_score,fill=as.factor(catholic),color=as.factor(catholic))) + 
+  geom_density(alpha=0.1) + theme_pander(base_size = 16) + xlab("Probability of Catholic HS attendance") 
+```
+---
+# Phase 2: PS Matching
+## Step 1: Assign nearest-neighbor match<sup>[1]</sup> 
+```{r, echo=T}
+matched <- matchit(catholic ~ math8 + inc8, method="nearest", 
+                   replace=T, discard="both", data=catholic)
+df_match <- match.data(matched)
+
+# How many rows/columns in resulting dataframe?
+dim(df_match)
+```
+
+.footnote[[1] As you might anticipate, there are *lots* of different ways besides "nearest-neighbor with replacement" to create these matches.]
+
+--
+
+This is the **NOT** same number of observations as were in the original sample... .blue[what happened?]
+
+
+---
+# Phase 2: PS Matching 
+## Step 2: Common support (post-match)
+```{r, echo=T, fig.height=6, echo=F}
+ggplot(df_match, aes(distance,fill=as.factor(catholic),color=as.factor(catholic))) + 
+  geom_density(alpha=0.1) + theme_pander(base_size = 16) + xlab("Probability of Catholic HS attendance")
+```
+---
+# Phase 2: PS Matching
+## Step 3: Examine balance
+*(doesn't really fit on screen)*
+```{r, echo=T}
+summary(matched)
+```
+---
+# Phase 2: PS Matching
+## Step 3: Examine balance
+
+**Summary of balance for .red-pink[all] data:**
+
+  Variable |   Means Treated | Means Control |  Std. Mean Diff
+-----------|-----------------| --------------|--------------
+distance   |     0.1216      |   0.1024      |  0.4351  
+math8      |     53.6604     |   51.2365     |  0.2746  
+inc8       |    39.5346      |   21.8548     |  0.4714
+
+
+**Summary of balance for .red-pink[matched] data:**
+
+  Variable |   Means Treated | Means Control |  Std. Mean Diff
+-----------|-----------------| --------------|--------------
+distance   |     0.1216      |   0.1216      |  0.0000  
+math8      |     53.6604     |   53.4416     |  0.0248  
+inc8       |    39.5346      |  39.6698      | -0.0083
+
+---
+# Phase 2: PS Matching
+
+Could get even closer with fuller model:
+```{r, echo=T}
+matched2 <- matchit(catholic ~ math8 + inc8 + inc8sq + mathfam, 
+       method="nearest", replace=T, discard="both", data=catholic)
+```
+
+```{r, echo=F, fig.height=4.5}
+df_match2 <- match.data(matched2)
+ggplot(df_match2, aes(distance,fill=as.factor(catholic),color=as.factor(catholic))) + 
+  geom_density(alpha=0.1) + theme_pander(base_size = 12, base_family = 
+  "Fira Sans Book") + xlab("Probability of Catholic HS attendance")
+```
+---
+# Phase 2: Estimate effects
+```{r, echo=T, output.lines=-c(1:8)}
+psmatch2 <- lm(math12 ~ catholic + math8 + inc8 + inc8sq + mathfam, 
+               weights = weights, data=df_match)
+#Notice how we have matched on just math8 and inc8 but are now 
+#   adjusting for more in our estimation. This is fine! 
+# Very important to include weights!
+summary(psmatch2)
+```
+```{r, echo=F}
+psmatch1 <- lm(math12 ~ catholic + math8 + inc8, 
+               weights = weights, data=df_match)
+psmatch3 <- lm(math12 ~ catholic + math8 + inc8 + inc8sq + mathfam, 
+               weights = weights, data=df_match2)
+```
+---
+# Can you interpret these results?
+
+<br>
+
+--
+
+> In a matched sample of students who had nearly identical 8th grade math test scores and family income levels and were equally likely to attend private school based on these observable conditions, the effect of attending parochial high school was to increase 12th grade math test scores by 1.59 scale score points [95% CI: 0.98, 2.22]. To the extent that families' selection into Catholic high school is based entirely on their children's 8th grade test scores and their family income, we can interpret this a credibly causal estimate of the effect of Catholic high school attendance, purged of observable variable bias.
+
+---
+class: middle, inverse
+
+# Matching:
+
+## Coarsened Exact Matching (CEM)
+
+---
+# A different approach: CEM
+
+### Some concerns with PSM:
+* Model (rather than theory) dependent
+* Lacks transparency
+* Can exclude large portions of data
+* Potential for bias
+* *We'll return to these at the end!*
+
+--
+
+$\rightarrow$ more transparent (?) approach ... .blue[**Coarsened Exact Matching**] ... literally what the words say!
+
+--
+
+### Basic intuition: 
+* Create bins of observations by covariates and require observation to match exactly within these bins. 
+* Can require some bins be as fine-grained as original variables (then, it's just exact matching).
+
+
+---
+# Creating bins
+
+```{r, echo=T}
+table(catholic$faminc8)
+```
+--
+```{r, echo=T}
+catholic <- mutate(catholic, coarse_inc=ifelse(faminc8<5,1,faminc8))
+catholic$coarse_inc <- as.ordered(catholic$coarse_inc)
+levels(catholic$coarse_inc)
+```
+--
+```{r, echo=T}
+summary(catholic$math8)
+mathcuts <- c(43.45, 51.49, 58.55)
+
+```
+
+---
+# CEM matches
+```{r, echo=T}
+cem <- matchit(catholic ~ coarse_inc + math8, 
+      cutpoints=list(math8=mathcuts), method="cem", data=catholic)
+df_cem <- match.data(cem)
+table(df_cem$catholic)
+```
+
+--
+
+This is the same number of observations as were in the original sample. .blue[What does this imply?]
+
+---
+# Quality of matches
+```{r, echo=T}
+summary(cem)
+```
+
+---
+# Quality of matches
+
+**Summary of balance for .red-pink[all] data:**
+
+.small[
+  Variable     |  Means Treated | Means Control | Std. Mean Diff 
+ ------------- | -------------- | ------------- | --------- 
+coarse_inc1    |     0.0135     |   0.0435      | -0.2598  
+coarse_inc5    |     0.0101     |   0.0272      | -0.1701  
+coarse_inc6    |      0.101     |    0.0333     | -0.2310 
+coarse_inc7    |      0.0338    |    0.0841     | -0.2783  
+coarse_inc8    |      0.0524    |    0.0807     | -0.1273  
+coarse_inc9    |      0.0794    |    0.1197     | -0.1491 
+coarse_inc10   |      0.2196    |    0.2239     | -0.0103  
+coarse_inc11   |      0.3345    |    0.2404     | -0.1994  
+coarse_inc12   |      0.2466    |    0.1473     | -0.2305 
+math8          |     53.6604    |   51.2365     | -0.2746 
+]
+
+---
+# Common support?
+
+```{r, echo=T}
+df_cem1 <- df_cem %>% group_by(catholic, subclass) %>% 
+            summarise(count= n())  
+df_cem1 <- df_cem1 %>%  mutate(attend = count / sum(count))
+```
+```{r, echo=F, fig.height=4}
+ggplot(df_cem1, aes(subclass, attend, color=as.factor(catholic))) + 
+          geom_col(alpha=0.1, position = position_dodge()) + 
+          theme_pander(base_size = 10) + 
+          xlab("Subclassification groups by income and 8th grade score")
+```
+
+
+---
+# Different cuts?
+
+Can generate different quantiles, e.g., quintiles
+```{r, echo=T}
+math8_quints <- gtools::quantcut(catholic$math8, 5)
+table(math8_quints)
+```
+
+--
+
+You might also have a substantive reason for the cuts:
+```{r, echo=T}
+mathcuts2 <- c(40, 45, 50, 55, 60, 65, 70)
+```
+---
+# Different cuts: Balance
+```{r, echo=F}
+cem2 <- matchit(catholic ~ coarse_inc + math8, 
+                cutpoints=list(math8=mathcuts2),
+                method="cem", data=catholic)
+df_cem2 <- match.data(cem2)
+summary(cem2)
+```
+---
+# Big improvements!
+
+**Summary of balance for .red-pink[matched] data:**
+
+.small[
+  Variable     |  Means Treated | Means Control | Std. Mean Diff 
+ ------------- | -------------- | ------------- | --------- 
+coarse_inc1    |     0.0269     |   0.0269      | -0.000  
+coarse_inc5    |     0.0203     |   0.0203      | 0.000  
+coarse_inc6    |      0.0251    |    0.0251     | -0.000 
+coarse_inc7    |      0.0799    |    0.0799     | 0.000  
+coarse_inc8    |      0.0744    |    0.0744     | 0.000  
+coarse_inc9    |      0.1171    |    0.1171     | 0.000 
+coarse_inc10   |      0.2322    |    0.2322     | 0.000  
+coarse_inc11   |      0.2601    |    0.2601     | 0.000  
+coarse_inc12   |      0.1639    |    0.1639     | -0.000  
+math8          |     51.6351    |   51.3938     | 0.026  
+]
+
+.small[We've forced T/C to be identical within coarsened income bins. The *original* **math8** variable still has some imbalance (but it's much better). Within **mathcuts2**, T/C would be identical.]
+
+---
+# Minimal sample loss
+
+Sample sizes:
+
+  Category | Control | Treated
+---------- | ------- | -------
+All        |   5079  |    592
+Matched    |   4866  |    590
+Unmatched  |    213  |      2
+
+--
+Common support?
+--
+```{r, echo=F, fig.height=3}
+df_cem3 <- df_cem2 %>% group_by(catholic, subclass) %>% 
+              summarise(count= n())  
+df_cem3 <- df_cem3 %>%  mutate(attend = count / sum(count))
+
+ggplot(df_cem3, aes(subclass, attend, color=as.factor(catholic))) + 
+          geom_col(alpha=0.1, position = position_dodge()) + 
+          theme_pander(base_size = 10) + xlab("Subclassification groups by income and 8th grade score")
+```
+---
+# Estimating effects
+```{r, echo=F}
+att1 <- lm(math12 ~ catholic + coarse_inc + math8, data=df_cem, weights = weights)
+```
+
+```{r, echo=T}
+att2 <- lm(math12 ~ catholic + coarse_inc + math8, 
+           data=df_cem2, weights = weights)
+summary(att2)
+```
+---
+# Let's look across estimates
+
+```{r, results='asis', echo=F}
+stargazer(ols1, psmatch1, psmatch2, psmatch3, att1, att2, type='html', omit.stat = c("ser", "adj.rsq", "f"), 
+      single.row=T, dep.var.caption="", dep.var.labels.include=F, omit=c("Constant", "coarse_inc", "math8", "inc8", "inc8sq", "mathfam"), 
+      covariate.labels=c("Attend catholic school"), notes.append=F,
+      star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", notes=c("*p<0.05; **p<0.01; ***p<0.001. Models 2-3 and 5-6 match on income and math score. Model 3 adjusts for higher-order terms and interactions post matching; Model 4 includes them in matching algorithm. Model 6 uses narrower bins to match than Model 5. All CEM and PSM estimates are doubly-robust. Outcome mean (SD) for treated = 54.5 (8.5)"), model.names=F, column.labels = c("OLS", "PSM", "CEM"), column.separate = c(1, 3, 2))
+```
+---
+# How would you describe results?
+
+--
+
+<br>
+
+> A na&iuml;ve estimate of 12th grade math test score outcomes suggests that students who attend Catholic high school scored nearly 4 scale score points higher than those who attended public school (almost half a standard deviation). However, the characteristics of students who attended Catholic high school were substantially different. They had higher family income, scored higher on 8th grade math tests and were more likely to be White, among other distinguishing characteristics. We theorize that the primary driver of Catholic school attendance is student 8th grade performance and family income. Conditional on these two characteristics, we implement two separate matching algorithms: Propensity Score Matching and Coarsened Exact Matching. Both sets of estimates indicate that the benefits of Catholic school are overstated in the full sample, but the attenuated results are still large in magnitude (just under one-fifth of a SD) and statistically significant. 
+
+---
+## Strengths/limitations of approaches
+.small[
+
+| Approach             |  Strengths                     |  Limitations
+|------------------------------------------------------------------------
+| PS nearest <br> neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment <br> - Limits dimensionality problem <br> - Calipers restrict poor matches <br> - Replacement takes maximal advantage of available data | - May generate poor matches <br> - Model dependent <br> Lacks transparency; PS in aribtrary units <br> - Potential for bias [(King & Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
+| PS stratification | - Simulates block-randomized experiment <br> - Limits dimensionality problem | - May produce worse matches than nearest neighbor <br> - Lacks transparency; stratum arbitrary
+| Inverse probablity <br> (PS) matching | - Retains all original sample data <br> - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
+| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) <br> - Matching substantively driven <br> Transparent matching process <br> - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are <br> - May lead to disgarding large portions of sample
+
+]
+---
+class: middle, inverse
+# Synthesis and wrap-up
+
+---
+# Goals
+
+### 1. Describe conceptual approach to matching analysis
+
+### 2. Assess validity of matching approach
+
+### 3. Conduct matching analysis in simplified data using both propensity-score matching and CEM
+
+
+---
+# Can you explain this figure?
+
+```{r, out.width = "100%", echo=F}
+  knitr::include_graphics("causal_id.jpg")
+```
+
+---
+# To-Dos
+
+## Week 9: Matching and presenting
+
+### Readings: 
+- Umansky & Dumont (2021)
+
+### Assignments Due
+**DARE 4**
+- Due 9:00am, February 28
+
+**Final Research Project**
+- Presentation, March 8 
+- Paper, March 17 (submit March 10 for feedback)
+
+---
+# Feedback
+
+## Plus/Deltas
+
+Front side of index card
+
+## Clear/Murky
+
+On back
+
