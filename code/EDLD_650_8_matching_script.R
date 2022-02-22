@@ -26,7 +26,7 @@ library(pacman)
 # These are the packages you will need for the analyses 
 
 p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, 
-       modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, arsenal, MatchIt, cem, gtools)
+       modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, arsenal, MatchIt, gtools)
 
 # You will want to have created a folder for the course and an R project within that folder
 # Then, create a folder within your course folder entitled "code"
