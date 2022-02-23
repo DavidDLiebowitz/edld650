@@ -296,7 +296,7 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Slides: html | pdf
-- Class Questions: [doc]
+- Class Questions: [doc](./questions/EDLD 650 Class 9 Questions.docx)
 
 **Assignment:**
 

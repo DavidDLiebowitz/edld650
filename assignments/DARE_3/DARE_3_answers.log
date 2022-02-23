@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.1.2)  14 FEB 2022 16:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.1.2)  22 FEB 2022 08:14
 entering extended mode
 **./DARE_3_answers.tex
 (DARE_3_answers.tex
@@ -507,15 +507,7 @@ Overfull \hbox (13.74773pt too wide) in paragraph at lines 5--19
 ) [1
 
 {C:/Users/daviddl/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-(tables/ols_results.tex)
-
-Package caption Warning: \label without proper reference on input line 82.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:box' on page 2 undefined on input line 79.
-
-[2]
+(tables/ols_results.tex) [2]
 <figures/mean_out_compare.png, id=35, 426.6339pt x 341.3553pt>
 File: figures/mean_out_compare.png Graphic file (type png)
 <use figures/mean_out_compare.png>
@@ -540,19 +532,15 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 113.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 113.
 Package rerunfilecheck Info: File `DARE_3_answers.out' has not changed.
 (rerunfilecheck)             Checksum: 3EF4077F73BEF165E75E2D64DE21C6F0;150.
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
  8931 strings out of 492970
  132200 string characters out of 3135850
- 239439 words of memory out of 3000000
+ 239456 words of memory out of 3000000
  12635 multiletter control sequences out of 15000+200000
  14547 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,12n,42p,1393b,495s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,12n,42p,1393b,491s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
@@ -565,7 +553,7 @@ m/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2
 .9/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on DARE_3_answers.pdf (6 pages, 190170 bytes).
+Output written on DARE_3_answers.pdf (6 pages, 189893 bytes).
 PDF statistics:
  116 PDF objects out of 1000 (max. 8388607)
  20 named destinations out of 1000 (max. 500000)
