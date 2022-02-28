@@ -1,5 +1,5 @@
 ###############################################
-##  Project: Textbooks and performance
+##  Project: Literacy intervention IV
 ##  Script Name: EDLD_DARE_3_code.R
 ##  Author: David D. Liebowitz
 ##  Date created: 2/14/22

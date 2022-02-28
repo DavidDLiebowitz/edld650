@@ -1,0 +1,6 @@
+
+t: latex
+pdf-engine: pdflatex
+s: 
+number-sections: 
+output: assignments/DARE_4/tables/descriptives.tex

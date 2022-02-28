@@ -1,0 +1,621 @@
+---
+title: "Matching and Synthesis"
+subtitle: "EDLD 650: Week 9"
+author: "David D. Liebowitz"
+output:
+  xaringan::moon_reader:
+    css: ['default', 'rladies', 'ki-fonts', 'my_custom.css', 'xaringanthemer.css']
+    # self_contained: true
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  
+  chunk_output_type: console
+---
+
+```{css, echo=F}
+.inverse {
+  background-color : #2293bf;
+}
+```
+
+```{R, setup, include = F}
+library(pacman)
+
+p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, arsenal, MatchIt, cem, gtools)
+
+
+i_am("slides/EDLD_650_9_synthesis.rmd")
+
+# Define graphing colors
+red_pink <- "#e64173"
+turquoise <- "#20B2AA"
+orange <- "#FFA500"
+red <- "#fb6107"
+blue <- "#3b3b9a"
+green <- "#8bb174"
+grey_light <- "grey70"
+grey_mid <- "grey50"
+grey_dark <- "grey20"
+purple <- "#6A5ACD"
+slate <- "#314f4f"
+
+# Define text color
+extra_css <- list(
+  ".red"   = list(color = "red"),
+  ".blue"  =list(color = "blue"),
+  ".green" = list(color = "#8bb174"),
+  ".purple" = list(color = "#6A5ACD"),
+  ".red-pink" = list(color= "#e64173"),
+  ".grey-light" = list(color= "grey70"),
+  ".slate" = list(color="#314f4f"),
+  ".small" = list("font-size" = "90%"),
+  ".large" = list("font-size" = "120%"))
+
+
+write_extra_css(css = extra_css, outfile = "my_custom.css")
+
+
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 6.75,
+  fig.width = 10.5,
+  warning = F,
+  message = F
+)
+# opts_chunk$set(dev = "svg")
+# 
+# options(device = function(file, width, height) {
+#   svg(tempfile(), width = width, height = height)
+# })
+
+options(knitr.table.format = "html")
+
+hook_output <- knit_hooks$get("output")
+knit_hooks$set(output = function(x, options) {
+  lines <- options$output.lines
+  if (is.null(lines)) {
+    return(hook_output(x, options))  # pass to default hook
+  }
+  x <- unlist(strsplit(x, "\n"))
+  more <- "..."
+  if (length(lines)==1) {        # first n lines
+    if (length(x) > lines) {
+      # truncate the output, but add ....
+      x <- c(head(x, lines), more)
+    }
+  } else {
+    x <- c(more, x[lines], more)
+  }
+  # paste these lines together
+  x <- paste(c(x, ""), collapse = "\n")
+  hook_output(x, options)
+})
+```
+
+# Agenda
+### 1. Roadmap and Goals (9:00-9:10)
+### 2. Umansky & Dumont and DARE #4 (9:10-10:20)
+### 3. Break (10:20-10:30)
+### 4. Presenting (10:30-10:45)
+### 5. Review and synthesis (10:45-11:40)
+### 5. Wrap-up (11:40-11:50)
+
+---
+# Roadmap
+
+```{r, echo=F}
+include_graphics("causal_id.jpg")
+```
+---
+# Goals
+
+.large[.purple[
+1. **Describe conceptual approach to matching analysis**
+2. **Assess validity of matching approach and what selection on observable assumptions implies**
+3. **Conduct matching analysis in simplified data using both coarsened-exact matching (CEM) and propensity-score matching (PSM)**
+4. **Synthesize strategies for causal inference and articulate value of each strategy given a particular data-generating process**
+]
+]
+
+---
+class: middle, inverse
+
+# So random...
+
+---
+# DARE-d to do it!
+
+Student examples in class...
+
+---
+class: middle, inverse
+
+# Break
+
+---
+class: middle, inverse
+
+# Review
+
+---
+# Correlation and causation 
+
+.large[
+-	Causal, correlational and descriptive research are all important, but they are distinct and should be approached differently
+-	If you encounter a research study (or embark on your own research project) an important first consideration to ask yourself is: 
+  + Is this study attempting to an answer an explicitly or implicitly causal question? If so, what are its identifying assumptions?
+-	One framework for considering these identifying assumptions : .blue[**the potential outcomes framework**]
+]
+
+---
+# Causal inference: Platonic ideal
+
+
+$Y_{i}^{1}$ = potential value of outcome for $i^{th}$ person, when treated $(D_{i} = 1)$
+
+$Y_{i}^{0}$ = potential value of outcome for $i^{th}$ person, when .blue[**NOT**] treated $(D_{i} = 0)$
+
+
+The .blue[**Individual Treatment Effect (ITE)**] is the difference in potential outcome values between treatment and control conditions, for each individual:
+
+$$ITE_{i} = Y_{i}^{1} - Y_{i}^{0}$$
+
+--
+
+.red[**We never actually observe this!!!**]
+
+--
+
+
+The .blue[**Average Treatment Effect (ATE)**] is the average of the individual treatment effects across all participants:
+
+$$\hat{ATE}_{i} = \frac{1}{n}{\sum_{i}^n ITE_{i}}$$
+
+--
+
+If the ATE differed from zero, we could claim that the treatment *caused* the effect because there would be no other explanation for the differences detected between the treatment and control conditions!
+
+---
+# Conditions of causal claims
+
+.large[
+1. Cause must precede effect in time
+2. Systematic variation in levels of cause must result in corresponding variation in the effect
+3. Must be able to discount all other plausible explanations
+
+]
+
+---
+# RCTs: Gold Standard
+
+Randomly assign each participant to the .blue[**Treatment**] (where we measure their value of $Y_{i}^{1}$ ) or .red[**Control**] (where we measure their value of $Y_{i}^{0}$ ) condition. 
+
+
+$$\hat{ATE}_{i} = \frac{1}{n_{1}}{\sum_{i}^{n_1} ITE_{i}} - \frac{1}{n_{0}}{\sum_{i}^{n_0} ITE_{i}}$$
+
+--
+
+- .small[Treatment variation is .blue[**exogenously and randomly assigned**].] 
+- .small[Members of the treatment and control groups are then equivalent, on average, in the population (.blue[“equal in expectation”]) before the experiment begins, on every possible dimension,] $\bar{\textbf{X}}_{D=1} \approxeq \bar{\textbf{X}}_{D=0}$
+- .small[The values of treatment variable, D, will also be completely uncorrelated with all characteristics of participants, observed and unobserved, in the population.]
+
+---
+# RCTs: Issues and assumptions
+
+- **Randomization**: Was it successful Check balance at variable level and with omnibus $F$-test
+- **Sample**: Representative? Sufficiently powered? for tests of heterogeneity? Pre-registered?
+- **Threats**:
+  + Spillover
+  + Hawthorne/John Henry
+  + Non-compliance
+  + Attrition
+  
+--
+  + SUTVA...the lurking monster
+
+---
+class: middle, inverse
+
+# Questions?
+---
+# DD: Classic two-period
+
+$$
+\begin{align}
+  y_i=\alpha + \beta(\text{FATHERDEC}_i \times \text{OFFER}_i) + \delta \text{FATHERDEC}_i + \theta \text{OFFER}_i + \upsilon_i
+\end{align}
+$$
+
+---
+# DD: Two-way fixed effects
+
+$$
+\begin{align}
+ \text{DROPOUT_BLACK} _{jt} = \beta_1 \text{UNITARY} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{align}
+$$
+---
+# DD: Time-variant effects
+$$
+\begin{aligned}
+ \text{DROPOUT_BLACK} _{jt} = & \color{red}{\beta_1} \text{UNITARY} _{jt} + \color{orange}{\beta_2} (\text{UNITARY} \times \text{YEAR_CENT}) _{jt} + \\
+    & \color{blue}{\beta_3} \text{YEAR_CENT} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{aligned}
+$$
+```{r, echo=F, fig.height=5}
+pre_x <- c(-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0)
+post_x <- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+pre_y <- c(0.00, -0.01, -0.01, 0.01, 0.02, 0.00, 0.01, -0.01, 0.00, 0.01, 0.01)
+post_y <- c(0.10, 0.09, 0.11, 0.08, 0.10, 0.11, 0.09, 0.11, 0.10, 0.12, 0.11)
+
+ex <- as.data.frame(pre_x, post_x, pre_y, post_y)
+
+ggplot(data=ex) +
+  geom_smooth(aes(x=pre_x, y=pre_y), method="lm", color = "blue") +
+  geom_smooth(aes(x=post_x, y=post_y), method="lm", color = "orange") +
+  expand_limits(y=c(-0.03, 0.15)) +
+  geom_vline(aes(xintercept=0), col="black", lty="dashed", size=1) +
+  ggbrace::geom_brace(aes(x=c(0, 0.4), y=c(0.01, 0.09)), rotate=90, color="red", inherit.data = F) +
+  annotate("text", x = -5, y = 0.03, label = "beta [3]", color = "blue", size = 8, parse=T) +
+  annotate("text", x = 5, y = 0.08, label = "beta [2]", color = "orange", size = 8, parse=T) +
+  annotate("text", x = 1, y = 0.05, label = "beta [1]", color = "red", size = 8, parse=T) +
+  labs(y="Black Dropout Rate", x="Relative Year") +
+  theme_pander(base_size = 20)
+
+```
+
+
+---
+# DD: Event Study
+
+$$
+\begin{aligned}
+ \text{DROPOUT_BLACK} _{jt} = & \beta_1 \text{pre}^{-n}_{jt} + \beta_2 \text{pre8} + \beta_3 \text{pre7} _{jt} +... \\
+& +\beta_m \text{post0} _{jt} + ...+ \beta_n \text{post}^{n}_{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{aligned}
+$$
+--
+
+Could also write as:
+$$
+\begin{align}
+  \text{DROPOUT_BLACK} _{jt} = \sum_{t=-10}^n 1(\text{t}=\text{t}_{j}^*)\beta_t+ \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{align}
+$$
+--
+
+.blue[**the assumptions and design structure are the same across all these!**]
+
+---
+## DD: Assumptions
+
+
+1. Not-treated (or not-yet-treated) units are .blue[**valid counterfactuals**]
+  - Parallel trends?
+  - Selection into treatment?
+
+--
+2. There are no .blue[**simultaneous shocks**] or unobserved .blue[**secular trends**]
+  - Other observed and unobserved events or patterns?
+
+--
+3. Appropriate weighting
+  - See ["further reading"]("schedule.html") for latest
+  
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Regression Discontinuity
+
+$$p(COLL_{i}=1)= \beta_{0} + \beta_{1} TESTSCORE_{i} + 1(TESTSCORE_{i} \geq 60)\beta_{2} + \varepsilon_{i}$$
+
+```{r, echo= F, fig.height=5.5}
+y0 <- function(x) 1 - exp(-x/100) 
+y1 <- function(x) (1 - exp(-x/100)) + 0.15
+
+set.seed(12345)
+srd_df <- tibble(
+  x = rnorm(n=300, mean=70, sd=15),
+  y = ((x < 60) * y0(x)) + ((x >= 60) * y1(x)) + rnorm(length(x), sd=0.07)
+) %>% mutate(
+  y = between(y, 0, 1) * y + (y < 0) * 0 + (y > 1) * 1
+) %>% filter(
+  x != 60
+)
+
+lm_tmp <- lm(y ~ x + I(x>60), data = srd_df)
+lm_fun <- function(x) predict(lm_tmp, data.frame(x = x))
+
+gg_srd <- ggplot() +
+geom_vline(xintercept = 60, color = slate, size = 1, alpha = 0.1) +
+
+scale_x_continuous(
+  "Test Score",
+  lim = c(25,100)
+) +
+scale_y_continuous(
+  "Probability of enrolling in college",
+  lim = c(0,1),
+   labels = scales::percent_format(accuracy = 1)
+) +
+geom_point(
+  data = srd_df, aes(x = x, y = y, color = x >= 60),
+  size = 2
+) +
+scale_color_manual(values = c(purple, red_pink)) +
+theme_pander(base_size = 18) +
+theme(legend.position = "none")
+
+gg_srd2 <- ggplot() +
+geom_vline(xintercept = 60, color = slate, size = 1, alpha = 0.1) +
+stat_function(
+  data = data.frame(x = c(0, 100)),
+  aes(x = x),
+  fun = lm_fun,
+  xlim = c(33,59),
+  color = purple,
+  size = 1.5
+) +
+stat_function(
+  data = data.frame(x = c(0, 100)),
+  aes(x = x),
+  fun = lm_fun,
+  xlim = c(60.5,100),
+  color = red_pink,
+  size = 1.5
+) +
+scale_x_continuous(
+  "Test Score",
+  lim = c(25,100)
+) +
+scale_y_continuous(
+  "Probability of enrolling in college",
+  lim = c(0,1),
+   labels = scales::percent_format(accuracy = 1)
+) +
+geom_point(
+  data = srd_df, aes(x = x, y = y, color = x >= 60),
+  size = 2
+) +
+scale_color_manual(values = c(purple, red_pink)) +
+theme_pander(base_size = 18) +
+theme(legend.position = "none")
+
+
+gg_srd2 +
+  
+  stat_function(
+  data = data.frame(x = c(0, 100)),
+  aes(x = x),
+  fun = y0,
+  xlim = c(60,65),
+  color = purple,
+  linetype = "dotted",
+  size = 1.5
+) +
+stat_function(
+  data = data.frame(x = c(0,100)),
+  aes(x = x),
+  fun = y1,
+  xlim = c(54,59),
+  color = red_pink,
+  linetype = "dotted",
+  size = 1.5
+) 
+
+
+```
+
+---
+# RD: Issues and Assumptions
+
+1. A **.red[Local] Average Treatment Effect (LATE)**
+ - bandwidth selection (bias v. variance tradeoff)
+2. Functional-form specification
+3. Forcing variable predicts treatment discontinuously
+4. No manipulation
+5. No bunching
+
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Instrumental variables
+
+```{r, echo=F}
+  include_graphics("iv2.jpg")
+```
+
+
+.pull-left[
+**IV estimate**: ratio of area of *overlap of $Y$ and $Z$* to area of *overlap of $D$ and $Z$*. Depends entirely on variation in $Z$ that predicts variation in $Y$ and $D$:
+]
+
+.pull-right[
+$$\hat{\beta}_{1}^{IVE} = \frac{S_{YD}}{S_{DZ}}$$
+a .blue[**Local Average Treatment Effect**]
+]
+---
+# 2SLS IV set-up
+
+### 1<sup>st</sup> stage:
+Regress the endogenous treatment $(D_{i})$ on instrumental variable $(Z_{i})$ using OLS:
+$$D_{i} = \alpha_{0} + \alpha_{1}Z_{i} + \nu_{i}$$
+
+Obtain the *predicted values* of the treatment $(\hat{D_{i}})$ from this fit.
+
+
+### 2<sup>nd</sup> stage:
+Regress the outcome $(Y_{i})$ on the predicted values of the treatment $(\hat{D_{i}})$:
+$$Y_{i} = \beta_{0} + \beta_{1}\hat{D_{i}} + \varepsilon_{i}$$
+
+---
+# Valid instruments
+
+1. Instrument $(Z_{i})$ must be correlated with treatment $(D_{i})$, .red[*but*]
+2. Instrument $(Z_{i})$ must be orthogonal $(\perp)$ to all other determinants of the outcome $(Y_{i})$ 
+  - Another way of saying it must be uncorrelated with the residuals $(\varepsilon_{i})$
+3. Instrument must be related to the outcome .red[*only*] through the treatment
+  - This is known as the .blue[**exclusion restriction**]
+
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Matching
+
+```{r, echo=F}
+
+set.seed(123)
+
+x <- rnorm(1000, mean = 12, sd=2)
+y <- 1000*x + rnorm(length(x), sd = 5000)
+
+ed <- as.data.frame(cbind(x,y))
+ed <- ed %>% mutate(c = ifelse(x <11, 0, 1))
+
+ed <- ed %>% mutate(y = case_when(y>0 ~ y,
+                                  y<=0 ~ abs(y)))
+
+ed <- ed %>% mutate(y2 = case_when(c==0 ~ y,
+                                   c==1 ~ y + 7500))
+
+```
+
+.pull-left[
+**Ignore biased observed relationship**
+```{r, echo=F}
+ggplot(ed) + 
+  geom_point(aes(x, y2, color=factor(c))) +
+  ylim(0, 40000) +
+  theme_pander(base_size = 16) +
+  scale_discrete_manual(aesthetics = c("color"), values = c(purple, red_pink)) +
+  theme(legend.position = "") +
+  geom_smooth(aes(x, y2), method=lm, se=F, linetype="dashed", color=grey_mid)
+
+```
+]
+
+.pull-right[
+**Estimate treatment effect absent bias**
+```{r, echo=F}
+ggplot(ed, aes(x, y2, color=factor(c))) + 
+  geom_point() +
+  ylim(0, 40000) +
+  theme_pander(base_size = 16) +
+  scale_discrete_manual(aesthetics = c("color"), values = c(purple, red_pink)) +
+  theme(legend.position = "") +
+  geom_smooth(method=lm, se=F)
+```
+]
+
+**Big idea**: if we were sure we knew that the only factor driving selection into treatment was individuals' membership in this group:
+- We can ignore overall point cloud and refuse to estimate the biased Y|X slope
+- Instead, conduct analysis within each subsidiary point clouds
+  + Obtain estimates of treatment effect within each point cloud
+  + Average to obtain overall *unbiased* estimate of treatment effect of more educational attainment
+
+---
+# Matching routines
+### Phase I:
+
+1. Investigate the selection process explicitly by fitting a "selection model":
+  - Could use exact, coarsened exact, etc. family of approaches
+  - Or fit a logistic model, with treatment group membership as outcome, and predictors you believe describe the process of selection explicitly:
+$$D_{i} = \frac{1}{1+e^{-\textbf{X}_{i} \theta_{i}}}$$
+2. Use selection model to estimate fitted probability of selection into treatment $(\hat{p})$ for each participant
+
+
+### Phase II:
+
+1. Enforce overlap in sample
+2. Check balancing condition has been satisfied
+3. Estimate treatment effect in matched (weighted) sample
+
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Putting it all together
+
+.blue[**Is there a hierarchy of causal inference strategies?**]
+
+--
+.red-pink[.large[**NO!**]]
+
+--
+Each research design is the best design and has the highest degree of internal validity, *given the data-generating process*.
+
+--
+
+A regression discontinuity design with poorly met assumptions (e.g., manipulation or even insufficient observations on one side of discontinuity that prevent modeling appropriate functional form) is not a "better" design than a well-justified matching study.
+
+--
+
+An RCT with great internal validity might not teach us as much as a generalizable RD.
+
+
+---
+# Can you explain this figure?
+
+```{r, out.width = "100%", echo=F}
+  knitr::include_graphics("causal_id.jpg")
+```
+---
+class: middle, inverse
+# Logistics and wrap-up
+
+---
+# Goals
+
+.large[.purple[
+1. **Describe conceptual approach to matching analysis**
+2. **Assess validity of matching approach and what selection on observable assumptions implies**
+3. **Conduct matching analysis in simplified data using both coarsened-exact matching (CEM) and propensity-score matching (PSM)**
+4. **Synthesize strategies for causal inference and articulate value of each strategy given a particular data-generating process**
+]
+]
+
+
+---
+# To-Dos
+
+## Week 10: Presentate! `r emo::ji("smile")`
+
+### Order (randomly generated):
+1. Anwesha
+2. Taiyo
+3. Adria
+4. Merly
+5. Chris
+6. Thuy
+
+---
+# To-dos
+
+### Readings: 
+- None!
+
+### Final Research Project
+- Presentation, March 8 
+- Paper, March 17 (submit March 10 for early feedback)
+
+---
+# Feedback
+
+### Student Experience Survey
+

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Matching and Synthesis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="David D. Liebowitz" />
+    <script src="EDLD_650_9_synthesis_files/header-attrs-2.11.22/header-attrs.js"></script>
+    <link href="EDLD_650_9_synthesis_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="EDLD_650_9_synthesis_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
+    <link href="EDLD_650_9_synthesis_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my_custom.css" type="text/css" />
+    <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Matching and Synthesis
+## EDLD 650: Week 9
+### David D. Liebowitz
+
+---
+
+
+&lt;style type="text/css"&gt;
+.inverse {
+  background-color : #2293bf;
+}
+&lt;/style&gt;
+
+
+
+# Agenda
+### 1. Roadmap and Goals (9:00-9:10)
+### 2. Umansky &amp; Dumont and DARE #4 (9:10-10:20)
+### 3. Break (10:20-10:30)
+### 4. Presenting (10:30-10:45)
+### 5. Review and synthesis (10:45-11:40)
+### 5. Wrap-up (11:40-11:50)
+
+---
+# Roadmap
+
+&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+---
+# Goals
+
+.large[.purple[
+1. **Describe conceptual approach to matching analysis**
+2. **Assess validity of matching approach and what selection on observable assumptions implies**
+3. **Conduct matching analysis in simplified data using both coarsened-exact matching (CEM) and propensity-score matching (PSM)**
+4. **Synthesize strategies for causal inference and articulate value of each strategy given a particular data-generating process**
+]
+]
+
+---
+class: middle, inverse
+
+# So random...
+
+---
+# DARE-d to do it!
+
+Student examples in class...
+
+---
+class: middle, inverse
+
+# Break
+
+---
+class: middle, inverse
+
+# Review
+
+---
+# Correlation and causation 
+
+.large[
+-	Causal, correlational and descriptive research are all important, but they are distinct and should be approached differently
+-	If you encounter a research study (or embark on your own research project) an important first consideration to ask yourself is: 
+  + Is this study attempting to an answer an explicitly or implicitly causal question? If so, what are its identifying assumptions?
+-	One framework for considering these identifying assumptions : .blue[**the potential outcomes framework**]
+]
+
+---
+# Causal inference: Platonic ideal
+
+
+`\(Y_{i}^{1}\)` = potential value of outcome for `\(i^{th}\)` person, when treated `\((D_{i} = 1)\)`
+
+`\(Y_{i}^{0}\)` = potential value of outcome for `\(i^{th}\)` person, when .blue[**NOT**] treated `\((D_{i} = 0)\)`
+
+
+The .blue[**Individual Treatment Effect (ITE)**] is the difference in potential outcome values between treatment and control conditions, for each individual:
+
+`$$ITE_{i} = Y_{i}^{1} - Y_{i}^{0}$$`
+
+--
+
+.red[**We never actually observe this!!!**]
+
+--
+
+
+The .blue[**Average Treatment Effect (ATE)**] is the average of the individual treatment effects across all participants:
+
+`$$\hat{ATE}_{i} = \frac{1}{n}{\sum_{i}^n ITE_{i}}$$`
+
+--
+
+If the ATE differed from zero, we could claim that the treatment *caused* the effect because there would be no other explanation for the differences detected between the treatment and control conditions!
+
+---
+# Conditions of causal claims
+
+.large[
+1. Cause must precede effect in time
+2. Systematic variation in levels of cause must result in corresponding variation in the effect
+3. Must be able to discount all other plausible explanations
+
+]
+
+---
+# RCTs: Gold Standard
+
+Randomly assign each participant to the .blue[**Treatment**] (where we measure their value of `\(Y_{i}^{1}\)` ) or .red[**Control**] (where we measure their value of `\(Y_{i}^{0}\)` ) condition. 
+
+
+`$$\hat{ATE}_{i} = \frac{1}{n_{1}}{\sum_{i}^{n_1} ITE_{i}} - \frac{1}{n_{0}}{\sum_{i}^{n_0} ITE_{i}}$$`
+
+--
+
+- .small[Treatment variation is .blue[**exogenously and randomly assigned**].] 
+- .small[Members of the treatment and control groups are then equivalent, on average, in the population (.blue[“equal in expectation”]) before the experiment begins, on every possible dimension,] `\(\bar{\textbf{X}}_{D=1} \approxeq \bar{\textbf{X}}_{D=0}\)`
+- .small[The values of treatment variable, D, will also be completely uncorrelated with all characteristics of participants, observed and unobserved, in the population.]
+
+---
+# RCTs: Issues and assumptions
+
+- **Randomization**: Was it successful Check balance at variable level and with omnibus `\(F\)`-test
+- **Sample**: Representative? Sufficiently powered? for tests of heterogeneity? Pre-registered?
+- **Threats**:
+  + Spillover
+  + Hawthorne/John Henry
+  + Non-compliance
+  + Attrition
+  
+--
+  + SUTVA...the lurking monster
+
+---
+class: middle, inverse
+
+# Questions?
+---
+# DD: Classic two-period
+
+$$
+`\begin{align}
+  y_i=\alpha + \beta(\text{FATHERDEC}_i \times \text{OFFER}_i) + \delta \text{FATHERDEC}_i + \theta \text{OFFER}_i + \upsilon_i
+\end{align}`
+$$
+
+---
+# DD: Two-way fixed effects
+
+$$
+`\begin{align}
+ \text{DROPOUT_BLACK} _{jt} = \beta_1 \text{UNITARY} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{align}`
+$$
+---
+# DD: Time-variant effects
+$$
+`\begin{aligned}
+ \text{DROPOUT_BLACK} _{jt} = &amp; \color{red}{\beta_1} \text{UNITARY} _{jt} + \color{orange}{\beta_2} (\text{UNITARY} \times \text{YEAR_CENT}) _{jt} + \\
+    &amp; \color{blue}{\beta_3} \text{YEAR_CENT} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{aligned}`
+$$
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+# DD: Event Study
+
+$$
+`\begin{aligned}
+ \text{DROPOUT_BLACK} _{jt} = &amp; \beta_1 \text{pre}^{-n}_{jt} + \beta_2 \text{pre8} + \beta_3 \text{pre7} _{jt} +... \\
+&amp; +\beta_m \text{post0} _{jt} + ...+ \beta_n \text{post}^{n}_{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{aligned}`
+$$
+--
+
+Could also write as:
+$$
+`\begin{align}
+  \text{DROPOUT_BLACK} _{jt} = \sum_{t=-10}^n 1(\text{t}=\text{t}_{j}^*)\beta_t+ \Gamma_j  + \Pi_t + \epsilon _{j}
+\end{align}`
+$$
+--
+
+.blue[**the assumptions and design structure are the same across all these!**]
+
+---
+## DD: Assumptions
+
+
+1. Not-treated (or not-yet-treated) units are .blue[**valid counterfactuals**]
+  - Parallel trends?
+  - Selection into treatment?
+
+--
+2. There are no .blue[**simultaneous shocks**] or unobserved .blue[**secular trends**]
+  - Other observed and unobserved events or patterns?
+
+--
+3. Appropriate weighting
+  - See ["further reading"]("schedule.html") for latest
+  
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Regression Discontinuity
+
+`$$p(COLL_{i}=1)= \beta_{0} + \beta_{1} TESTSCORE_{i} + 1(TESTSCORE_{i} \geq 60)\beta_{2} + \varepsilon_{i}$$`
+
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# RD: Issues and Assumptions
+
+1. A **.red[Local] Average Treatment Effect (LATE)**
+ - bandwidth selection (bias v. variance tradeoff)
+2. Functional-form specification
+3. Forcing variable predicts treatment discontinuously
+4. No manipulation
+5. No bunching
+
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Instrumental variables
+
+&lt;img src="iv2.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+
+
+.pull-left[
+**IV estimate**: ratio of area of *overlap of `\(Y\)` and `\(Z\)`* to area of *overlap of `\(D\)` and `\(Z\)`*. Depends entirely on variation in `\(Z\)` that predicts variation in `\(Y\)` and `\(D\)`:
+]
+
+.pull-right[
+`$$\hat{\beta}_{1}^{IVE} = \frac{S_{YD}}{S_{DZ}}$$`
+a .blue[**Local Average Treatment Effect**]
+]
+---
+# 2SLS IV set-up
+
+### 1&lt;sup&gt;st&lt;/sup&gt; stage:
+Regress the endogenous treatment `\((D_{i})\)` on instrumental variable `\((Z_{i})\)` using OLS:
+`$$D_{i} = \alpha_{0} + \alpha_{1}Z_{i} + \nu_{i}$$`
+
+Obtain the *predicted values* of the treatment `\((\hat{D_{i}})\)` from this fit.
+
+
+### 2&lt;sup&gt;nd&lt;/sup&gt; stage:
+Regress the outcome `\((Y_{i})\)` on the predicted values of the treatment `\((\hat{D_{i}})\)`:
+`$$Y_{i} = \beta_{0} + \beta_{1}\hat{D_{i}} + \varepsilon_{i}$$`
+
+---
+# Valid instruments
+
+1. Instrument `\((Z_{i})\)` must be correlated with treatment `\((D_{i})\)`, .red[*but*]
+2. Instrument `\((Z_{i})\)` must be orthogonal `\((\perp)\)` to all other determinants of the outcome `\((Y_{i})\)` 
+  - Another way of saying it must be uncorrelated with the residuals `\((\varepsilon_{i})\)`
+3. Instrument must be related to the outcome .red[*only*] through the treatment
+  - This is known as the .blue[**exclusion restriction**]
+
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Matching
+
+
+
+.pull-left[
+**Ignore biased observed relationship**
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+**Estimate treatment effect absent bias**
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+**Big idea**: if we were sure we knew that the only factor driving selection into treatment was individuals' membership in this group:
+- We can ignore overall point cloud and refuse to estimate the biased Y|X slope
+- Instead, conduct analysis within each subsidiary point clouds
+  + Obtain estimates of treatment effect within each point cloud
+  + Average to obtain overall *unbiased* estimate of treatment effect of more educational attainment
+
+---
+# Matching routines
+### Phase I:
+
+1. Investigate the selection process explicitly by fitting a "selection model":
+  - Could use exact, coarsened exact, etc. family of approaches
+  - Or fit a logistic model, with treatment group membership as outcome, and predictors you believe describe the process of selection explicitly:
+`$$D_{i} = \frac{1}{1+e^{-\textbf{X}_{i} \theta_{i}}}$$`
+2. Use selection model to estimate fitted probability of selection into treatment `\((\hat{p})\)` for each participant
+
+
+### Phase II:
+
+1. Enforce overlap in sample
+2. Check balancing condition has been satisfied
+3. Estimate treatment effect in matched (weighted) sample
+
+---
+class: middle, inverse
+
+# Questions?
+
+---
+# Putting it all together
+
+.blue[**Is there a hierarchy of causal inference strategies?**]
+
+--
+.red-pink[.large[**NO!**]]
+
+--
+Each research design is the best design and has the highest degree of internal validity, *given the data-generating process*.
+
+--
+
+A regression discontinuity design with poorly met assumptions (e.g., manipulation or even insufficient observations on one side of discontinuity that prevent modeling appropriate functional form) is not a "better" design than a well-justified matching study.
+
+--
+
+An RCT with great internal validity might not teach us as much as a generalizable RD.
+
+
+---
+# Can you explain this figure?
+
+&lt;img src="causal_id.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+---
+class: middle, inverse
+# Logistics and wrap-up
+
+---
+# Goals
+
+.large[.purple[
+1. **Describe conceptual approach to matching analysis**
+2. **Assess validity of matching approach and what selection on observable assumptions implies**
+3. **Conduct matching analysis in simplified data using both coarsened-exact matching (CEM) and propensity-score matching (PSM)**
+4. **Synthesize strategies for causal inference and articulate value of each strategy given a particular data-generating process**
+]
+]
+
+
+---
+# To-Dos
+
+## Week 10: Presentate! 😄
+
+### Order (randomly generated):
+1. Anwesha
+2. Taiyo
+3. Adria
+4. Merly
+5. Chris
+6. Thuy
+
+---
+# To-dos
+
+### Readings: 
+- None!
+
+### Final Research Project
+- Presentation, March 8 
+- Paper, March 17 (submit March 10 for early feedback)
+
+---
+# Feedback
+
+### Student Experience Survey
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
