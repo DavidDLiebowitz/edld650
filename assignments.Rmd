@@ -86,7 +86,7 @@ Assignment details: [pdf](./assignments/DARE_4/DARE_4.pdf)
 
 Dataset: [dta](./assignments/DARE_4/data/dumont_umansky_ECLSK.dta)
 
-Answer Key: pdf | tex | R script
+Answer Key: [pdf](./assignments/DARE_4/DARE_4_answers.pdf) | [tex](./assignments/DARE_4/DARE_4_answers.tex) | [R script](./assignments/DARE_4/code/EDLD_650_DARE_4_code.R)
 
 
 # 4. Final Research Project 

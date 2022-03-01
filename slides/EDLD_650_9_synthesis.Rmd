@@ -140,6 +140,47 @@ class: middle, inverse
 ---
 class: middle, inverse
 
+# Presenting
+
+---
+# Causal inference presentations
+
+With 10-15 minutes you have time for:
+1. What is the focus and why is this important? (1-2 slides)
+2. What are the research questions? (1 slide)
+3. What are the key features of the sample and data (2 slides)
+4. What is the methodology and research design? (2-3 slides)
+5. What is the result? (3-4 slides)
+6. What does this mean? (1 slide)
+
+--
+
+If you are only presenting on a proposal, cut results, but preserve/extend data and methodology (rather than motivation)
+
+--
+
+.blue[Are these any different than standard academic presentations?]
+
+--
+.red-pink[**Yes and No**]
+
+--
+
+.blue[Is this particular structure just about disciplinary norms?]
+
+--
+.red-pink[**Yes and No**]
+
+--
+
+.blue[**Key insight**]: *For presentations to lay audience:* they trust you know what you are talking about, you need to convince them it is important. 
+
+--
+*For presentations to researchers:* they already believe your topic is important, you need to convince them you are right.
+
+---
+class: middle, inverse
+
 # Review
 
 ---

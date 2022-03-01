@@ -295,7 +295,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: html | pdf
+- Slides: [html](./slides/EDLD_650_9_synthesis.html) | [pdf](./slides/EDLD_650_9_synthesis.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 9 Questions.docx)
 
 **Assignment:**
