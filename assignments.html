@@ -357,7 +357,7 @@ d-title {
 
 </style>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -629,8 +629,8 @@ body {
   padding-top: 60px;
 }
 </style>
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -681,6 +681,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -701,6 +702,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -758,11 +762,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -791,8 +799,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -800,16 +808,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -964,7 +965,7 @@ Lectures
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -980,7 +981,7 @@ Lectures
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Lectures
      
     <span class="caret"></span>
@@ -1035,26 +1036,55 @@ Lectures
 
 
 
-<h1 class="title toc-ignore">Data Analysis and Replication Exercises (DAREs)</h1>
+<h1 class="title toc-ignore">Data Analysis and Replication Exercises
+(DAREs)</h1>
 
 </div>
 
 
 <div id="general-guidelines" class="section level1">
 <h1>1. General Guidelines</h1>
-<p>For each of the four units, you will complete a Data Analysis and Replication Exercise (DARE) that will require you to integrate statistical programming, methodological understanding and scholarly writing skills. In the preceding class, you will be provided with guidance and a detailed assignment that will entail familiarizing yourself with a replication dataset for one of the papers we have read. You will need to familiarize yourself with this small data set, produce a set of tables and figures that replicate some of the results from the paper, and write up your results in a memo following scholarly reporting standards. Each DARE will have a detailed assignment sheet and you will receive exemplar models after your work is graded.</p>
+<p>For each of the four units, you will complete a Data Analysis and
+Replication Exercise (DARE) that will require you to integrate
+statistical programming, methodological understanding and scholarly
+writing skills. In the preceding class, you will be provided with
+guidance and a detailed assignment that will entail familiarizing
+yourself with a replication dataset for one of the papers we have read.
+You will need to familiarize yourself with this small data set, produce
+a set of tables and figures that replicate some of the results from the
+paper, and write up your results in a memo following scholarly reporting
+standards. Each DARE will have a detailed assignment sheet and you will
+receive exemplar models after your work is graded.</p>
 </div>
 <div id="submission-requirements" class="section level1">
 <h1>2. Submission Requirements</h1>
-<p>You will need to upload your work to Canvas by 9:00am of the Monday in the week in which the DARE is due.</p>
-<p>We encourage (though don’t require) you to form pairs (2 people maximum) for the DAREs. Both members of the pair should contribute equally to the submitted product, both members should list their names on their submitted work, both members of the pair should submit the assignment on Canvas, and each member of the pair will receive the same score on the assignment. Please email us if you have attempted to form a group or pair without success.</p>
+<p>You will need to upload your work to Canvas by 9:00am of the Monday
+in the week in which the DARE is due.</p>
+<p>We encourage (though don’t require) you to form pairs (2 people
+maximum) for the DAREs. Both members of the pair should contribute
+equally to the submitted product, both members should list their names
+on their submitted work, both members of the pair should submit the
+assignment on Canvas, and each member of the pair will receive the same
+score on the assignment. Please email us if you have attempted to form a
+group or pair without success.</p>
 <p>Please submit the following two documents for each DARE:</p>
 <ul>
-<li>An .html, .doc/x, or .pdf file that includes your typed responses, tables, and/or figures to the problems<br />
+<li>An .html, .doc/x, or .pdf file that includes your typed responses,
+tables, and/or figures to the problems<br />
 </li>
-<li>The programming code (.Rmd, .R, .do or similar file) that you used to generate the tables and figures in the above html/doc/pdf</li>
+<li>The programming code (.Rmd, .R, .do or similar file) that you used
+to generate the tables and figures in the above html/doc/pdf</li>
 </ul>
-<p><em>An aside: you may have noticed the use of the first person plural (“we”) throughout the course materials and may especially notice it in the DARE answer keys. It is not because I believe in the royal we, and it is NOT because I think it is good practice to write “we” when you are a sole author. Rather, some years a doctoral student will co-teach the class with me, and this syntax allows the course materials to be scalable and inclusive. Please write in the active voice your DARE memos.</em> <strong>If you are submitting joint work, use first person plural (“we”), if you are submitting individual work, use first person singular (“I”).</strong></p>
+<p><em>An aside: you may have noticed the use of the first person plural
+(“we”) throughout the course materials and may especially notice it in
+the DARE answer keys. It is not because I believe in the royal we, and
+it is NOT because I think it is good practice to write “we” when you are
+a sole author. Rather, some years a doctoral student will co-teach the
+class with me, and this syntax allows the course materials to be
+scalable and inclusive. Please write in the active voice your DARE
+memos.</em> <strong>If you are submitting joint work, use first person
+plural (“we”), if you are submitting individual work, use first person
+singular (“I”).</strong></p>
 </div>
 <div id="dare-details" class="section level1">
 <h1>3. DARE details</h1>
@@ -1062,37 +1092,50 @@ Lectures
 <h2>DARE #1</h2>
 <p><strong>Difference-in-differences</strong></p>
 <p>Replication paper: Liebowitz, Porter &amp; Bragg (2021)</p>
-<p>Deadline: 9:00am, January 17 (<em>note that this is MLK Jr. Day; feel free to submit earlier</em>)</p>
-<p>Assignment details: <a href="./assignments/DARE_1/DARE_1.pdf">pdf</a></p>
-<p>Dataset: <a href="./assignments/DARE_1/data/EDLD_650_DARE_1.csv">csv</a></p>
-<p>Answer Key: <a href="./assignments/DARE_1/DARE_1_answers.pdf">pdf</a> | <a href="./assignments/DARE_1/DARE_1.tex">tex</a> | <a href="./assignments/DARE_1/code/EDLD_650_DARE_1_code.R">R script</a></p>
+<p>Deadline: 9:00am, January 17 (<em>note that this is MLK Jr. Day; feel
+free to submit earlier</em>)</p>
+<p>Assignment details: <a
+href="./assignments/DARE_1/DARE_1.pdf">pdf</a></p>
+<p>Dataset: <a
+href="./assignments/DARE_1/data/EDLD_650_DARE_1.csv">csv</a></p>
+<p>Answer Key:
+<!-- [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assignments/DARE_1/DARE_1.tex) | [R script](./assignments/DARE_1/code/EDLD_650_DARE_1_code.R) --></p>
 </div>
 <div id="dare-2" class="section level2">
 <h2>DARE #2</h2>
 <p><strong>Regression discontinuity</strong></p>
 <p>Replication paper: Holden (2016)</p>
 <p>Deadline: 9:00am, January 31</p>
-<p>Assignment details: <a href="./assignments/DARE_2/DARE_2.pdf">pdf</a></p>
-<p>Dataset: <a href="./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta">dta</a></p>
-<p>Answer Key: <a href="./assignments/DARE_2/DARE_2_answers.pdf">pdf</a> | <a href="./assignments/DARE_2/DARE_2.tex">tex</a> | <a href="./assignments/DARE_2/code/EDLD_650_DARE_2_code.R">R script</a></p>
+<p>Assignment details: <a
+href="./assignments/DARE_2/DARE_2.pdf">pdf</a></p>
+<p>Dataset: <a
+href="./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta">dta</a></p>
+<p>Answer Key:
+<!-- [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R) --></p>
 </div>
 <div id="dare-3" class="section level2">
 <h2>DARE #3</h2>
 <p><strong>Instrumental variables</strong></p>
 <p>Replication paper: Kim, Capotosto, Hartry &amp; Fitzgerald (2011)</p>
 <p>Deadline: 9:00am, February 14</p>
-<p>Assignment details: <a href="./assignments/DARE_3/DARE_3.pdf">pdf</a></p>
-<p>Dataset: <a href="./assignments/DARE_3/data/EDLD_650_DARE_3.csv">csv</a></p>
-<p>Answer Key: <a href="./assignments/DARE_3/DARE_3_answers.pdf">pdf</a> | <a href="./assignments/DARE_3/DARE_3_answers.tex">tex</a> | <a href="./assignments/DARE_3/code/EDLD_650_DARE_3_code.R">R script</a></p>
+<p>Assignment details: <a
+href="./assignments/DARE_3/DARE_3.pdf">pdf</a></p>
+<p>Dataset: <a
+href="./assignments/DARE_3/data/EDLD_650_DARE_3.csv">csv</a></p>
+<p>Answer Key:
+<!-- [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assignments/DARE_3/DARE_3_answers.tex) | [R script](./assignments/DARE_3/code/EDLD_650_DARE_3_code.R) --></p>
 </div>
 <div id="dare-4" class="section level2">
 <h2>DARE #4</h2>
 <p><strong>Matching</strong></p>
 <p>Replication paper: Umansky &amp; Dumont (2021)</p>
 <p>Deadline: 9:00am, February 28</p>
-<p>Assignment details: <a href="./assignments/DARE_4/DARE_4.pdf">pdf</a></p>
-<p>Dataset: <a href="./assignments/DARE_4/data/dumont_umansky_ECLSK.dta">dta</a></p>
-<p>Answer Key: <a href="./assignments/DARE_4/DARE_4_answers.pdf">pdf</a> | <a href="./assignments/DARE_4/DARE_4_answers.tex">tex</a> | <a href="./assignments/DARE_4/code/EDLD_650_DARE_4_code.R">R script</a></p>
+<p>Assignment details: <a
+href="./assignments/DARE_4/DARE_4.pdf">pdf</a></p>
+<p>Dataset: <a
+href="./assignments/DARE_4/data/dumont_umansky_ECLSK.dta">dta</a></p>
+<p>Answer Key:
+<!-- [pdf](./assignments/DARE_4/DARE_4_answers.pdf) | [tex](./assignments/DARE_4/DARE_4_answers.tex) | [R script](./assignments/DARE_4/code/EDLD_650_DARE_4_code.R) --></p>
 </div>
 </div>
 <div id="final-research-project" class="section level1">
@@ -1100,11 +1143,23 @@ Lectures
 <div id="project-presentation" class="section level2">
 <h2>Project Presentation</h2>
 <p>Deadline: 9:00am, March 8</p>
-<p>Here are some helpful resources on academic presentations. There are some disciplinary conventions that vary and you have several degrees of freedom to decide what your own personal style is, so don’t feel like there is a single formula. Some of the below resources are about the structure and substance of the presentation, others are about presentation style, and still others are about both.</p>
-<p>Jesse Shapiro’s <a href="https://www.brown.edu/Research/Shapiro/pdfs/applied_micro_slides.pdf">Tips on an Applied Micro Talk</a></p>
-<p>John Willett’s <a href="./assignments/Good%20Presentations.pptx">Good Presentations Presentation</a></p>
-<p>Alex Tabarrok’s <a href="./assignments/HowToGiveAGreatSeminar.pptx">How to Give a Great Seminar</a></p>
-<p>Berthold Herrendorf’s <a href="http://www.public.asu.edu/~bherrend/Various/PresentationTips.pdf">How to Make Academic Presentations</a></p>
+<p>Here are some helpful resources on academic presentations. There are
+some disciplinary conventions that vary and you have several degrees of
+freedom to decide what your own personal style is, so don’t feel like
+there is a single formula. Some of the below resources are about the
+structure and substance of the presentation, others are about
+presentation style, and still others are about both.</p>
+<p>Jesse Shapiro’s <a
+href="https://www.brown.edu/Research/Shapiro/pdfs/applied_micro_slides.pdf">Tips
+on an Applied Micro Talk</a></p>
+<p>John Willett’s <a href="./assignments/Good%20Presentations.pptx">Good
+Presentations Presentation</a></p>
+<p>Alex Tabarrok’s <a
+href="./assignments/HowToGiveAGreatSeminar.pptx">How to Give a Great
+Seminar</a></p>
+<p>Berthold Herrendorf’s <a
+href="http://www.public.asu.edu/~bherrend/Various/PresentationTips.pdf">How
+to Make Academic Presentations</a></p>
 </div>
 <div id="written-project" class="section level2">
 <h2>Written Project</h2>

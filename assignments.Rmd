@@ -44,7 +44,7 @@ Assignment details: [pdf](./assignments/DARE_1/DARE_1.pdf)
 
 Dataset: [csv](./assignments/DARE_1/data/EDLD_650_DARE_1.csv)
 
-Answer Key: [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assignments/DARE_1/DARE_1.tex) | [R script](./assignments/DARE_1/code/EDLD_650_DARE_1_code.R)
+Answer Key: <!-- [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assignments/DARE_1/DARE_1.tex) | [R script](./assignments/DARE_1/code/EDLD_650_DARE_1_code.R) -->
 
 ## DARE #2 
 
@@ -58,7 +58,7 @@ Assignment details: [pdf](./assignments/DARE_2/DARE_2.pdf)
 
 Dataset: [dta](./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta)
 
-Answer Key: [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R)
+Answer Key: <!-- [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R) -->
 
 ## DARE #3 
 
@@ -72,7 +72,7 @@ Assignment details: [pdf](./assignments/DARE_3/DARE_3.pdf)
 
 Dataset: [csv](./assignments/DARE_3/data/EDLD_650_DARE_3.csv)
 
-Answer Key: [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assignments/DARE_3/DARE_3_answers.tex) | [R script](./assignments/DARE_3/code/EDLD_650_DARE_3_code.R)
+Answer Key: <!-- [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assignments/DARE_3/DARE_3_answers.tex) | [R script](./assignments/DARE_3/code/EDLD_650_DARE_3_code.R) -->
 
 ## DARE #4 
 
@@ -86,7 +86,7 @@ Assignment details: [pdf](./assignments/DARE_4/DARE_4.pdf)
 
 Dataset: [dta](./assignments/DARE_4/data/dumont_umansky_ECLSK.dta)
 
-Answer Key: [pdf](./assignments/DARE_4/DARE_4_answers.pdf) | [tex](./assignments/DARE_4/DARE_4_answers.tex) | [R script](./assignments/DARE_4/code/EDLD_650_DARE_4_code.R)
+Answer Key: <!-- [pdf](./assignments/DARE_4/DARE_4_answers.pdf) | [tex](./assignments/DARE_4/DARE_4_answers.tex) | [R script](./assignments/DARE_4/code/EDLD_650_DARE_4_code.R) -->
 
 
 # 4. Final Research Project 
