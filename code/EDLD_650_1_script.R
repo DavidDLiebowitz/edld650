@@ -1,9 +1,9 @@
 ######################################################
 ## Script Name: EDLD_650_1_script.R
-## Project Title: EDLD 650 Winter 2022
+## Project Title: EDLD 650 Winter 2024
 ## Author: David Liebowitz
 ## Created: 12/17/21
-## Last update: 12/17/21
+## Last update: 1/3/24
 ## Purpose: this script imports the SfA data, does light variable cleaning and estimates the effects of randomized assignment of the 
 ##                      school-level treatment of SfA. To do so, it fits a multi-level random effects model to adjust for school-level differences in achievement
 ## Inputs: ch7_sfa.dta           
