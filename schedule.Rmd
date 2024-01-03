@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 1: A Common Vocabulary
 
-### Week 1: January 4
+### Week 1: January 8
 
 **Objectives:**
 
@@ -44,7 +44,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Assignment:**
 
-- Student survey (see email or Canvas)
+- Student survey **due Jan. 10** (see email or Canvas)
 
 *Further readings:*
 
@@ -57,7 +57,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 2: Difference-in-differences
 
-### Week 2: January 11
+### Week 2: Asynchronous Online
 
 **Objectives:**
 
@@ -71,15 +71,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
+<!--
 - Slides: [html](./slides/EDLD_650_2_DD_1.html) | [pdf](./slides/EDLD_650_2_DD_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 2 Questions.docx)
 - R Script: [Class 2](./code/EDLD_650_2_DD_script.R)
 - Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](./data/edld650_class_2_eepa_data.dta)
 - Review slides: [html](./slides/EDLD_650_Review.html)
+-->
 
 **Assignment:**
 
-- Complete DARE #1 by 9:00am, January 17 (*note that this is MLK Jr. Day; feel free to submit earlier*)
+- Submit written responses to Class 2 Questions by 12:00pm, Jan. 16
+- Complete DARE #1 by 11:59pm, January 21
 
 *Further readings:*
 
@@ -88,7 +91,7 @@ knitr::opts_chunk$set(echo = TRUE)
 3. Cunningham (2021), Chapters 8-9
 
 
-### Week 3: January 18
+### Week 3: January 22
 
 **Objectives:**
 
@@ -98,28 +101,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Readings:**
 
-1. Liebowitz, D.D., Porter, L. & Bragg, D. (2022). [The effects of higher-stakes teacher evaluation on office disciplinary referrals](./readings/Liebowitz Porter Bragg 2022.pdf). *Journal of Research on Educational Effectiveness*. [Online Appendix](./readings/Liebowitz Porter Bragg 2022 supplemental.pdf)
+1. Liebowitz, D.D., Porter, L. & Bragg, D. (2022). [The effects of higher-stakes teacher evaluation on office disciplinary referrals](./readings/Liebowitz Porter Bragg 2022.pdf). *Journal of Research on Educational Effectiveness, 15*(3), 475-509. [Online Appendix](./readings/Liebowitz Porter Bragg 2022 supplemental.pdf)
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_3_RD_1.html) | [pdf](./slides/EDLD_650_3_RD_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
-
+-->
 
 **Assignment:**
 
-- Submit Research Project Proposal by 9:00am, January 28
+- Submit Research Project Proposal by 11:59pm, January 28
 
 *Further readings:*
 
 1. Zeldow, B. & Hatfield, L. (2019). [Difference-in-differences](https://diff.healthpolicydatascience.org/).
 2. Baker, A. (2019). [Difference-in-differences methodology](https://andrewcbaker.netlify.app/2019/09/25/difference-in-differences-methodology/).
 3. de Chaisemartin, C. & d'Haultfoeuille, X. (2021). [Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey](./readings/deChaisemartin DHaultfoeuille 2021.pdf).
-4. Roth, J., Sant'Anna, P.H.C., Bilinski, A. & Poe, J. (2022). [What's trending in difference-in-differences? A synthesis of the recent econometrics literature.](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf)
+4. Roth, J., Sant'Anna, P.H.C., Bilinski, A. & Poe, J. (2023). [What's trending in difference-in-differences? A synthesis of the recent econometrics literature.](https://www.sciencedirect.com/science/article/abs/pii/S0304407623001318) *Journal of Econometrics, 235*(2), 2218-2244.
 
 ## Unit 3: Regression Discontinuity
 
-### Week 4: January 25
+### Week 4: January 29
 
 **Objectives:**
 
@@ -131,29 +134,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1.	Murnane and Willett, Chapter 9
 2. Angrist, J.D. & Lavy, V. (1999). [Using Maimonides’ Rule to estimate the effect of class size on scholastic achievement](./readings/Angrist Lavy 1999.pdf). *Quarterly Journal of Economics, 114*(2), 533-575. 
-3. Ludwig, J. & Miller, D. (2007). [Does Head Start improve children’s life chances? Evidence from a regression discontinuity design](./readings/Ludwig Miller 2007.pdf). *Quarterly Journal of Economics, 122*(1), 159-208.
+3. Dee, T.S. & Penner, E.K. (2017). [The causal effects of cultural relevance: Evidence from an Ethnic Studies curriculum](./readings/Dee Penner 2017.pdf). *American Educational Research Journal, 54*(1), 127-166.
 	 
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_4_RD_2.html) | [pdf](./slides/EDLD_650_4_RD_2.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 4 Questions.docx)
 - R Script: [Class 4](./code/EDLD_650_4_RD_script.R)
 - Data: [Angrist](./data/ch9_angrist.dta)
-
+-->
 
 **Assignment:** 
 
-- Complete DARE #2 by 9:00am, January 31
+- Complete DARE #2 by 11:59pm, February 5
 
 *Further readings:*
 
 1. Angrist and Pischke (2009), Chapter 6
 2. Angrist and Pischke (2014), Chapter 4
 3. Cunningham (2021), Chapter 6
+4. Ludwig, J. & Miller, D. (2007). [Does Head Start improve children’s life chances? Evidence from a regression discontinuity design](./readings/Ludwig Miller 2007.pdf). *Quarterly Journal of Economics, 122*(1), 159-208.
 
-
-### Week 5: February 1
+### Week 5: February 6
 
 **Objectives:**
 
@@ -167,9 +170,10 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Holden, K.L. (2016). [Buy the book? Evidence on the effect of textbook funding on school-level achievement.](./readings/Holden 2016.pdf) *American Economic Journal: Applied Economics, 8*(4), 100-127. [Online Appendix](./readings/Holden 2016 appendix.pdf)
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_5_IV_1.html) | [pdf](./slides/EDLD_650_5_IV_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 5 Questions.docx)
+-->
 
 **Assignment:** 
 
@@ -183,7 +187,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 4: Instrumental Variables
 
-### Week 6: February 8
+### Week 6: February 12
 
 **Objectives:**
 
@@ -199,15 +203,16 @@ knitr::opts_chunk$set(echo = TRUE)
 	 
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_6_IV_2.html) | [pdf](./slides/EDLD_650_6_IV_2.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 6 Questions.docx)
 - R Script: [Class 6](./code/EDLD_650_6_IV_script.R)
 - Data: [PACES](./data/ch11_PACES.csv)
+-->
 
 **Assignment:**
 
-- Complete DARE #3 by 9:00am February 14
+- Complete DARE #3 by 11:59pm February 18
 
 *Further readings:*
 
@@ -217,7 +222,7 @@ knitr::opts_chunk$set(echo = TRUE)
 4.  Angrist, J.A and Krueger, A.B. (2001). [Instrumental variables and the search for identification: From supply and demand to natural experiments.](./readings/Angrist Krueger 2001.pdf) *Journal of Economic Perspectives, 15*(4), 69-85.
 
 
-### Week 7: February 15
+### Week 7: February 19
 
 **Objectives:**
 
@@ -231,10 +236,10 @@ knitr::opts_chunk$set(echo = TRUE)
 1.	Kim, J.S., Capotosto, L., Hartry, A. & Fitzgerald, R. (2011). [Can a mixed-method literacy intervention improve the reading achievement of low-performing elementary school students in an after-school program? Results from a randomized controlled trial of READ180 Enterprise](./readings/Kim et al 2011.pdf). *Educational Evaluation and Policy Analysis, 33*(2), 183-201. 
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_7_match_1.html) | [pdf](./slides/EDLD_650_7_match_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 7 Questions.docx)
- 
+ -->
 
 **Assignment:**
 
@@ -247,7 +252,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 5: Matching
 
-### Week 8: February 22
+### Week 8: February 26
 
 **Objectives:**
 
@@ -262,15 +267,16 @@ knitr::opts_chunk$set(echo = TRUE)
  
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_8_match_2.html) | [pdf](./slides/EDLD_650_8_match_2.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 8 Questions.docx)
 - R Script: [Class 8](./code/EDLD_650_8_matching_script.R) 
 - Data: [dta](./data/ch12_catholic.dta)
+-->
 
 **Assignment:**
 
-- Complete DARE #4 by 9:00 February 28
+- Complete DARE #4 by 11:59pm, March 3.
 
 *Further readings:*
 
@@ -279,7 +285,7 @@ knitr::opts_chunk$set(echo = TRUE)
 3.	Iacus, S. M., King, G., & Porro, G. (2011). Causal inference without balance checking: Coarsened Exact Matching. *Political Analysis, 20*(1), 1–24. https://doi.org/10.1093/pan/mpr013. 
 
 
-### Week 9: March 1
+### Week 9: March 4
 
 **Objectives:**
 
@@ -294,13 +300,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_9_synthesis.html) | [pdf](./slides/EDLD_650_9_synthesis.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 9 Questions.docx)
-
+-->
 **Assignment:**
 
-- Prepare to present Research Project Presentation in class on March 8
+- Prepare to present Research Project Presentation in class on March 11
 
 *Further readings:*
 
@@ -309,7 +315,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 6: Presentations
 
-### Week 10: March 8
+### Week 10: March 11
 
 
 **Readings:** 
@@ -317,7 +323,9 @@ knitr::opts_chunk$set(echo = TRUE)
 - None!
 
 
-**Assignment:** Submit Final Research Project by **9:00am March 17th.**
+**Assignment:** 
+
+- Submit Final Research Project by **5:00pm March 20th.**
 
 
 

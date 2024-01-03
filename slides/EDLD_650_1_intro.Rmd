@@ -40,7 +40,7 @@ extra_css <- list(
   ".red-pink" = list(color= "#e64173"),
   ".grey-light" = list(color= "grey70"),
   ".slate" = list(color="#314f4f"),
-  ".small" = list("font-size" = "90%"),
+  ".small" = list("font-size" = "80%"),
   ".large" = list("font-size" = "120%"))
 
 
@@ -136,7 +136,7 @@ include_graphics("cuddy_art.jpg")
 include_graphics("cuddy_art2.jpg")
 ```
 ---
-# Descriptive and causal research
+## Descriptive and causal research
 
 > **Quality causal research question**: Did the Success for All whole-school intervention improve students' reading achievement?
 
@@ -212,7 +212,7 @@ class: middle, inverse
 
 
 ---
-# Five conditions of causal claims
+# 5 conditions of causal claims
 
 [William Shadish, Donald Cook and Thomas Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) adapt John Stuart Mill's critical conditions that must exist in order to defend the claim that one thing causes another:
 
@@ -341,7 +341,7 @@ We can draw our random sample, and randomly assign each participant to the .blue
 
 $$\hat{ATE}_{i} = \frac{1}{n_{1}}{\sum_{i}^{n_1} ITE_{i}} - \frac{1}{n_{0}}{\sum_{i}^{n_0} ITE_{i}}$$
 ---
-# The importance of exogeneity
+# Importance of exogeneity
 
 The big idea in a randomized experiment is that treatment variation is .blue[**exogenously and randomly assigned**]. An external (or "exogenous") agent, usually the researcher, determines who is treated $(D_{i} = 1)$ and who is not $(D_{i} = 0)$.
 
@@ -428,13 +428,13 @@ $$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \beta_{2}X_{i} + \color{purple}\varepsilo
 # Cold-calling
 
 .pull-left[
-#### .purple[Purpose]
+.purple[**Purpose**]
 - Formative assessment
-- Equitable distribution of class participation
+- Fair distribution of participation
 - Shared accountability for deep understanding of complex and technical readings
 
-#### .purple[Norms]
-- Questions posted by Thursday PM
+.purple[**Norms**]
+- Questions posted by Wednesday
 - Preparation is expected
 - These are hard concepts; mistakes are expected
 - Judgments on accuracy of responses are about the responses, not the individual
@@ -442,7 +442,7 @@ $$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \beta_{2}X_{i} + \color{purple}\varepsilo
 ]
 
 .pull-right[
-#### .purple[Structure]
+.purple[**Structure**]
 - All cold calls will be telegraphed
 - Questions will come directly from question list
 - Random draw (w/ replacement) from class list
@@ -466,19 +466,21 @@ class: middle, inverse
 # More complexity
 
 ---
-# Threats to experimental validity
+## Threats to experimental validity
 
-### 1. Contamination of treatment-control contrast
+.large[.purple[**1. Contamination of treatment-control contrast**]]
  - violations of Stable Unit Treatment-Value Assumption (SUTVA)
  - an important assumption: selection of others into an intervention should not affect your outcome
  
-### 2. Cross overs (aka non-compliance)
+.large[.purple[**2. Cross overs (aka non-compliance)**]]
 
-### 3. Attrition
+.large[.purple[**3. Attrition**]]
 
-### 4. Participation in experiment affects behavior
+.large[.purple[**4. Participation in experiment affects behavior**]]
  - Hawthorne and John Henry effects
  
+--
+
 > There is much to explore in these threats to validity. We will address some in the Instrumental Variables unit, but could form entire courses.
 
 ---
@@ -510,7 +512,7 @@ Thus, in this course, we will primarily concern ourselves with the goal of .blue
 but this is **hard**.
 
 ---
-# Correlation $\neq$ causation pt. 562
+## Correlation $\neq$ causation pt. 562
 
 RQ: What is the relationship between Oregon's annual per capita divorce rate and the U.S. per capita annual beef consumption? 
 
@@ -558,7 +560,7 @@ This is a classic problem of a .blue[**confounder**]!<sup>1</sup>
 .footnote[[1] More fun with [spurious correlations](https://www.tylervigen.com/spurious-correlations)]
 
 ---
-# Why correlation $\neq$ causation?
+## Why correlation $\neq$ causation?
 
 Common barriers in attributing causality to observed co-relationships include:
 - .purple[Confounders]: a third variable causes changes in X and also in Y
@@ -573,9 +575,9 @@ include_graphics("causalinf.jpg")
 h/t [@causalinf](https://twitter.com/causalinf)
 
 ---
-# Directed acyclic graphs (DAGs)
+## Directed acyclic graphs (DAGs)
 
-[Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629) model causal relationships through graphical representation.
+[Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629) can help us visualize the assumptions necessary to estimate causal relationships in observational data through graphical representation.
 
 
 ```{r, echo=F, fig.height=5}
@@ -632,8 +634,8 @@ ggdag::ggdag_status(dag0, use_labels = "label", text=F, text_size = 8) +
     ggdag::theme_dag() 
 ```
 
-- Directed Acyclical Graphs (DAGs)] model causal relationships through graphical representation
-- Arrows represent directional causal effects; missing arrow implies lack of a causal path
+- Directed Acyclical Graphs (DAGs)] help us visualize the assumptions necessary to estimate causal relationships in observational data
+- .red-pink[**Nodes**] represent variables; .purple[**arrows**] represent directional causal effects; missing arrow implies lack of a causal path
 - Effects are either:
    - direct $(D \rightarrow Y)$; i.e., the causal effect of D (college) on Y (earnings); **or**
    
@@ -656,17 +658,53 @@ ggdag::ggdag_status(dag3, use_labels = "label", text=F, text_size = 8) +
     ggdag::theme_dag() 
 ```
 
-- Directed Acyclical Graphs (DAGs)] model causal relationships through graphical representation
-- Arrows represent directional causal effects; missing arrow implies lack of a causal path
+- Directed Acyclical Graphs (DAGs)] help us visualize the assumptions necessary to estimate causal relationships in observational data
+- .red-pink[**Nodes**] represent variables; .purple[**arrows**] represent directional causal effects; missing arrow implies lack of a causal path
 - Effects are either:
    - direct $(D \rightarrow Y)$; i.e., the causal effect of D (college) on Y (earnings); or
    - indirect $(D \leftarrow X \rightarrow Y)$; i.e., a backdoor path created by a confounder
 - Here, conditioning on X (observed family characteristics) closes the backdoor and allows a causal estimate
 
+
+---
+# DAGs follow two rules
+
+.blue[**Rule 1: No bidirectional arrows**]   .red[**ILLEGAL!! Not "directed"**]
+```{r, echo=F, fig.height=2.75}
+dag3a <- ggdag::dagify(y ~ d,
+                       d ~ y,
+                     exposure = "d",
+                     outcome = "y",
+                coords = list(x = c(d = 1, y = 2),
+                              y = c(d = 2, y = 3))
+                              )
+ggdag::ggdag_status(dag3a, text_size = 8) +
+    guides(fill = F, color=F) +
+    ggdag::theme_dag() 
+```
+
+--
+
+.blue[**Rule 2: No feedback loops**]   .red[**ILLEGAL!! Not "acyclic"**]
+```{r, echo=F, fig.height=2.75}
+dag3b <- ggdag::dagify(y ~ d,
+                      x ~ d,
+                      x ~ y,
+                     exposure = "d",
+                     outcome = "y",
+                coords = list(x = c(d = 1, x = 2, y = 3),
+                              y = c(d = 2, x = 3, y = 2))
+                              )
+ggdag::ggdag_status(dag3b, text_size = 8) +
+    guides(fill = F, color=F) +
+    ggdag::theme_dag() 
+```
+
+
 ---
 # Confounders
 
-```{r, echo=F, fig.height=3.5}
+```{r, echo=F, fig.height=3.25}
 dag4 <- ggdag::dagify(y ~ d + i,
                       i ~ pe,
                       pe  ~ i + x,
@@ -695,7 +733,7 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 ---
 # Confounders
 
-```{r, echo=F, fig.height=3.5}
+```{r, echo=F, fig.height=3.25}
 dag5 <- ggdag::dagify(y ~ d + i + x,
                       i ~ pe,
                       pe  ~ i + x,
@@ -747,7 +785,7 @@ ggdag::ggdag_status(dag6, use_labels = "label", text=F, text_size = 8) +
   - Here, doing so might underestimate the effect of going to college
 
 ---
-# Where DAGs get tricky (for me)
+## Where DAGs get tricky (for me)
 
 ```{r, echo=F, fig.height=3.5}
 college_dag <- ggdag::dagify(
@@ -789,9 +827,8 @@ class: middle, inverse
 # Nested Data
 
 ---
-
 # What is nested data?
-Recall the Success for All evaluation from *Methods Matter*<sup>1</sup>
+.small[Recall the Success for All evaluation from *Methods Matter*]<sup>1</sup>
 ```{r, echo=T}
 ch7_sfa <- read_dta(here("data/ch7_sfa.dta"))
 ```
@@ -801,7 +838,7 @@ ch7_sfa$sfa <- as_factor(ch7_sfa$sfa)
 ch7_sfa$schid <- as_factor(ch7_sfa$schid)
 
 head(ch7_sfa, n=3)
-tail(ch7_sfa, n=3)
+tail(ch7_sfa, n=2)
 ```
 
 .footnote[[1] Most datasets from *MM* available from [UCLA stats site](https://stats.idre.ucla.edu/other/examples/methods-matter/).]
@@ -809,10 +846,10 @@ tail(ch7_sfa, n=3)
 ---
 # Modeling nested data
 
-### Physical nesting
+.large[**Physical nesting**]
 - Our data can be nested in multiple units: students inside classrooms, classrooms inside schools, schools inside districts, districts inside states, etc.
 
-### Conceptual nesting
+.large[**Conceptual nesting**]
 - If we observe students across multiple years, we will have multiple observations nested inside students
 - If we administer assessments multiple times, we will have tests nested inside students
 
@@ -824,7 +861,7 @@ In the SfA example, we want to capture the effect of receiving the SfA treatment
 ---
 # Two common approaches
 
-### Random intercepts (aka random effects)
+.large[.purple[**Random intercepts (aka random effects)**]]
 
 $$WATTACK_{ij} = \gamma_{0} + \gamma_{1}SFA_{j} + (\varepsilon_{ij} + \nu_{j})$$
 
@@ -837,7 +874,7 @@ $$WATTACK_{ij} = \gamma_{00} + \gamma_{01}SFA_{j} + (\varepsilon_{ij} + \nu_{0j}
 ---
 # Two common approaches
 
-### Random intercepts (aka random effects)
+.large[.purple[**Random intercepts (aka random effects)**]]
 
 $$WATTACK_{ij} = \gamma_{0} + \gamma_{1}SFA_{j} + (\varepsilon_{ij} + \nu_{j})$$
 
@@ -845,7 +882,7 @@ You may also have seen this written as:
 
 $$WATTACK_{ij} = \gamma_{00} + \gamma_{01}SFA_{j} + (\varepsilon_{ij} + \nu_{0j})$$
 
-### Fixed intercepts (aka fixed effects)
+.large[.purple[**Fixed intercepts (aka fixed effects)**]]
 
 $$WATTACK_{ij} = \sum_{1}^{J}\alpha_{j}S_{ij} + \gamma_{1}SFA_\color{red}{ij} + \varepsilon_{ij}$$
 .red[Notice the within-school variation in treatment in this hypothetical example]
@@ -855,7 +892,7 @@ $$WATTACK_{ij} = \sum_{1}^{J}\alpha_{j}S_{ij} + \gamma_{1}SFA_\color{red}{ij} + 
 ---
 # What is a fixed effect doing?
 
-```{r, echo=F, fig.height=4}
+```{r, echo=F}
 df <- data.frame(Person = rep(1:4,50)) %>%
   mutate(X = .5+.5*(Person-2.5) + rnorm(200)) %>%
   mutate(Y = -.5*X + (Person-2.5) + 1 + rnorm(200),time="1") %>%
@@ -893,7 +930,7 @@ p <- ggplot(dffull,aes(y=Y,x=X,color=as.factor(Person)))+geom_point()+
   ease_aes('sine-in-out')+
   exit_fade()+enter_fade()
 
-animate(p,nframes=200, renderer = gifski_renderer(loop = FALSE))
+animate(p,nframes=200, renderer = gifski_renderer(loop = FALSE, height=450))
 ```
 
 .small[h/t [@nickchk](https://twitter.com/nickchk)]
@@ -925,14 +962,14 @@ animate(p,nframes=200, renderer = gifski_renderer(loop = FALSE))
 
 
 ---
-# Random intercepts application
+## Random intercepts application
 ```{r, echo=T, output.lines = -(1:10)}
 sfa <- lme4::lmer(wattack ~ sfa + (1 | schid), data=ch7_sfa)
 summary(sfa)
 ```
 
 ---
-# Random intercepts application
+## Random intercepts application
 ```{r, echo=F, output.lines = -(1:10), highlight.output=c(4:5, 10:11)}
 sfa <- lme4::lmer(wattack ~ sfa + (1 | schid), data=ch7_sfa)
 summary(sfa)
@@ -963,7 +1000,7 @@ class: middle, inverse
 # Difference-in-differences (DD)
 
 ---
-# S. London cholera outbreak 1854
+## S. London cholera outbreak 1854
 
 .pull-left[
 - Londed was a crowded, dirty city w/ waste disposed directly in Thames River
@@ -1133,31 +1170,39 @@ class: middle, inverse
 ---
 # Key logistics
 
+.small[
 - Review syllabus carefully
 
 - Prepare questions in advance (partner work encouraged)
 
-- Review session? (multi-level models? residuals/standard errors? notation?)
+- Class canceled Jan. 15 for MLK Jr. Day; online video and submission of written responses to class questions
+
+- Review session 
+  + Review DD details
+  + What else? (multi-level models? residuals/standard errors? notation?)
+  + When?
 
 - Data Analysis and Replication Exercises (DAREs)
 - Project proposal by January 28
   - Meet w/ teaching staff to discuss at least once
-  - In class scholarly presentation (March 8)
-  - Written final research project (March 17; *optional feedback by March 10*)
-  
+  - In class scholarly presentation (March 11)
+  - Written final research project (March 20; *optional feedback by March 13*)
+]
+
 ---
 class: inverse
 # To-dos
 
-### Week 3: Difference-in-differences
+### Week 2: Difference-in-differences
 ### Readings for next week:
 - Murnane & Willet, Chapter 8
 - Dynarski (2003), Does aid matter?
 - Further, MHE: Ch. 5; 'Metrics: Ch. 5, Mixtape: Chs. 8 & 9
 
 ### Assignments Due
-- Complete student survey on Canvas (if not yet done) (Jan. 5)
-- DARE #1 due: 9:00am January 17
+- Complete student survey on Canvas (Jan. 10)
+- Watch recorded video and submit written responses to Class 2 questions (Jan. 16)
+- DARE #1 due: 11:59pm January 21
 
 
 ---
@@ -1165,15 +1210,13 @@ class: inverse
 
 ## Plus/Deltas
 
-- On front of index card
 - What worked about today's class?
 - What could be improved or changed about the pedagogical process of today's class?
 
 ## Clear/Murky
 
-- On back of index card
 - What substantively is most clear to you or got clarified during class today?
 - What is the muddiest substantive topic for you?
 
-- .blue[*For today only, could you please indicate (a) are you interested in attending a review session?; (b) if so, what topics would you like to see included in the review?; (c) what times are you available in the next two weeks?*]
+- .blue[*For today only, could you please indicate (a) what times you are available next week for a review session; (b) what topics would you like to see included in the review?*]
 

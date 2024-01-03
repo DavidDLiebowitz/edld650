@@ -357,7 +357,7 @@ d-title {
 
 </style>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -629,8 +629,8 @@ body {
   padding-top: 60px;
 }
 </style>
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -681,6 +681,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -701,6 +702,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -758,11 +762,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -791,8 +799,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -800,16 +808,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -937,14 +938,14 @@ Lectures
 </button>
 <div class="nav-dropdown-content">
 <a href="./slides/EDLD_650_1_intro.html">Week 1: Intro to Causal Inference</a>
-<a href="./slides/EDLD_650_2_DD_1.html">Week 2: Difference-in-Differences (DD) I</a>
-<a href="./slides/EDLD_650_3_RD_1.html">Week 3: Difference-in-Differences (DD) II</a>
-<a href="./slides/EDLD_650_4_RD_2.html">Week 4: Regression Discontinuity (RD) I</a>
-<a href="./slides/EDLD_650_5_IV_1.html">Week 5: Regression Discontinuity (RD) II</a>
-<a href="./slides/EDLD_650_6_IV_2.html">Week 6: Instrumental Variables (IV) I</a>
-<a href="./slides/EDLD_650_7_match_1.html">Week 7: Instrumental Variables (IV) II</a>
-<a href="./slides/EDLD_650_8_match_2.html">Week 8: Matching I</a>
-<a href="./slides/EDLD_650_9_synthesis.html">Week 9: Matching II</a>
+<span class="nav-dropdown-header">Week 2: Difference-in-Differences (DD) I</span>
+<span class="nav-dropdown-header">Week 3: Difference-in-Differences (DD) II</span>
+<span class="nav-dropdown-header">Week 4: Regression Discontinuity (RD) I</span>
+<span class="nav-dropdown-header">Week 5: Regression Discontinuity (RD) II</span>
+<span class="nav-dropdown-header">Week 6: Instrumental Variables (IV) I</span>
+<span class="nav-dropdown-header">Week 7: Instrumental Variables (IV) II</span>
+<span class="nav-dropdown-header">Week 8: Matching I</span>
+<span class="nav-dropdown-header">Week 9: Matching II</span>
 </div>
 </div>
 </div>
@@ -964,7 +965,7 @@ Lectures
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -980,7 +981,7 @@ Lectures
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Lectures
      
     <span class="caret"></span>
@@ -989,30 +990,14 @@ Lectures
     <li>
       <a href="./slides/EDLD_650_1_intro.html">Week 1: Intro to Causal Inference</a>
     </li>
-    <li>
-      <a href="./slides/EDLD_650_2_DD_1.html">Week 2: Difference-in-Differences (DD) I</a>
-    </li>
-    <li>
-      <a href="./slides/EDLD_650_3_RD_1.html">Week 3: Difference-in-Differences (DD) II</a>
-    </li>
-    <li>
-      <a href="./slides/EDLD_650_4_RD_2.html">Week 4: Regression Discontinuity (RD) I</a>
-    </li>
-    <li>
-      <a href="./slides/EDLD_650_5_IV_1.html">Week 5: Regression Discontinuity (RD) II</a>
-    </li>
-    <li>
-      <a href="./slides/EDLD_650_6_IV_2.html">Week 6: Instrumental Variables (IV) I</a>
-    </li>
-    <li>
-      <a href="./slides/EDLD_650_7_match_1.html">Week 7: Instrumental Variables (IV) II</a>
-    </li>
-    <li>
-      <a href="./slides/EDLD_650_8_match_2.html">Week 8: Matching I</a>
-    </li>
-    <li>
-      <a href="./slides/EDLD_650_9_synthesis.html">Week 9: Matching II</a>
-    </li>
+    <li class="dropdown-header">Week 2: Difference-in-Differences (DD) I</li>
+    <li class="dropdown-header">Week 3: Difference-in-Differences (DD) II</li>
+    <li class="dropdown-header">Week 4: Regression Discontinuity (RD) I</li>
+    <li class="dropdown-header">Week 5: Regression Discontinuity (RD) II</li>
+    <li class="dropdown-header">Week 6: Instrumental Variables (IV) I</li>
+    <li class="dropdown-header">Week 7: Instrumental Variables (IV) II</li>
+    <li class="dropdown-header">Week 8: Matching I</li>
+    <li class="dropdown-header">Week 9: Matching II</li>
   </ul>
 </li>
       </ul>
@@ -1041,37 +1026,54 @@ Lectures
 
 
 <ul>
-<li>This calendar and reading assignments may change at the discretion of the teaching team.</li>
-<li>Readings for a given week are to be completed by the time of the class on that date</li>
-<li>You can read in any order you like but we have ordered readings for each week in what we think may make the most sense.</li>
-<li>For most weeks, we have included supplemental readings. They serve to provide additional perspectives on the methodological or substantive topics of that week. They are not required, but could be insightful to your future academic or professional work.</li>
+<li>This calendar and reading assignments may change at the discretion
+of the teaching team.</li>
+<li>Readings for a given week are to be completed by the time of the
+class on that date</li>
+<li>You can read in any order you like but we have ordered readings for
+each week in what we think may make the most sense.</li>
+<li>For most weeks, we have included supplemental readings. They serve
+to provide additional perspectives on the methodological or substantive
+topics of that week. They are not required, but could be insightful to
+your future academic or professional work.</li>
 </ul>
 <div id="unit-1-a-common-vocabulary" class="section level2">
 <h2>Unit 1: A Common Vocabulary</h2>
-<div id="week-1-january-4" class="section level3">
-<h3>Week 1: January 4</h3>
+<div id="week-1-january-8" class="section level3">
+<h3>Week 1: January 8</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Articulate in words and simple graphical representations challenges in identifying causal relationships in quantitative data</li>
-<li>Articulate in words and using simple mathematical terms a framework for identifying causal relationships in quantitative data</li>
-<li>Describe (conceptually) unit fixed effects and their strengths (and limitations) in research designs seeking to identify causal relationships</li>
-<li>Describe the conceptual approach to identifying causal effects using the difference-in-differences framework</li>
+<li>Articulate in words and simple graphical representations challenges
+in identifying causal relationships in quantitative data</li>
+<li>Articulate in words and using simple mathematical terms a framework
+for identifying causal relationships in quantitative data</li>
+<li>Describe (conceptually) unit fixed effects and their strengths (and
+limitations) in research designs seeking to identify causal
+relationships</li>
+<li>Describe the conceptual approach to identifying causal effects using
+the difference-in-differences framework</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Murnane and Willett. (2011). <em>Methods Matter</em>, Chapters 1-5, 7</li>
-<li>Hoxby, C. (2016). The immensity of the Coleman data project. <em>Education Next, 16</em>(2), 64-69. <a href="https://www.educationnext.org/the-immensity-of-the-coleman-data-project/">https://www.educationnext.org/the-immensity-of-the-coleman-data-project/</a>.</li>
+<li>Murnane and Willett. (2011). <em>Methods Matter</em>, Chapters 1-5,
+7</li>
+<li>Hoxby, C. (2016). The immensity of the Coleman data project.
+<em>Education Next, 16</em>(2), 64-69. <a
+href="https://www.educationnext.org/the-immensity-of-the-coleman-data-project/">https://www.educationnext.org/the-immensity-of-the-coleman-data-project/</a>.</li>
 </ol>
 <p><strong>Lecture:</strong></p>
 <ul>
-<li>Slides: <a href="./slides/EDLD_650_1_intro.html">html</a> | <a href="./slides/EDLD_650_1_intro.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%201%20Questions.docx">doc</a></li>
+<li>Slides: <a href="./slides/EDLD_650_1_intro.html">html</a> | <a
+href="./slides/EDLD_650_1_intro.pdf">pdf</a></li>
+<li>Class Questions: <a
+href="./questions/EDLD%20650%20Class%201%20Questions.docx">doc</a></li>
 <li>R Script: <a href="./code/EDLD_650_1_script.R">Class 1</a></li>
 <li>Data: <a href="./data/ch7_sfa.dta">dta</a></li>
 </ul>
 <p><strong>Assignment:</strong></p>
 <ul>
-<li>Student survey (see email or Canvas)</li>
+<li>Student survey <strong>due Jan. 10</strong> (see email or
+Canvas)</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
@@ -1079,35 +1081,46 @@ Lectures
 <li>Angrist and Pischke (2009), pp. 1-110</li>
 <li>Angrist and Pischke (2014), Chapters 1-2</li>
 <li>Cunningham (2021), Chapters 1-4</li>
-<li>Clark, T.S. &amp; Linzer, D.A. (2015). <a href="./readings/Clark%20Linzer%202015.pdf">Should I use fixed or random effects?</a> <em>Political Science Research and Methods, 3</em>(2), 399-408.</li>
+<li>Clark, T.S. &amp; Linzer, D.A. (2015). <a
+href="./readings/Clark%20Linzer%202015.pdf">Should I use fixed or random
+effects?</a> <em>Political Science Research and Methods, 3</em>(2),
+399-408.</li>
 </ol>
 </div>
 </div>
 <div id="unit-2-difference-in-differences" class="section level2">
 <h2>Unit 2: Difference-in-differences</h2>
-<div id="week-2-january-11" class="section level3">
-<h3>Week 2: January 11</h3>
+<div id="week-2-asynchronous-online" class="section level3">
+<h3>Week 2: Asynchronous Online</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Describe threats to validity in difference-in-differences (DD) identification strategy and multiple approaches to address these threats.</li>
-<li>Using a cleaned dataset, estimate multiple DD specifications in R and interpret these results</li>
+<li>Describe threats to validity in difference-in-differences (DD)
+identification strategy and multiple approaches to address these
+threats.</li>
+<li>Using a cleaned dataset, estimate multiple DD specifications in R
+and interpret these results</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Murnane and Willett, Chapter 8</li>
-<li>Dynarski, S.M. (2003). <a href="./readings/Dynarski%202003.pdf">Does aid matter? Measuring the effect of student aid on college attendance and completion</a>. <em>The American Economic Review, 93</em>(1), 279-288.</li>
+<li>Dynarski, S.M. (2003). <a href="./readings/Dynarski%202003.pdf">Does
+aid matter? Measuring the effect of student aid on college attendance
+and completion</a>. <em>The American Economic Review, 93</em>(1),
+279-288.</li>
 </ol>
 <p><strong>Lecture:</strong></p>
-<ul>
-<li>Slides: <a href="./slides/EDLD_650_2_DD_1.html">html</a> | <a href="./slides/EDLD_650_2_DD_1.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%202%20Questions.docx">doc</a></li>
-<li>R Script: <a href="./code/EDLD_650_2_DD_script.R">Class 2</a></li>
-<li>Data: <a href="./data/ch8_dynarski.dta">Dynarksi</a> | <a href="./data/edld650_class_2_eepa_data.dta">Liebowitz</a></li>
-<li>Review slides: <a href="./slides/EDLD_650_Review.html">html</a></li>
-</ul>
+<!--
+- Slides: [html](./slides/EDLD_650_2_DD_1.html) | [pdf](./slides/EDLD_650_2_DD_1.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 2 Questions.docx)
+- R Script: [Class 2](./code/EDLD_650_2_DD_script.R)
+- Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](./data/edld650_class_2_eepa_data.dta)
+- Review slides: [html](./slides/EDLD_650_Review.html)
+-->
 <p><strong>Assignment:</strong></p>
 <ul>
-<li>Complete DARE #1 by 9:00am, January 17 (<em>note that this is MLK Jr. Day; feel free to submit earlier</em>)</li>
+<li>Submit written responses to Class 2 Questions by 12:00pm,
+Jan. 16</li>
+<li>Complete DARE #1 by 11:59pm, January 21</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
@@ -1116,233 +1129,326 @@ Lectures
 <li>Cunningham (2021), Chapters 8-9</li>
 </ol>
 </div>
-<div id="week-3-january-18" class="section level3">
-<h3>Week 3: January 18</h3>
+<div id="week-3-january-22" class="section level3">
+<h3>Week 3: January 22</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Describe threats to validity in difference-in-differences (DD) identification strategy and approaches to address these threats</li>
-<li>Conduct applied difference-in-difference analysis and interpret these results</li>
-<li>Describe conceptual approach to regression discontinuity analysis</li>
+<li>Describe threats to validity in difference-in-differences (DD)
+identification strategy and approaches to address these threats</li>
+<li>Conduct applied difference-in-difference analysis and interpret
+these results</li>
+<li>Describe conceptual approach to regression discontinuity
+analysis</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Liebowitz, D.D., Porter, L. &amp; Bragg, D. (2022). <a href="./readings/Liebowitz%20Porter%20Bragg%202022.pdf">The effects of higher-stakes teacher evaluation on office disciplinary referrals</a>. <em>Journal of Research on Educational Effectiveness</em>. <a href="./readings/Liebowitz%20Porter%20Bragg%202022%20supplemental.pdf">Online Appendix</a></li>
+<li>Liebowitz, D.D., Porter, L. &amp; Bragg, D. (2022). <a
+href="./readings/Liebowitz%20Porter%20Bragg%202022.pdf">The effects of
+higher-stakes teacher evaluation on office disciplinary referrals</a>.
+<em>Journal of Research on Educational Effectiveness, 15</em>(3),
+475-509. <a
+href="./readings/Liebowitz%20Porter%20Bragg%202022%20supplemental.pdf">Online
+Appendix</a></li>
 </ol>
-<p><strong>Lecture:</strong></p>
-<ul>
-<li>Slides: <a href="./slides/EDLD_650_3_RD_1.html">html</a> | <a href="./slides/EDLD_650_3_RD_1.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%203%20Questions.docx">doc</a></li>
-</ul>
+<p><strong>Lecture:</strong> <!--
+- Slides: [html](./slides/EDLD_650_3_RD_1.html) | [pdf](./slides/EDLD_650_3_RD_1.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
+--></p>
 <p><strong>Assignment:</strong></p>
 <ul>
-<li>Submit Research Project Proposal by 9:00am, January 28</li>
+<li>Submit Research Project Proposal by 11:59pm, January 28</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
-<li>Zeldow, B. &amp; Hatfield, L. (2019). <a href="https://diff.healthpolicydatascience.org/">Difference-in-differences</a>.</li>
-<li>Baker, A. (2019). <a href="https://andrewcbaker.netlify.app/2019/09/25/difference-in-differences-methodology/">Difference-in-differences methodology</a>.</li>
-<li>de Chaisemartin, C. &amp; d’Haultfoeuille, X. (2021). <a href="./readings/deChaisemartin%20DHaultfoeuille%202021.pdf">Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey</a>.</li>
-<li>Roth, J., Sant’Anna, P.H.C., Bilinski, A. &amp; Poe, J. (2022). <a href="https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf">What’s trending in difference-in-differences? A synthesis of the recent econometrics literature.</a></li>
+<li>Zeldow, B. &amp; Hatfield, L. (2019). <a
+href="https://diff.healthpolicydatascience.org/">Difference-in-differences</a>.</li>
+<li>Baker, A. (2019). <a
+href="https://andrewcbaker.netlify.app/2019/09/25/difference-in-differences-methodology/">Difference-in-differences
+methodology</a>.</li>
+<li>de Chaisemartin, C. &amp; d’Haultfoeuille, X. (2021). <a
+href="./readings/deChaisemartin%20DHaultfoeuille%202021.pdf">Two-Way
+Fixed Effects and Differences-in-Differences with Heterogeneous
+Treatment Effects: A Survey</a>.</li>
+<li>Roth, J., Sant’Anna, P.H.C., Bilinski, A. &amp; Poe, J. (2023). <a
+href="https://www.sciencedirect.com/science/article/abs/pii/S0304407623001318">What’s
+trending in difference-in-differences? A synthesis of the recent
+econometrics literature.</a> <em>Journal of Econometrics, 235</em>(2),
+2218-2244.</li>
 </ol>
 </div>
 </div>
 <div id="unit-3-regression-discontinuity" class="section level2">
 <h2>Unit 3: Regression Discontinuity</h2>
-<div id="week-4-january-25" class="section level3">
-<h3>Week 4: January 25</h3>
+<div id="week-4-january-29" class="section level3">
+<h3>Week 4: January 29</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Describe conceptual approach to regression discontinuity analysis</li>
+<li>Describe conceptual approach to regression discontinuity
+analysis</li>
 <li>Assess validity of RD assumptions in applied context</li>
-<li>Conduct RD analysis in simplified data and interpret results substantively</li>
+<li>Conduct RD analysis in simplified data and interpret results
+substantively</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Murnane and Willett, Chapter 9</li>
-<li>Angrist, J.D. &amp; Lavy, V. (1999). <a href="./readings/Angrist%20Lavy%201999.pdf">Using Maimonides’ Rule to estimate the effect of class size on scholastic achievement</a>. <em>Quarterly Journal of Economics, 114</em>(2), 533-575.</li>
-<li>Ludwig, J. &amp; Miller, D. (2007). <a href="./readings/Ludwig%20Miller%202007.pdf">Does Head Start improve children’s life chances? Evidence from a regression discontinuity design</a>. <em>Quarterly Journal of Economics, 122</em>(1), 159-208.</li>
+<li>Angrist, J.D. &amp; Lavy, V. (1999). <a
+href="./readings/Angrist%20Lavy%201999.pdf">Using Maimonides’ Rule to
+estimate the effect of class size on scholastic achievement</a>.
+<em>Quarterly Journal of Economics, 114</em>(2), 533-575.</li>
+<li>Dee, T.S. &amp; Penner, E.K. (2017). <a
+href="./readings/Dee%20Penner%202017.pdf">The causal effects of cultural
+relevance: Evidence from an Ethnic Studies curriculum</a>. <em>American
+Educational Research Journal, 54</em>(1), 127-166.</li>
 </ol>
-<p><strong>Lecture:</strong></p>
-<ul>
-<li>Slides: <a href="./slides/EDLD_650_4_RD_2.html">html</a> | <a href="./slides/EDLD_650_4_RD_2.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%204%20Questions.docx">doc</a></li>
-<li>R Script: <a href="./code/EDLD_650_4_RD_script.R">Class 4</a></li>
-<li>Data: <a href="./data/ch9_angrist.dta">Angrist</a></li>
-</ul>
+<p><strong>Lecture:</strong> <!--
+- Slides: [html](./slides/EDLD_650_4_RD_2.html) | [pdf](./slides/EDLD_650_4_RD_2.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 4 Questions.docx)
+- R Script: [Class 4](./code/EDLD_650_4_RD_script.R)
+- Data: [Angrist](./data/ch9_angrist.dta)
+--></p>
 <p><strong>Assignment:</strong></p>
 <ul>
-<li>Complete DARE #2 by 9:00am, January 31</li>
+<li>Complete DARE #2 by 11:59pm, February 5</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
 <li>Angrist and Pischke (2009), Chapter 6</li>
 <li>Angrist and Pischke (2014), Chapter 4</li>
 <li>Cunningham (2021), Chapter 6</li>
+<li>Ludwig, J. &amp; Miller, D. (2007). <a
+href="./readings/Ludwig%20Miller%202007.pdf">Does Head Start improve
+children’s life chances? Evidence from a regression discontinuity
+design</a>. <em>Quarterly Journal of Economics, 122</em>(1),
+159-208.</li>
 </ol>
 </div>
-<div id="week-5-february-1" class="section level3">
-<h3>Week 5: February 1</h3>
+<div id="week-5-february-6" class="section level3">
+<h3>Week 5: February 6</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Implement RD design in simplified data and interpret results</li>
 <li>Assess basic assumptions of RD design</li>
-<li>Describe the conceptual and simple mathematical approach to identifying causal effects using the Instrumental Variables approach</li>
+<li>Describe the conceptual and simple mathematical approach to
+identifying causal effects using the Instrumental Variables
+approach</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Holden, K.L. (2016). <a href="./readings/Holden%202016.pdf">Buy the book? Evidence on the effect of textbook funding on school-level achievement.</a> <em>American Economic Journal: Applied Economics, 8</em>(4), 100-127. <a href="./readings/Holden%202016%20appendix.pdf">Online Appendix</a></li>
+<li>Holden, K.L. (2016). <a href="./readings/Holden%202016.pdf">Buy the
+book? Evidence on the effect of textbook funding on school-level
+achievement.</a> <em>American Economic Journal: Applied Economics,
+8</em>(4), 100-127. <a
+href="./readings/Holden%202016%20appendix.pdf">Online Appendix</a></li>
 </ol>
-<p><strong>Lecture:</strong></p>
-<ul>
-<li>Slides: <a href="./slides/EDLD_650_5_IV_1.html">html</a> | <a href="./slides/EDLD_650_5_IV_1.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%205%20Questions.docx">doc</a></li>
-</ul>
+<p><strong>Lecture:</strong> <!--
+- Slides: [html](./slides/EDLD_650_5_IV_1.html) | [pdf](./slides/EDLD_650_5_IV_1.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 5 Questions.docx)
+--></p>
 <p><strong>Assignment:</strong></p>
 <ul>
 <li>Work on research project</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
-<li>Lee, D. &amp; Lemieux, T. (2010). <a href="./readings/Lee%20Lemieux%202010.pdf">Regression discontinuity designs in economics.</a> <em>Journal of Economic Literature, 48</em>(June), 281-355.</li>
-<li>Calonico, S., Cattaneo, M., Farrell, M. &amp; Titiunik, R. (2017). <a href="./readings/Calonico%20et%20al%202017.pdf">rdrobust: Software for regression-discontinuity designs.</a> <em>The Stata Journal, 17</em>(2), 372-404.</li>
-<li>Pei, Z., Lee, D.S., Card, D. &amp; Weber, A. (2021). <a href="./readings/Pei%20et%20al%202021.pdf">Local polynomial order in regression discontinuity designs.</a> <em>Journal of Business and Economics Statistics</em>, Online.</li>
+<li>Lee, D. &amp; Lemieux, T. (2010). <a
+href="./readings/Lee%20Lemieux%202010.pdf">Regression discontinuity
+designs in economics.</a> <em>Journal of Economic Literature,
+48</em>(June), 281-355.</li>
+<li>Calonico, S., Cattaneo, M., Farrell, M. &amp; Titiunik, R. (2017).
+<a href="./readings/Calonico%20et%20al%202017.pdf">rdrobust: Software
+for regression-discontinuity designs.</a> <em>The Stata Journal,
+17</em>(2), 372-404.</li>
+<li>Pei, Z., Lee, D.S., Card, D. &amp; Weber, A. (2021). <a
+href="./readings/Pei%20et%20al%202021.pdf">Local polynomial order in
+regression discontinuity designs.</a> <em>Journal of Business and
+Economics Statistics</em>, Online.</li>
 </ol>
 </div>
 </div>
 <div id="unit-4-instrumental-variables" class="section level2">
 <h2>Unit 4: Instrumental Variables</h2>
-<div id="week-6-february-8" class="section level3">
-<h3>Week 6: February 8</h3>
+<div id="week-6-february-12" class="section level3">
+<h3>Week 6: February 12</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Describe conceptual approach to instrumental variables (IV) analysis</li>
+<li>Describe conceptual approach to instrumental variables (IV)
+analysis</li>
 <li>Assess validity of IV assumptions in applied context</li>
 <li>Conduct IV analysis in simplified data and interpret results</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Murnane and Willett, Chapters 10 and 11</li>
-<li>Dee, T.S. (2004). <a href="./readings/Dee%202004.pdf">Are there civic returns to education?</a> <em>Journal of Public Economics, 118</em>(4) 1495-1532.</li>
-<li>Angrist, J.D., Cohodes, S.R., Dynarski, S.M., Pathak, P.A. &amp; Walters, C.R. (2016). <a href="readings/Angrist%20et%20al%202016.pdf">Stand and deliver: Effects of Boston’s charter high schools on college preparation, entry, and choice</a>. <em>Journal of Labor Economics, 34</em>(2), 275-318.</li>
+<li>Dee, T.S. (2004). <a href="./readings/Dee%202004.pdf">Are there
+civic returns to education?</a> <em>Journal of Public Economics,
+118</em>(4) 1495-1532.</li>
+<li>Angrist, J.D., Cohodes, S.R., Dynarski, S.M., Pathak, P.A. &amp;
+Walters, C.R. (2016). <a
+href="readings/Angrist%20et%20al%202016.pdf">Stand and deliver: Effects
+of Boston’s charter high schools on college preparation, entry, and
+choice</a>. <em>Journal of Labor Economics, 34</em>(2), 275-318.</li>
 </ol>
-<p><strong>Lecture:</strong></p>
-<ul>
-<li>Slides: <a href="./slides/EDLD_650_6_IV_2.html">html</a> | <a href="./slides/EDLD_650_6_IV_2.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%206%20Questions.docx">doc</a></li>
-<li>R Script: <a href="./code/EDLD_650_6_IV_script.R">Class 6</a></li>
-<li>Data: <a href="./data/ch11_PACES.csv">PACES</a></li>
-</ul>
+<p><strong>Lecture:</strong> <!--
+- Slides: [html](./slides/EDLD_650_6_IV_2.html) | [pdf](./slides/EDLD_650_6_IV_2.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 6 Questions.docx)
+- R Script: [Class 6](./code/EDLD_650_6_IV_script.R)
+- Data: [PACES](./data/ch11_PACES.csv)
+--></p>
 <p><strong>Assignment:</strong></p>
 <ul>
-<li>Complete DARE #3 by 9:00am February 14</li>
+<li>Complete DARE #3 by 11:59pm February 18</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
 <li>Angrist and Pischke (2009), Chapter 4</li>
 <li>Angrist and Pischke (2014), Chapter 3</li>
 <li>Cunningham (2021), Chapter 7</li>
-<li>Angrist, J.A and Krueger, A.B. (2001). <a href="./readings/Angrist%20Krueger%202001.pdf">Instrumental variables and the search for identification: From supply and demand to natural experiments.</a> <em>Journal of Economic Perspectives, 15</em>(4), 69-85.</li>
+<li>Angrist, J.A and Krueger, A.B. (2001). <a
+href="./readings/Angrist%20Krueger%202001.pdf">Instrumental variables
+and the search for identification: From supply and demand to natural
+experiments.</a> <em>Journal of Economic Perspectives, 15</em>(4),
+69-85.</li>
 </ol>
 </div>
-<div id="week-7-february-15" class="section level3">
-<h3>Week 7: February 15</h3>
+<div id="week-7-february-19" class="section level3">
+<h3>Week 7: February 19</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Implement instrumental variables estimatation in simplified data and interpret results</li>
-<li>Assess basic assumptions of IV design in an experimental setting with imperfect compliance</li>
-<li>Describe the conceptual approach of using selection on observables to defend causal inferences about the effects of treatment</li>
+<li>Implement instrumental variables estimatation in simplified data and
+interpret results</li>
+<li>Assess basic assumptions of IV design in an experimental setting
+with imperfect compliance</li>
+<li>Describe the conceptual approach of using selection on observables
+to defend causal inferences about the effects of treatment</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
-<li>Kim, J.S., Capotosto, L., Hartry, A. &amp; Fitzgerald, R. (2011). <a href="./readings/Kim%20et%20al%202011.pdf">Can a mixed-method literacy intervention improve the reading achievement of low-performing elementary school students in an after-school program? Results from a randomized controlled trial of READ180 Enterprise</a>. <em>Educational Evaluation and Policy Analysis, 33</em>(2), 183-201.</li>
+<li>Kim, J.S., Capotosto, L., Hartry, A. &amp; Fitzgerald, R. (2011). <a
+href="./readings/Kim%20et%20al%202011.pdf">Can a mixed-method literacy
+intervention improve the reading achievement of low-performing
+elementary school students in an after-school program? Results from a
+randomized controlled trial of READ180 Enterprise</a>. <em>Educational
+Evaluation and Policy Analysis, 33</em>(2), 183-201.</li>
 </ol>
-<p><strong>Lecture:</strong></p>
-<ul>
-<li>Slides: <a href="./slides/EDLD_650_7_match_1.html">html</a> | <a href="./slides/EDLD_650_7_match_1.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%207%20Questions.docx">doc</a></li>
-</ul>
+<p><strong>Lecture:</strong> <!--
+- Slides: [html](./slides/EDLD_650_7_match_1.html) | [pdf](./slides/EDLD_650_7_match_1.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 7 Questions.docx)
+ --></p>
 <p><strong>Assignment:</strong></p>
 <ul>
 <li>Work on research project</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
-<li>Lee, D.S., McCrary, J., Moreira, M.J. &amp; Porter, J.R. (2021). <a href="./readings/Lee%20et%20al%202021.pdf">Valid <em>t</em>-ratio inference for IV.</a> NBER Working Paper Series No. 29124.</li>
-<li>Baicker, K. et al. (2014). <a href="./readings/Baicker%20et%20al%202013.pdf">The Oregon experiment — Effects of Medicaid on clinical outcomes.</a> <em>The New England Journal of Medicine, 368</em>(18), 1713-1722.</li>
+<li>Lee, D.S., McCrary, J., Moreira, M.J. &amp; Porter, J.R. (2021). <a
+href="./readings/Lee%20et%20al%202021.pdf">Valid <em>t</em>-ratio
+inference for IV.</a> NBER Working Paper Series No. 29124.</li>
+<li>Baicker, K. et al. (2014). <a
+href="./readings/Baicker%20et%20al%202013.pdf">The Oregon experiment —
+Effects of Medicaid on clinical outcomes.</a> <em>The New England
+Journal of Medicine, 368</em>(18), 1713-1722.</li>
 </ol>
 </div>
 </div>
 <div id="unit-5-matching" class="section level2">
 <h2>Unit 5: Matching</h2>
-<div id="week-8-february-22" class="section level3">
-<h3>Week 8: February 22</h3>
+<div id="week-8-february-26" class="section level3">
+<h3>Week 8: February 26</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Describe conceptual approach to matching analysis</li>
 <li>Assess validity of matching approach</li>
-<li>Conduct matching analysis in simplified data using both propensity-score matching and CEM; interpret and compare results</li>
+<li>Conduct matching analysis in simplified data using both
+propensity-score matching and CEM; interpret and compare results</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Murnane and Willett, Chapter 12</li>
-<li>Diaz, J.J. &amp; Handa, S. (2006). <a href="./readings/Diaz%20Handa%202006.pdf">An assessment of propensity score matching as a nonexperimental impact estimator: Evidence from Mexico’s PROGRESA program</a>. <em>The Journal of Human Resources, 41</em>(2), 319-345.</li>
+<li>Diaz, J.J. &amp; Handa, S. (2006). <a
+href="./readings/Diaz%20Handa%202006.pdf">An assessment of propensity
+score matching as a nonexperimental impact estimator: Evidence from
+Mexico’s PROGRESA program</a>. <em>The Journal of Human Resources,
+41</em>(2), 319-345.</li>
 </ol>
-<p><strong>Lecture:</strong></p>
-<ul>
-<li>Slides: <a href="./slides/EDLD_650_8_match_2.html">html</a> | <a href="./slides/EDLD_650_8_match_2.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%208%20Questions.docx">doc</a></li>
-<li>R Script: <a href="./code/EDLD_650_8_matching_script.R">Class 8</a></li>
-<li>Data: <a href="./data/ch12_catholic.dta">dta</a></li>
-</ul>
+<p><strong>Lecture:</strong> <!--
+- Slides: [html](./slides/EDLD_650_8_match_2.html) | [pdf](./slides/EDLD_650_8_match_2.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 8 Questions.docx)
+- R Script: [Class 8](./code/EDLD_650_8_matching_script.R) 
+- Data: [dta](./data/ch12_catholic.dta)
+--></p>
 <p><strong>Assignment:</strong></p>
 <ul>
-<li>Complete DARE #4 by 9:00 February 28</li>
+<li>Complete DARE #4 by 11:59pm, March 3.</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
 <li>Cunningham (2021), Chapter 5</li>
-<li>Dehejia, R.H. &amp; Wahba, S. (2002). Propensity score-matching methods for nonexperimental causal studies. <em>Review of Economics and Statistics, 84</em>(1), 151–161. <a href="https://doi.org/10.1162/003465302317331982" class="uri">https://doi.org/10.1162/003465302317331982</a>.</li>
-<li>Iacus, S. M., King, G., &amp; Porro, G. (2011). Causal inference without balance checking: Coarsened Exact Matching. <em>Political Analysis, 20</em>(1), 1–24. <a href="https://doi.org/10.1093/pan/mpr013" class="uri">https://doi.org/10.1093/pan/mpr013</a>.</li>
+<li>Dehejia, R.H. &amp; Wahba, S. (2002). Propensity score-matching
+methods for nonexperimental causal studies. <em>Review of Economics and
+Statistics, 84</em>(1), 151–161. <a
+href="https://doi.org/10.1162/003465302317331982"
+class="uri">https://doi.org/10.1162/003465302317331982</a>.</li>
+<li>Iacus, S. M., King, G., &amp; Porro, G. (2011). Causal inference
+without balance checking: Coarsened Exact Matching. <em>Political
+Analysis, 20</em>(1), 1–24. <a href="https://doi.org/10.1093/pan/mpr013"
+class="uri">https://doi.org/10.1093/pan/mpr013</a>.</li>
 </ol>
 </div>
-<div id="week-9-march-1" class="section level3">
-<h3>Week 9: March 1</h3>
+<div id="week-9-march-4" class="section level3">
+<h3>Week 9: March 4</h3>
 <p><strong>Objectives:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Describe conceptual approach to matching analysis</li>
 <li>Assess validity of matching approach</li>
-<li>Conduct matching analysis in simplified data using both propensity-score matching and CEM; interpret and compare results</li>
+<li>Conduct matching analysis in simplified data using both
+propensity-score matching and CEM; interpret and compare results</li>
 </ol>
 <p><strong>Readings:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Murnane and Willett, Chapters 13 and 14</li>
-<li>Umansky, I, &amp; Dumont, H. (2021). <a href="./readings/Umansky%20Dumont%202021.pdf">English Learner labeling: How English Learner status shapes teacher perceptions of student skills and the moderating role of bilingual instructional settings</a>. <em>American Educational Research Journal, 58</em>(5), 993-1031. <a href="./readings/Umansky%20Dumont%202021%20app.pdf">Online Appendix</a></li>
+<li>Umansky, I, &amp; Dumont, H. (2021). <a
+href="./readings/Umansky%20Dumont%202021.pdf">English Learner labeling:
+How English Learner status shapes teacher perceptions of student skills
+and the moderating role of bilingual instructional settings</a>.
+<em>American Educational Research Journal, 58</em>(5), 993-1031. <a
+href="./readings/Umansky%20Dumont%202021%20app.pdf">Online
+Appendix</a></li>
 </ol>
-<p><strong>Lecture:</strong></p>
+<p><strong>Lecture:</strong> <!--
+- Slides: [html](./slides/EDLD_650_9_synthesis.html) | [pdf](./slides/EDLD_650_9_synthesis.pdf)
+- Class Questions: [doc](./questions/EDLD 650 Class 9 Questions.docx)
+--> <strong>Assignment:</strong></p>
 <ul>
-<li>Slides: <a href="./slides/EDLD_650_9_synthesis.html">html</a> | <a href="./slides/EDLD_650_9_synthesis.pdf">pdf</a></li>
-<li>Class Questions: <a href="./questions/EDLD%20650%20Class%209%20Questions.docx">doc</a></li>
-</ul>
-<p><strong>Assignment:</strong></p>
-<ul>
-<li>Prepare to present Research Project Presentation in class on March 8</li>
+<li>Prepare to present Research Project Presentation in class on March
+11</li>
 </ul>
 <p><em>Further readings:</em></p>
 <ol style="list-style-type: decimal">
-<li>King, G., Nielsen, R., Coberly, C., Pope, J.E. &amp; Wells, A. (2011). Comparative effectiveness of matching methods for causal inference. Working Paper. <a href="http://j.mp/2nydGlv" class="uri">http://j.mp/2nydGlv</a>.</li>
-<li>King, G. &amp; Nielsen, R. (2019). Why propensity scores should not be used for matching. <em>Political Analysis, 27</em>(4), 435-454. <a href="https://doi.org/10.1017/pan.2019.11" class="uri">https://doi.org/10.1017/pan.2019.11</a>.</li>
+<li>King, G., Nielsen, R., Coberly, C., Pope, J.E. &amp; Wells, A.
+(2011). Comparative effectiveness of matching methods for causal
+inference. Working Paper. <a href="http://j.mp/2nydGlv"
+class="uri">http://j.mp/2nydGlv</a>.</li>
+<li>King, G. &amp; Nielsen, R. (2019). Why propensity scores should not
+be used for matching. <em>Political Analysis, 27</em>(4), 435-454. <a
+href="https://doi.org/10.1017/pan.2019.11"
+class="uri">https://doi.org/10.1017/pan.2019.11</a>.</li>
 </ol>
 </div>
 </div>
 <div id="unit-6-presentations" class="section level2">
 <h2>Unit 6: Presentations</h2>
-<div id="week-10-march-8" class="section level3">
-<h3>Week 10: March 8</h3>
+<div id="week-10-march-11" class="section level3">
+<h3>Week 10: March 11</h3>
 <p><strong>Readings:</strong></p>
 <ul>
 <li>None!</li>
 </ul>
-<p><strong>Assignment:</strong> Submit Final Research Project by <strong>9:00am March 17th.</strong></p>
+<p><strong>Assignment:</strong></p>
+<ul>
+<li>Submit Final Research Project by <strong>5:00pm March
+20th.</strong></li>
+</ul>
 </div>
 </div>
 

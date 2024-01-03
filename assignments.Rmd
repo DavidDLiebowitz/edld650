@@ -19,9 +19,9 @@ For each of the four units, you will complete a Data Analysis and Replication Ex
 
 # 2. Submission Requirements
 
-You will need to upload your work to Canvas by 9:00am of the Monday in the week in which the DARE is due.  
+All work (with the exception of the final) is due at 11:59pm on Sundays.
 
-We encourage (though don't require) you to form pairs (2 people maximum) for the DAREs. Both members of the pair should contribute equally to the submitted product, both members should list their names on their submitted work, both members of the pair should submit the assignment on Canvas, and each member of the pair will receive the same score on the assignment. Please email us if you have attempted to form a group or pair without success.
+We encourage (though don't require) you to form pairs (3 people maximum) for the DAREs. Both members of the pair should contribute equally to the submitted product, both members should list their names on their submitted work, both members of the pair should submit the assignment on Canvas, and each member of the pair will receive the same score on the assignment. Please email us if you have attempted to form a group or pair without success.
 
 Please submit the following two documents for each DARE:
 
@@ -36,9 +36,9 @@ Please submit the following two documents for each DARE:
 
 **Difference-in-differences**
 
-Replication paper: Liebowitz, Porter & Bragg (2021)
+Replication paper: Liebowitz, Porter & Bragg (2022)
 
-Deadline: 9:00am, January 17 (*note that this is MLK Jr. Day; feel free to submit earlier*)
+Deadline: 11:59pm, January 21
 
 Assignment details: [pdf](./assignments/DARE_1/DARE_1.pdf)
 
@@ -52,13 +52,13 @@ Answer Key: <!-- [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assign
 
 Replication paper: Holden (2016)
 
-Deadline: 9:00am, January 31
+Deadline: 11:59pm, February 5
 
-Assignment details: [pdf](./assignments/DARE_2/DARE_2.pdf)
+Assignment details: <!-- [pdf](./assignments/DARE_2/DARE_2.pdf)
 
 Dataset: [dta](./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta)
 
-Answer Key: <!-- [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R) -->
+Answer Key:  [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R) -->
 
 ## DARE #3 
 
@@ -66,13 +66,13 @@ Answer Key: <!-- [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assign
 
 Replication paper: Kim, Capotosto, Hartry & Fitzgerald (2011)
 
-Deadline: 9:00am, February 14
+Deadline: 11:59m, February 18
 
-Assignment details: [pdf](./assignments/DARE_3/DARE_3.pdf)
+Assignment details: <!-- [pdf](./assignments/DARE_3/DARE_3.pdf)
 
 Dataset: [csv](./assignments/DARE_3/data/EDLD_650_DARE_3.csv)
 
-Answer Key: <!-- [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assignments/DARE_3/DARE_3_answers.tex) | [R script](./assignments/DARE_3/code/EDLD_650_DARE_3_code.R) -->
+Answer Key: [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assignments/DARE_3/DARE_3_answers.tex) | [R script](./assignments/DARE_3/code/EDLD_650_DARE_3_code.R) -->
 
 ## DARE #4 
 
@@ -80,20 +80,20 @@ Answer Key: <!-- [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assign
 
 Replication paper: Umansky & Dumont (2021)
 
-Deadline: 9:00am, February 28
+Deadline: 11:59pm, March 3
 
-Assignment details: [pdf](./assignments/DARE_4/DARE_4.pdf)
+Assignment details: <!-- [pdf](./assignments/DARE_4/DARE_4.pdf)
 
 Dataset: [dta](./assignments/DARE_4/data/dumont_umansky_ECLSK.dta)
 
-Answer Key: <!-- [pdf](./assignments/DARE_4/DARE_4_answers.pdf) | [tex](./assignments/DARE_4/DARE_4_answers.tex) | [R script](./assignments/DARE_4/code/EDLD_650_DARE_4_code.R) -->
+Answer Key: [pdf](./assignments/DARE_4/DARE_4_answers.pdf) | [tex](./assignments/DARE_4/DARE_4_answers.tex) | [R script](./assignments/DARE_4/code/EDLD_650_DARE_4_code.R) -->
 
 
 # 4. Final Research Project 
 
 ## Project Presentation
 
-Deadline: 9:00am, March 8
+Deadline: 9:00am, March 11
 
 Here are some helpful resources on academic presentations. There are some disciplinary conventions that vary and you have several degrees of freedom to decide what your own personal style is, so don't feel like there is a single formula. Some of the below resources are about the structure and substance of the presentation, others are about presentation style, and still others are about both.
 
@@ -109,7 +109,7 @@ Berthold Herrendorf's [How to Make Academic Presentations](http://www.public.asu
 
 ## Written Project
 
-Deadline: 9:00am, March 17
+Deadline: 5:00pm, March 20
 
 
 
