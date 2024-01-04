@@ -90,7 +90,9 @@ Here are some sites where you can find the answers to many R questions and learn
  - [StackOverflow](https://stackoverflow.com/questions/tagged/r)
  - [Stack Exchange](https://stats.stackexchange.com)
 
-## 
+# Using Artificial Intelligence (AI) Tools
+
+Artificial Intelligence (AI) chatbots and the large language models (LLMs) on which they rely have dramatically increased the speed and efficiency of many programmers. Members of the teaching team regularly use such tools in their analytic and drafting tasks. That said, they are not (as least currently) substitutes for skilled analysts and writers. Beyond AI chatbots' known proclivity for "hallucinating" facts and reproducing social biases, their solutions to programming tasks often require adaptation and revision by a knowledgeable human. Further, because their ability to generate text relies on using billions of phrase chunks in the public domain to predict the next word, their language on technical topics can be imprecise when many other writers on these topics are also imprecise. Thus, while we encourage you to investigate how AI chatbots can help improve your programming and statistical analysis skills, we caution you to skeptically review all code and language produced to ensure its alignment to the course expectations. To be explicit: you may use AI chatbots for assistance with your assignments. If you use one to generate your responses, you must indicate so on your assignment. You do not need to do so if you have used these tools only to help with coding tasks and/or light editing of your written responses. You are likely already familiar with OpenAI's [ChatGPT](chat.openai.com). As you gain more experience as a programmer, you may want to use an AI tool that is designed specifically to help with coding such as [GitHub Copilot](github.com/features/copilot) or [AskCodi](https://www.askcodi.com/).
 
 # Schedule
 
