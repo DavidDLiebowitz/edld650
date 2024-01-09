@@ -13,7 +13,7 @@ navbar:
       - text: "Week 1: Intro to Causal Inference"
         href: ./slides/EDLD_650_1_intro.html
       - text: "Week 2: Difference-in-Differences (DD) I"
-        #href: ./slides/EDLD_650_2_DD_1.html
+        href: ./slides/EDLD_650_2_DD_1.html
       - text: "Week 3: Difference-in-Differences (DD) II"
         #href: ./slides/EDLD_650_3_RD_1.html
       - text: "Week 4: Regression Discontinuity (RD) I"
