@@ -90,13 +90,10 @@ knit_hooks$set(output = function(x, options) {
 
 # Agenda
 
-### 1. Roadmap and Goals (9:00-10:10)
-### 2. Discussion of Difference-in-Differences (DD) strategy (9:10-10:20)
-### 3. Break (10:20-10:30)
-### 4. Estimating DD effects in data (10:30-11:40)
-### 5. Wrap-up (11:40-11:50)
+### 1. Roadmap and Goals
+### 2. Estimating DD effects in data
+### 3. Wrap-up
 - DARE #1
-- Plus/Deltas & Clear/Murky
 
 ---
 # Roadmap
@@ -107,62 +104,27 @@ knit_hooks$set(output = function(x, options) {
 ---
 # Goals
 
-1. Describe threats to validity in difference-in-differences (DD) identification strategy and multiple approaches to address these threats.
-
+.large[
+1. Describe threats to validity in difference-in-differences (DD) identification strategy and multiple approaches to address these threats
+   + *from responding to Discussion Questions*
 2. Using a cleaned dataset, estimate multiple DD specifications in R and interpret these results
-
-
----
-# Cold-calling
-
-.pull-left[
-#### .purple[Purpose]
-- Formative assessment
-- Equitable distribution of class participation
-- Shared accountability for deep understanding of complex and technical readings
-
-#### .purple[Norms]
-- Questions posted by Thursday PM
-- Preparation is expected
-- These are hard concepts; mistakes are expected
-- Judgments on accuracy of responses are about the responses, not the individual
-- Questions and response are about learning, not performance
+   + *from this lecture and accompanying [script](./code/EDLD_650_2_DD_script.R)*
 ]
-
-.pull-right[
-#### .purple[Structure]
-- All cold calls will be telegraphed
-- Questions will come directly from question list
-- Random draw (w/ replacement) from class list
-- Ample wait time; multiple "at-bats"
-- Teaching staff will identify incomplete or incorrect response and seek clarification
-- Extension questions on a volunteer basis
-]
-
----
-class: middle, inverse
-
-# Discussion questions
-
----
-class: middle, inverse
-
-# Break
 
 ---
 # Programming in EDLD 650
 
 ## What you won't get `r emo::ji("frown")`
 - A heavy dose of data management and visualization strategies
-- The most efficient code (My coding skills are `r emo::ji("poop")`)
+- The most efficient code with extensive use of functions
 
 --
 
 ## What you will get `r emo::ji("smile")`
 - A review of the programming steps you should take as part of the **actual** research process
-- *Some* model code for management and visualization
+- *Some* model code for data management and visualization
 - Programming strategies and packages that can be used to estimate the causal inference techniques we will study
-- A community of knowledge programmers who will expand our knowledge base!
+- A community of skilled programmers who will expand our collective knowledge base!
 
 ---
 class: middle, inverse
@@ -181,14 +143,16 @@ $$
 $$
 --
 
+<br>
 
-**Let's try to fit this!**
+.large[**Let's try to fit this in our data!**]
 
 ---
 # Reading in the data
 
+I'm using the `haven` package to import a data file that is in the Stata .dta format. Lotsa options for importing file formats other than .csv ( `foreign` and `rio` are two such ones)!
 ```{r, echo=TRUE}
-dynarski <- read_dta(here("data/ch8_dynarski.dta"))
+dynarski <- haven::read_dta(here("data/ch8_dynarski.dta"))
   
 head(dynarski)
 ```
@@ -205,9 +169,9 @@ datatable(dynarski[,c(1, 4:8)], fillContainer = FALSE, options =
 # Understanding the data (1)
 
 ```{r, echo=TRUE}
-x <- select(dynarski, coll, hgc23, fatherdec, offer)
+d <- select(dynarski, coll, hgc23, fatherdec, offer)
 
-summary(x)
+summary(d)
 ```
 --
 ```{r, echo=TRUE}  
@@ -232,10 +196,11 @@ college
 ---
 # Plot outcome data
 
-```{r, echo=TRUE, fig.height=5}
+```{r, echo=TRUE, fig.height=4.75}
 hg <- ggplot(dynarski, aes(hgc23)) + geom_histogram(binwidth=1) 
   hg + scale_x_continuous(name="Highest-grade completed at 23", 
-                          breaks=c(10, 12, 14, 16, 18, 20))
+                          breaks=c(10, 12, 14, 16, 18, 20)) +
+      theme_pander(base_size=18)
 
 ```
 ---
@@ -243,7 +208,7 @@ hg <- ggplot(dynarski, aes(hgc23)) + geom_histogram(binwidth=1)
 
 ```{r, echo=F, results='asis'}
 
-stargazer(as.data.frame(x), type="html", summary=T, summary.logical=T, summary.stat=(c("n", "mean", "sd")),
+stargazer(as.data.frame(d), type="html", summary=T, summary.logical=T, summary.stat=(c("n", "mean", "sd")),
             covariate.labels = c("Attend college at 23", "Years schooling at 23", "Father deceased", "Offer"),
             notes="Notes: This table presents unweighted means and standard deviations from the NLSY poverty and random samples used in the                     Dynarski (2003) paper.",
             digits=2, notes.append = F, title="Table 1. Descriptive Statistics")
@@ -281,13 +246,13 @@ dd
 ```{r, echo=F, fig.height=5}
 dd +
   annotate("segment", x = -0.2, xend = 0, y = .54, yend = 0.511, color = "#00BFC4", linetype = "dashed") +
-  annotate("segment", x = -0.2, xend = 0, y = .477, yend = 0.47, color = "#F8766D", linetype = "dashed")
+  annotate("segment", x = -0.2, xend = 0, y = .4778, yend = 0.47, color = "#F8766D", linetype = "dashed")
 ```
 
 .blue[**What would you think if you "knew" this was the pattern?**]
 
 ---
-# Estimate classic two-period DD
+## Estimate classic two-period DD
 Dynarski's original model:
 $$
 \begin{align}
@@ -295,14 +260,14 @@ $$
 \end{align}
 $$
 --
-Murnane and Willet have renamed the variable to make clear that a value of 1 means individuals are eligible for aid, so:
+Murnane and Willet have renamed the variable to make clear that a value of 1 means individuals are eligible for aid, so we'll do the same:
 $$
 \begin{align}
   y_i=\alpha + \beta(\text{FATHERDEC}_i \times \text{OFFER}_i) + \delta \text{FATHERDEC}_i + \theta \text{OFFER}_i + \upsilon_i
 \end{align}
 $$
 ---
-# Estimate classic two-period DD
+## Estimate classic two-period DD
 
 $$
 \begin{align}
@@ -311,14 +276,15 @@ $$
 $$
 
 ```{r, echo=TRUE}
-lm(coll ~ fatherdec*offer + fatherdec + offer, data=dynarski)
+lm(coll ~ fatherdec*offer, data=dynarski)
 ```
 
 --
 
 This doesn't quiet match, let's add the weights in...
+
 ---
-# Estimate classic two-period DD
+## Estimate classic two-period DD
 
 $$
 \begin{align}
@@ -326,7 +292,7 @@ $$
 \end{align}
 $$
 ```{r, echo=TRUE}
-lm(coll ~ fatherdec*offer + fatherdec + offer, data=dynarski, 
+lm(coll ~ fatherdec*offer, data=dynarski, 
             weights=dynarski$wt88)
 ```
 
@@ -337,7 +303,7 @@ Pretty underwhelming output?
 ---
 # Under the hood
 ```{r, echo=TRUE}
-est_dynarski <- lm(coll ~ fatherdec*offer + fatherdec + offer, 
+est_dynarski <- lm(coll ~ fatherdec*offer, 
                    data=dynarski, weights=dynarski$wt88)
 est_dynarski %>% names()
 ```
@@ -350,16 +316,19 @@ est_dynarski %>% tidy()
 
 ---
 # Further under the hood
-```{r, echo=TRUE, highlight.output=c(11, 13:15)}
+```{r, echo=TRUE, output.lines= -(1:5), highlight.output=c(6, 8:10)}
 summary(est_dynarski)
 ```
 
 ---
 # Making a no-fuss table
 
+.small[
 ```{r, results = 'asis', echo=TRUE}
 stargazer(est_dynarski, type='html', single.row = T)
 ```
+]
+
 ---
 # Central DD asssumptions
 
@@ -367,7 +336,7 @@ In order to fully trust that the estimates produced by a DD analysis are unbiase
 
 1. Not-treated (or not-yet-treated) units are .blue[**valid counterfactuals**]
   - Parallel trends?
-  - Selection into treatment?
+  - Selection into treatment? (non-exogeneity)
 
 --
 2. There are no .blue[**simultaneous shocks**] or unobserved .blue[**secular trends**]
@@ -382,23 +351,25 @@ class: middle, inverse
 
 # DD in panel data
 
-### A. The two-way fixed effect (TWFE) estimator for staggered implementation
-### B. Appropriate statistical inference
-### C. Assessing the parallel trends assumption (PTA)
-### D. The event-study approach
+#### A. The two-way fixed effect (TWFE) estimator for staggered implementation
+#### B. Appropriate statistical inference
+#### C. Assessing the parallel trends assumption (PTA)
+#### D. The modern event-study approach
 
 ---
 # End of desegregation
+.small[
 - In 1991, 480 school districts were under court desegregation order
 - In following two decades, nearly half (215) were released and returned to neighborhood assignment patterns
-- Timing of release was arguably .blue[**exogenous**] and .blue[**quasi-random**]. 
-- This provides strong support to the claim that the districts which were not (or *not yet*) released from court orders were on .blue[**parallel trends**] in their outcomes with districts that were released and, thus, serve as .blue[**valid counterfactuals**].<sup>1</sup>
+- Timing of release was arguably .blue[**exogenous**] and .blue[**quasi-random**] 
+- This provides strong support to the claim that the districts which were not (or *not yet*) released from court orders were on .blue[**parallel trends**] in their outcomes with districts that were released and, thus, serve as .blue[**valid counterfactuals**]<sup>1</sup>
+]
 
  .pull-left[
 ```{r, echo=F}
      include_graphics("state_map.png")
 ```
-  ]
+]
   
 .pull-right[
 ```{r, echo=F}    
@@ -407,6 +378,7 @@ class: middle, inverse
 ]
 
 .footnote[[1] [Liebowitz (2018)](https://journals.sagepub.com/doi/10.3102/0162373717725804)]
+
 ---
 # End of desegregation data
 ```{r, echo=F}
@@ -427,11 +399,13 @@ $$
 $$
 --
 
-Take a minute to write down what this model does in words. Use the terms .blue[**mean effect**], .blue[**time series**], .blue[**fixed effects**] and .blue[**causal parameter of interest**]. Share with your neighbor.
+Take a minute to write down what this model does in words. Use the terms .blue[**mean effect**], .blue[**time series**], .blue[**fixed effects**] and .blue[**causal parameter of interest**]. 
 
 --
 
-> The model takes advantage of **time series** data in which the black dropout rate in each district is observed at three points in time. The model regresses the black dropout rate in a **fixed effect** model in which observations are clustered in two dimensions: within district $(\Gamma_j)$ and also within time $(\Pi_t)$. Note: $\Gamma_j$ represents a vector of dummy indicators that take the value of one if observation *j* is equal to district *j* and zero otherwise. $\Pi_t$ represents a vector of dummy indicators that take the value of one if observation *j* is in time *t* (1990, 2000 or 2010). $\beta_{1}$ estimates the **mean effect** of being observed after being declared unitary and is the **causal parameter of interest** reflecting the effect of being released from a desegregation order $UNITARY_{jt}$ on the black dropout rate.
+.small[
+> The model takes advantage of **time series (or panel or repeated measure)** data in which the Black dropout rate in each district is observed at three points in time. The model regresses the Black dropout rate in a **fixed effect** model in which observations are clustered in two dimensions: within district $(\Gamma_j)$ and also within time $(\Pi_t)$. Note: $\Gamma_j$ represents a vector of dummy indicators that take the value of one if observation *j* is equal to district *j* and zero otherwise. $\Pi_t$ represents a vector of dummy indicators that take the value of one if observation *j* is in time *t* (1990, 2000 or 2010). $\beta_{1}$ estimates the **average treatment effect** of being observed after being declared unitary and is the **causal parameter of interest** reflecting the effect of being released from a desegregation order $UNITARY_{jt}$ on the black dropout rate.
+]
 
 --
 
@@ -442,8 +416,8 @@ Take a minute to write down what this model does in words. Use the terms .blue[*
 
 We are going to shift to using the `fixest` [package](https://cran.r-project.org/web/packages/fixest/index.html); an incredibly versatile and robust tool for regression analysis in R from Laurent Berge.
 
-```{r, echo=T, highlight.output=c(2:3, 5:6)}
-ols_unitary1 <- feols(sd_dropout_prop_b ~ unitary | year + leaid, 
+```{r, echo=T, highlight.output=c(2:4, 6:7)}
+ols_unitary1 <- feols(sd_dropout_prop_b ~ unitary | leaid + year, 
                 data=desegregation, 
                 vcov = "iid", weights=desegregation$sd_t_1619_b)
 summary(ols_unitary1)
@@ -451,7 +425,7 @@ summary(ols_unitary1)
 
 --
 
-.blue[**Can you interpret this output?**] .small[(*ignore the line beginning vcov for now*)]
+.blue[**Can you interpret this output?**] .small[(*ignore un-highlighted line for now*)]
 
 ---
 ### Addressing serial correlation
@@ -467,17 +441,16 @@ $$\tau_{k} \simeq 1 + \rho_{x_{k}} \rho_{\mu} (\bar{N}_{g} - 1)$$
 where $\rho_{x_{k}}$ is the within-cluster correlation of regressor $x_{igk}$,  $\rho_{\mu}$ is the within-cluster error correlation and $\bar{N}_{g}$ is the average cluster size.
 
 --
-
-$\tau_{k}$ is **asymptotically** correct as number of clusters increase. Current consensus: this estimate of $\tau_{k}$ is accurate with .blue[**~50 clusters**]. Fewer than 40, and this approach can dramatically under-estimate SEs (consider bootstrapping). 
+$\tau_{k}$ is **asymptotically** correct as number of clusters increase. Current consensus: this estimate of $\tau_{k}$ is accurate with .blue[**~45 clusters**]. Fewer than 40, and this approach can dramatically under-estimate SEs (consider bootstrapping). 
 
 **Best practice**: cluster at the unit of treatment (or consider two-way clustering).<sup>2</sup> 
 
-.footnote[[1] Read all about cluster-robust standard errors in [Cameron & Miller's (2015)](http://jhr.uwpress.org/content/50/2/317.refs) accessible practitioner's guide to standard errors. <br> [2] [Bertrand, Mullainathan & Duflo (2004)](https://academic.oup.com/qje/article/119/1/249/1876068) and [Abadie et al. (2017)](https://www.nber.org/papers/w24003).]
+.footnote[.small[[1] Read all about cluster-robust standard errors in [Cameron & Miller's (2015)](http://jhr.uwpress.org/content/50/2/317.refs) accessible practitioner's guide to standard errors. <br> [2] [Bertrand, Mullainathan & Duflo (2004)](https://academic.oup.com/qje/article/119/1/249/1876068) and [Abadie et al. (2017)](https://www.nber.org/papers/w24003).]]
 
 ---
 # Clustered standard errors (1)
 
-```{r, echo=T, highlight.output=c(4:6)}
+```{r, echo=T, highlight.output=c(4:7)}
 ols_unitary2 <- feols(sd_dropout_prop_b ~ unitary | leaid + year, 
                  data=desegregation, 
                  weights=desegregation$sd_t_1619_b)
@@ -492,7 +465,7 @@ Default behavior in `fixest` is to cluster standard errors on the first fixed ef
 ---
 # Clustered standard errors (2)
 
-```{r, echo=T, highlight.output=c(4:6)}
+```{r, echo=T, highlight.output=c(4:7)}
 ols_unitary3 <- feols(sd_dropout_prop_b ~ unitary | leaid + year, 
                  data=desegregation, 
                  vcov = ~ leaid^year,
@@ -503,11 +476,12 @@ summary(ols_unitary3)
 
 --
 
-We are going to cluster our standard errors .blue[**at the level of assignment to treatment**]: the district-year
-.
+.small[We are going to cluster our standard errors .blue[**at the level of assignment to treatment**]: the district-year.]
+
 ---
 # Addressing serial correlation
 
+.small[
 ```{r, results='asis', echo=F}
 mods <- list()
 mods[['Unclustered']] <- ols_unitary1
@@ -517,16 +491,20 @@ mods[['Clustered (Unit*Period)']] <- ols_unitary3
 modelsummary(mods, 
          title = "A taxonomy of models estimating the end of school desegregation on the black dropout rate, by std. error clustering approach",
          stars=T,
-         gof_omit= "Adj|Pseudo|Log|Within|AIC|BIC",
+         gof_omit= "Adj|Pseudo|Log|Within|AIC|BIC|RMSE",
          threeparttable= T,
          type='html',
          notes = c("Notes: The table displays coefficients from Equation X with standard errors in parentheses.")
           )
 ```
+]
 
 --
 
-Doesn't make too much of a difference here...
+.small[Doesn't make too much of a difference here...]
+
+--
+.small[*Note*: Using `modelsummary` package, but `fixest` comes with the powerful `etable` function.]
 
 ---
 # Addressing parallel trends
@@ -534,38 +512,41 @@ Doesn't make too much of a difference here...
 
 $$
 \begin{aligned}
- \text{DROPOUT_BLACK} _{jt} = & \beta_1 \text{UNITARY} _{jt} + \beta_2 (\text{UNITARY} \times \text{YEAR}) _{jt} + \\
-    & \beta_3 \text{RUN_TIME} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+ \text{DROPOUT_BLACK}_{jt} = & \beta_1 \text{UNITARY} _{jt} + \beta_2 (\text{UNITARY} \times \text{REL_YEAR})_{jt} + \\
+    & \beta_3 \text{REL_YEAR}_{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
 \end{aligned}
 $$
 
 --
 
-What is this $\text{RUN_TIME} _{jt}$ and how do we code it?
+What is this $\text{REL_YEAR}_{jt}$ and how do we code it?
 
 --
 
 ```{r,echo=T}
 desegregation <- desegregation %>%
-  mutate(run_time = case_when(
+  mutate(rel_yr = case_when(
    !is.na(yrdiss) ~ (year - yrdiss),
    is.na(yrdiss) ~ -1 ## <-- this is funky, let's talk about it
   ))
-summary(desegregation$run_time)
+summary(desegregation$rel_yr)
 
 ```
 ---
-# Look at RUN_TIME in the data
+# Peek at REL_YEAR
+.small[
 ```{r, echo=F}
 DT::datatable(desegregation[c(7:9, 13:15,319:321),c(1:3, 7, 10, 24, 26)], 
               fillContainer = FALSE, height=175, options = list(pageLength = 9))
 ```
+]
+
 ---
 # Map coefficients to graph
 $$
 \begin{aligned}
- \text{DROPOUT_BLACK} _{jt} = & \color{red}{\beta_1} \text{UNITARY} _{jt} + \color{orange}{\beta_2} (\text{UNITARY} \times \text{YEAR}) _{jt} + \\
-    & \color{blue}{\beta_3} \text{RUN_TIME} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
+ \text{DROPOUT_BLACK}_{jt} = & \color{red}{\beta_1} \text{UNITARY} _{jt} + \color{orange}{\beta_2} (\text{UNITARY} \times \text{REL_YEAR})_{jt} + \\
+    & \color{blue}{\beta_3} \text{REL_YEAR}_{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
 \end{aligned}
 $$
 ```{r, echo=F, fig.height=5}
@@ -596,10 +577,9 @@ ggplot(data=ex) +
 
 ---
 # Parallel trends?
-```{r, echo=T, highlight.output=c(4:8)}
-ols_unitary_run <- feols(sd_dropout_prop_b ~ unitary + 
-      unitary:run_time + run_time | 
-      year + leaid, data=desegregation, 
+```{r, echo=T, highlight.output=c(5:9)}
+ols_unitary_run <- feols(sd_dropout_prop_b ~ unitary*rel_yr | 
+      leaid + year, data=desegregation, 
       vcov = ~leaid^year, weights=desegregation$sd_t_1619_b)
 summary(ols_unitary_run)
 ```
@@ -612,7 +592,7 @@ summary(ols_unitary_run)
 ```{r, results='asis', echo=F}
 desegregation$black90_yr <- desegregation$per_black_90 * desegregation$year
 
-ols_unitary_run <- feols(sd_dropout_prop_b ~ unitary + unitary:run_time + run_time + black90_yr | year + leaid, 
+ols_unitary_run <- feols(sd_dropout_prop_b ~ unitary*rel_yr + black90_yr | year + leaid, 
                     data=desegregation, 
                     vcov = ~leaid^year, weights=desegregation$sd_t_1619_b)
 
@@ -635,12 +615,13 @@ modelsummary(results,
          title = "Table 2. Effects of end of school desegregation on black dropout rate",
          stars=T,
          coef_omit = c("black90_yr"),
-         coef_rename = c("unitary" = "Unitary status", "run_time" = "Pre-trend", "unitary:run_time" = "Unitary x Relative-Year"),
+         coef_rename = c("unitary" = "Unitary status", "rel_yr" = "Pre-trend", "unitary:rel_yr" = "Unitary x Relative-Year"),
          estimate = "{estimate}{stars}",
-         gof_omit= "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std",
+         gof_omit= "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|RMSE",
+         vcov= ~leaid^year,
          add_rows = row,
          threeparttable= T,
-         notes = c("Notes: $^{+}p<0.1, ^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$. The table displays coefficients from Equation X and district-by-year clustered standard errors in parentheses. All models include fixed effects for year and district. Models 2 and 3 adjust for the proportion of 16-19 year-olds residing in the district in 1990 who were Black, interacted with year."),
+         notes = c("Notes: +p<0.1, *p<0.05, **p<0.01, ***p<0.001. Table displays coefficients and district-by-year clustered standard errors in parentheses. All models include fixed effects for year and district. Models 2 and 3 adjust for proportion of 16-19 year-olds residing in district in 1990 who were Black, interacted with year."),
          type='html')
 ```
 
@@ -675,66 +656,41 @@ Think for a moment what this model does?
 This would permit a .blue[**fully flexible specification**], permitting us to both evaluate .blue[**violations of the PTA**] and assess potential .blue[**dynamic effects**] of the treatment:
 
 ```{r, echo=F, output.lines=c(2:15)}
-desegregation <- mutate(desegregation, r_10minus=ifelse(run_time<=-10,1,0))
-desegregation <- mutate(desegregation, r_10plus=ifelse(run_time>=10, 1, 0))
+desegregation <- desegregation %>%
+                  mutate(cat_yr = case_when(
+                                  rel_yr <= -10 ~ "-10+",
+                                  rel_yr %in% c(-7,-8,-9) ~ "-7to-9",
+                                  rel_yr %in% c(-6,-5,-4) ~ "-6to-4",
+                                  rel_yr %in% c(-3,-2) ~ "-3to-2",
+                                  rel_yr == -1 ~ "Unitary",
+                                  rel_yr %in% c(0,1,2) ~ "Unitaryto+2",
+                                  rel_yr %in% c(3,4,5) ~ "3to5",
+                                  rel_yr %in% c(6,7,8,9) ~ "7to9",
+                                  rel_yr >= 10 ~ "10+"
+                          ))
+desegregation$cat_yr <- factor(desegregation$cat_yr, ordered=TRUE,
+                         levels = c("-10+", "-7to-9", "-6to-4", "-3to-2", "Unitary", "Unitaryto+2", "3to5", "7to9", "10+"))
 
-desegregation <- mutate(desegregation, r_7to9minus=case_when(
-  run_time==-7 ~ 1,
-  run_time==-8 ~ 1,
-  run_time==-9 ~ 1,
-  TRUE ~ 0))
-desegregation <- mutate(desegregation, r_6to4minus=case_when(
-  run_time==-6 ~ 1,
-  run_time==-5 ~ 1,
-  run_time==-4 ~ 1,
-  TRUE ~ 0))
-desegregation <- mutate(desegregation, r_3to2minus=case_when(
-  run_time==-3 ~ 1,
-  run_time==-2 ~ 1,
-  TRUE ~ 0))
-desegregation <- mutate(desegregation, r_1minus = case_when(
-  run_time==-1 ~ 1,
-  is.na(run_time) ~ 1,
-  TRUE ~ 0))
-desegregation <- mutate(desegregation, r_0to2plus=case_when(
-  run_time==0 ~ 1,
-  run_time==1 ~ 1,
-  run_time==2 ~ 1,
-  TRUE ~ 0))
-desegregation <- mutate(desegregation, r_3to5plus=case_when(
-  run_time==3 ~ 1,
-  run_time==4 ~ 1,
-  run_time==5 ~ 1,
-  TRUE ~ 0))
-desegregation <- mutate(desegregation, r_6to9plus=case_when(
-  run_time==6 ~ 1,
-  run_time==7 ~ 1,
-  run_time==8 ~ 1,
-  run_time==9 ~ 1,
-  TRUE ~ 0))
-
-event_study <- feols(sd_dropout_prop_b ~ r_10minus + r_7to9minus + r_6to4minus +
-                         r_3to2minus + r_0to2plus + r_3to5plus + r_6to9plus + 
-                         r_10plus | year + leaid, data=desegregation,
+event_study <- feols(sd_dropout_prop_b ~ i(cat_yr, ref="Unitary") | year + leaid, data=desegregation,
                        vcov = ~leaid^year, weights=desegregation$sd_t_1619_b)
 summary(event_study)
 ```
 
 --
-*What has happened to our standard errors?* (think about .blue[**bias v. variance tradeoff**])
+.small[*What has happened to our standard errors?* (think about .blue[**bias v. variance tradeoff**])]
 
 ---
 # Event study visualized
 
 ```{r, echo=F, fig.height=5.5}
-
-modelplot(event_study, vcov=~leaid^year) +
-  theme_pander(base_size=16) + geom_hline(aes(yintercept = 4.75), col="red", lty="dashed") +
-  geom_vline(aes(xintercept=0), col="blue", lty="dashed") +
-  geom_point(aes(x=0, y=4.5), size=2) +
-  labs(x="Change in Hispanic Dropout Rate", y="Relative Year", title="Figure XX. Event study of effects of end of school desegregation \n on the Black dropout rate") +
-  scale_y_discrete(labels=c("-10 plus", "-7to-9", "-6to-4", "-3to-2", "Unitaryto+2", "+3to+5", "+6to+9", "10 plus")) + 
-  coord_flip()
+iplot(event_study)
+#modelplot(event_study, vcov=~leaid^year) +
+#  theme_pander(base_size=16) + geom_hline(aes(yintercept = 4.75), col="red", lty="dashed") +
+#  geom_vline(aes(xintercept=0), col="blue", lty="dashed") +
+#  geom_point(aes(x=0, y=4.5), size=2) +
+#  labs(x="Change in Hispanic Dropout Rate", y="Relative Year", title="Figure XX. Event study of effects of end of school desegregation \n on the Black dropout rate") +
+#  scale_y_discrete(labels=c("-10 plus", "-7to-9", "-6to-4", "-3to-2", "Unitaryto+2", "+3to+5", "+6to+9", "10 plus")) + 
+#  coord_flip()
 
 
 ```
@@ -753,7 +709,7 @@ modelplot(event_study, vcov=~leaid^year) +
 
 unit <- filter(desegregation, !is.na(yrdiss) & !is.na(sd_dropout_prop_b))
 
-ggplot(data=unit, aes(y=sd_dropout_prop_b, x=run_time, color=unitary)) +
+ggplot(data=unit, aes(y=sd_dropout_prop_b, x=rel_yr, color=unitary)) +
   geom_point() +
   geom_smooth(data=subset(unit, unitary==0), method = lm, formula = y ~ x,  mapping = aes(weight = sd_t_1619_b)) +
   geom_smooth(data=subset(unit, unitary==1), method = lm, formula = y ~ poly(x, 2), mapping = aes(weight = sd_t_1619_b)) +
@@ -797,28 +753,15 @@ class: middle, inverse
 ---
 # To-Dos
 
-### Reading: Liebowitz, Porter & Bragg (2019)
+#### Reading: Liebowitz, Porter & Bragg (2022)
 - Critical to read the paper and answer a small set of questions as preparation for DARE
 - *Further*: MHE: Ch. 5, 'Metrics: Ch. 5, Mixtape: 
 
-
-### DARE #1
-- Due 9:00am, January 21 (different due date bc MLK Jr Day)
+#### DARE #1
 - Let's look at assignment
 - Submit code and memo in response to questions
 - Indicate partners (or not)
 - I am available for support!
 
-### Research Project Proposal due 9am, 1/27
+#### Research Project Proposal due 11:59pm, 1/28
 - Talk to me!
-
----
-# Feedback
-
-## Plus/Deltas
-
-Front side of index card
-
-## Clear/Murky
-
-On back
