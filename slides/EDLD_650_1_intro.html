@@ -829,7 +829,7 @@ What is one approach by which we might estimate the effects of a policy change o
 
 --
 
-Difference-in-difference (DD) estimates are the difference of two differences:
+Difference-in-differences (DD) estimates are the difference of two differences:
 
 `\(\hat{ATE} = \color{blue}{(Y_{1}^{D=1} - Y_{0}^{D=1})} - \color{purple}{(Y_{1}^{D=0} - Y_{0}^{D=0})}\)`
 
@@ -870,7 +870,7 @@ We can get the same results for a two-period DD in a regression framework, which
 
 where, *TREAT* = 1 if in treatment and = 0 if in control and ...
 
-*AFTER* = if after the treatment occurred (even if you didn't experience the treatment) and *AFTER* = 0 if before treatment; **OR**
+*AFTER* = 1 if observed after the treatment occurred (even if you didn't experience the treatment) and *AFTER* = 0 if before treatment; **OR**
 
 `\(CHOLERA_{it} = \beta_{0} + \beta_{1}LAMBETH_{it} + \beta_{2}1854_{it} + \color{purple}{\beta_{3}}LAMBETH \times 1854_{it} + \varepsilon_{it}\)`
 
