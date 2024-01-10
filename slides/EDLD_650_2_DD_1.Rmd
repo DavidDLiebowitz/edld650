@@ -662,16 +662,16 @@ desegregation <- desegregation %>%
                                   rel_yr %in% c(-7,-8,-9) ~ "-7to-9",
                                   rel_yr %in% c(-6,-5,-4) ~ "-6to-4",
                                   rel_yr %in% c(-3,-2) ~ "-3to-2",
-                                  rel_yr == -1 ~ "Unitary",
+                                  rel_yr == -1 ~ "-1",
                                   rel_yr %in% c(0,1,2) ~ "Unitaryto+2",
                                   rel_yr %in% c(3,4,5) ~ "3to5",
                                   rel_yr %in% c(6,7,8,9) ~ "7to9",
                                   rel_yr >= 10 ~ "10+"
                           ))
 desegregation$cat_yr <- factor(desegregation$cat_yr, ordered=TRUE,
-                         levels = c("-10+", "-7to-9", "-6to-4", "-3to-2", "Unitary", "Unitaryto+2", "3to5", "7to9", "10+"))
+                         levels = c("-10+", "-7to-9", "-6to-4", "-3to-2", "-1", "Unitaryto+2", "3to5", "7to9", "10+"))
 
-event_study <- feols(sd_dropout_prop_b ~ i(cat_yr, ref="Unitary") | year + leaid, data=desegregation,
+event_study <- feols(sd_dropout_prop_b ~ i(cat_yr, ref="-1") | year + leaid, data=desegregation,
                        vcov = ~leaid^year, weights=desegregation$sd_t_1619_b)
 summary(event_study)
 ```
@@ -684,14 +684,6 @@ summary(event_study)
 
 ```{r, echo=F, fig.height=5.5}
 iplot(event_study)
-#modelplot(event_study, vcov=~leaid^year) +
-#  theme_pander(base_size=16) + geom_hline(aes(yintercept = 4.75), col="red", lty="dashed") +
-#  geom_vline(aes(xintercept=0), col="blue", lty="dashed") +
-#  geom_point(aes(x=0, y=4.5), size=2) +
-#  labs(x="Change in Hispanic Dropout Rate", y="Relative Year", title="Figure XX. Event study of effects of end of school desegregation \n on the Black dropout rate") +
-#  scale_y_discrete(labels=c("-10 plus", "-7to-9", "-6to-4", "-3to-2", "Unitaryto+2", "+3to+5", "+6to+9", "10 plus")) + 
-#  coord_flip()
-
 
 ```
 
