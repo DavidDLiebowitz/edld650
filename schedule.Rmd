@@ -104,10 +104,11 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Liebowitz, D.D., Porter, L. & Bragg, D. (2022). [The effects of higher-stakes teacher evaluation on office disciplinary referrals](./readings/Liebowitz Porter Bragg 2022.pdf). *Journal of Research on Educational Effectiveness, 15*(3), 475-509. [Online Appendix](./readings/Liebowitz Porter Bragg 2022 supplemental.pdf)
 
 **Lecture:**
+
 <!--
-- Slides: [html](./slides/EDLD_650_3_RD_1.html) | [pdf](./slides/EDLD_650_3_RD_1.pdf)
+- Slides: [html](./slides/EDLD_650_3_RD_1.html) | [pdf](./slides/EDLD_650_3_RD_1.pdf) -->
 - Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
--->
+
 
 **Assignment:**
 
