@@ -75,9 +75,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Class Questions: [doc](./questions/EDLD 650 Class 2 Questions.docx)
 - R Script: [Class 2](./code/EDLD_650_2_DD_script.R)
 - Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](./data/edld_650_class_2_eepa_data.dta)
-<!--
 - Review slides: [html](./slides/EDLD_650_Review.html)
--->
 
 **Assignment:**
 

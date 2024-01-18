@@ -216,7 +216,7 @@ $$INCOME_{ij} = \beta_{0} + \beta_{1} SAT_{ij} + \beta_{2} SCHOOL2_{j} + \beta_{
 ---
 # Cluster-adjusted SEs
 ```{r, echo=T}
-summary(feols(income30 ~ SAT | school, data=df))
+summary(fixest::feols(income30 ~ SAT | school, data=df))
 ```
 
 --
@@ -250,10 +250,24 @@ $\varepsilon_{ij}$: unique to student i in school j. iid for every student
 
 Can calculate the **intra-class correlation**, *a summary of the proportion of outcome variability attributable to differences across schools.*
 
-Random effects estimation procedures use iterative algorithms (Maximum Likelihood Estimation, restricted MLE, Gradient descent, etc.) to minimize the sum of the square errors at each hierarchical level of the model.
+$$\hat{\rho} = \frac{\sigma^{2}_{s}}{\sigma^{2}_{s}+\sigma^{2}_{i}}$$
+
+--
+
+.small[Random effects estimation procedures use iterative algorithms (Maximum Likelihood Estimation, restricted MLE, Gradient descent, etc.) to minimize the sum of the square errors at each hierarchical level of the model.]
 
 ---
 # Estimate random intercept model
 ```{r, echo=T}
-summary(lmer(income30 ~ SAT + (1 | school), data=df))
+summary(lme4::lmer(income30 ~ SAT + (1 | school), data=df))
 ```
+
+---
+# Treatment effect?
+```{r, echo=F, output.lines=-c(1:6)}
+summary(lme4::lmer(income30 ~ SAT + (1 | school), data=df))
+```
+
+--
+
+**What's different/same compared to fixed effect estimates?**

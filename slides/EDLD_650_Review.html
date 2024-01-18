@@ -4,7 +4,7 @@
     <title>EDLD 650 Review Session</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_Review_files/header-attrs-2.11/header-attrs.js"></script>
+    <script src="EDLD_650_Review_files/header-attrs-2.20/header-attrs.js"></script>
     <link href="EDLD_650_Review_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_Review_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -12,8 +12,12 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # EDLD 650 Review Session
+]
+.author[
 ### David D. Liebowitz
+]
 
 ---
 
@@ -137,7 +141,7 @@ summary(lm(income30 ~ SAT + school, data=df))
 # Cluster-adjusted SEs
 
 ```r
-summary(feols(income30 ~ SAT | school, data=df))
+summary(fixest::feols(income30 ~ SAT | school, data=df))
 ```
 
 ```
@@ -184,13 +188,17 @@ There is now a composite residual that has parts *for each individual*. A school
 
 Can calculate the **intra-class correlation**, *a summary of the proportion of outcome variability attributable to differences across schools.*
 
-Random effects estimation procedures use iterative algorithms (Maximum Likelihood Estimation, restricted MLE, Gradient descent, etc.) to minimize the sum of the square errors at each hierarchical level of the model.
+`$$\hat{\rho} = \frac{\sigma^{2}_{s}}{\sigma^{2}_{s}+\sigma^{2}_{i}}$$`
+
+--
+
+.small[Random effects estimation procedures use iterative algorithms (Maximum Likelihood Estimation, restricted MLE, Gradient descent, etc.) to minimize the sum of the square errors at each hierarchical level of the model.]
 
 ---
 # Estimate random intercept model
 
 ```r
-summary(lmer(income30 ~ SAT + (1 | school), data=df))
+summary(lme4::lmer(income30 ~ SAT + (1 | school), data=df))
 ```
 
 ```
@@ -219,6 +227,36 @@ summary(lmer(income30 ~ SAT + (1 | school), data=df))
 #&gt;     (Intr)
 #&gt; SAT -0.518
 ```
+
+---
+# Treatment effect?
+
+```
+...
+#&gt; Scaled residuals: 
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -3.3911 -0.6687  0.0083  0.6518  3.7524 
+#&gt; 
+#&gt; Random effects:
+#&gt;  Groups   Name        Variance Std.Dev.
+#&gt;  school   (Intercept) 6440493  2538    
+#&gt;  Residual             1160413  1077    
+#&gt; Number of obs: 3000, groups:  school, 3
+#&gt; 
+#&gt; Fixed effects:
+#&gt;              Estimate Std. Error t value
+#&gt; (Intercept) 50892.981   1713.254  29.705
+#&gt; SAT            -1.699      1.776  -0.957
+#&gt; 
+#&gt; Correlation of Fixed Effects:
+#&gt;     (Intr)
+#&gt; SAT -0.518
+...
+```
+
+--
+
+**What's different/same compared to fixed effect estimates?**
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -262,6 +300,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
