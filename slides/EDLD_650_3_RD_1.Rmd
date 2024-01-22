@@ -104,11 +104,11 @@ knit_hooks$set(output = function(x, options) {
 
 .large[
 1. Roadmap and Goals (9:00-9:10)
-2. Analyzing Liebowitz, Porter & Bragg (9:10-10:00)
-3. How DARE you! (10:00-10:50)
-  - Concepts and coding
-  - Debrief
-4. Break (10:50-11:00)
+2. Analyzing Liebowitz, Porter & Bragg (9:10-10:10)
+3. How DARE you! (10:10-10:45)
+  - More questions?
+  - Preview debrief
+4. Break (10:45-11:00)
 5. Regression discontinuity (11:00-11:40)
 6. Wrap-up (11:40-11:50)
   - Research project proposal
@@ -140,6 +140,7 @@ class: middle, inverse
 
 ---
 # DARE 1 review process
+.blue[*...we'll do this next class...*]
 
 .large[
 1. Form groups of 2-3 (not your DARE partner)
@@ -147,7 +148,7 @@ class: middle, inverse
   - Take notes on where answers differ from model
   - Think about conceptual questions (modeling decisions, robustness checks, etc.) 
   - Think about presentation and language (what to leave in, what to leave out? how to describe results?)
-3. Discuss in group conceptual and presentation questions (15 min)
+3. Discuss in group conceptual questions (15 min)
 4. Independently review code posted on course website (5 min)
 5. Join partner (for solo authors join another author)
 6. Discuss coding choices and questions (10 min)
@@ -226,7 +227,7 @@ ggplot(data=unit, aes(y=sd_dropout_prop_b, x=run_time, color=unitary)) +
 ---
 # C-ITS considered
 
-### Strengths
+.purple[**Strengths**]
 - Takes advantage of full range of data
 - Compared to mean-effect-only DD, allows differentiation of discontinuous jump vs. post-trend
 - Permits modeling of fully flexible functional form (can include quadratic, cubic, quartic relationships, interactions and more!)
@@ -234,7 +235,7 @@ ggplot(data=unit, aes(y=sd_dropout_prop_b, x=run_time, color=unitary)) +
 
 --
 
-### Weaknesses
+.purple[**Weaknesses**]
 - Units on each side of discontinuity not .blue[*equal-in-expectation*] w/o other assumptions
 - Encourages over-fitting; risks generating unstable models
 - Estimates are functional-form dependent
@@ -246,9 +247,9 @@ ggplot(data=unit, aes(y=sd_dropout_prop_b, x=run_time, color=unitary)) +
 
 
 ---
-# Failing (passing) graduation test
+## Failing (passing) graduation test
 
-.large[Massachusetts, like many other states (including Oregon until very recently) requires students to pass a test in order to graduate. **How does just passing (or failing affect students)?**]<sup>1</sup>
+.large[Massachusetts, like somee other states (including Oregon until very recently) requires students to pass a test in order to graduate. **How does just passing (or failing affect students)?**]<sup>1</sup>
 
 ```{r, out.width = "45%", echo=F}
   include_graphics("PapayMurnaneWillett2016.jpg")
@@ -428,21 +429,21 @@ gg_srd3
 ---
 # Education FTW!<sup>1</sup>
 
-```{r, out.width = "80%", echo=F}
+```{r, out.width = "70%", echo=F}
   include_graphics("original_rdd.jpg")
 ```
 
 .footnote[[1] Thistlethwaite, D. L., & Campbell, D. T. (1960). [Regression-discontinuity analysis: An alternative to the ex post facto experiment](https://psycnet.apa.org/record/1962-00061-001). Journal of Educational Psychology, 51(6), 309–317]
 
 ---
-# The benefits of being recognized
+## The benefits of being recognized
 
-```{r, out.width = "90%", echo=F}
+```{r, out.width = "80%", echo=F}
   include_graphics("origin_rdd_2.jpg")
 ```
 
 ---
-# The basic set up in regression
+## The basic set up in regression
 
 Given a continuous forcing variable $S_{i}$ such that individuals receive a treatment $(D_{i})$ when $S_{i} \geq$ a cutoff $(C)$:  
   
@@ -483,14 +484,16 @@ class: middle, inverse
 
 ## Week 4: Regression Discontinuity
 
-## Readings: 
+**Readings:**
 - Murnane & Willet, Ch. 9
 - Angrist & Lavy (1999)
-- Ludwig & Miller (2007)
+- Dee & Penner (2017)
 - *Further*: MHE: Ch. 6, 'Metrics: Ch. 4, Mixtape: Ch. 6
 
-## Research Project Proposal due 9am, 1/28
+**Research Project Proposal due 11:59pm, 1/28**
 - Talk to me!
+
+**DARE #2 due 11:59pm, 2/5**
 
 ---
 # Feedback
