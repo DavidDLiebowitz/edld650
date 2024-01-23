@@ -564,9 +564,7 @@ ggplot(data=ex) +
   geom_vline(aes(xintercept=0), col="black", lty="dashed", size=1) +
   ggbrace::geom_brace(aes(x=c(0, 0.4), y=c(0.01, 0.09)), rotate=90, color="red", inherit.data = F) +
   annotate("text", x = -5, y = 0.03, label = "beta [3]", color = "blue", size = 8, parse=T) +
-  annotate("text", x = 4.5, y = 0.08, label = "beta [2]", color = "orange", size = 8, parse=T) + 
-  annotate("text", x = 5.1, y = 0.08, label = "+", color = "black", size=8) +
-  annotate("text", x = 5.75, y = 0.08, label = "beta [3]", color = "blue", size = 8, parse=T) +
+  annotate("text", x = 5, y = 0.08, label = "beta [2]", color = "orange", size = 8, parse=T) + 
   annotate("text", x = 1, y = 0.05, label = "beta [1]", color = "red", size = 8, parse=T) +
   labs(y="Black Dropout Rate", x="Relative Year") +
   theme_pander(base_size = 20)
