@@ -52,7 +52,7 @@ Answer Key: <!-- [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assign
 
 Replication paper: Holden (2016)
 
-Deadline: 11:59pm, February 5
+Deadline: 11:59pm, February 4
 
 Assignment details: <!-- [pdf](./assignments/DARE_2/DARE_2.pdf)
 

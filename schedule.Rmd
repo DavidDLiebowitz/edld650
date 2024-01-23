@@ -109,7 +109,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Assignment:**
 
-- Submit Research Project Proposal by 11:59pm, January 28
+- Submit Research Project Proposal by 11:59pm, February 2
 
 *Further readings:*
 
@@ -136,16 +136,18 @@ knitr::opts_chunk$set(echo = TRUE)
 	 
 
 **Lecture:**
+
 <!--
-- Slides: [html](./slides/EDLD_650_4_RD_2.html) | [pdf](./slides/EDLD_650_4_RD_2.pdf)
+- Slides: [html](./slides/EDLD_650_4_RD_2.html) | [pdf](./slides/EDLD_650_4_RD_2.pdf) -->
 - Class Questions: [doc](./questions/EDLD 650 Class 4 Questions.docx)
+<!--
 - R Script: [Class 4](./code/EDLD_650_4_RD_script.R)
 - Data: [Angrist](./data/ch9_angrist.dta)
 -->
 
 **Assignment:** 
 
-- Complete DARE #2 by 11:59pm, February 5
+- Complete DARE #2 by 11:59pm, February 4
 
 *Further readings:*
 
