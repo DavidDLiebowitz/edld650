@@ -1,0 +1,38 @@
+
+\begin{table}[!htbp]
+   \caption{\label{tab:pbis} Difference-in-differences estimates of moderating effects of successful PBIS implementation}
+   \bigskip
+   \centering
+   \begin{tabular}{lcccccc}
+      \hline \hline \\[-1.8ex]
+       & \multicolumn{3}{c}{Class} & \multicolumn{3}{c}{Subjective}\\
+                                              & (1)           & (2)           & (3)           & (4)           & (5)           & (6)\\  
+      \midrule 
+      Implement Evaluation                    & -0.032        & -0.084        & 0.039         & -0.030        & -0.051        & 0.043\\   
+                                              & (0.043)       & (0.105)       & (0.148)       & (0.029)       & (0.070)       & (0.107)\\   
+      Implement PBIS well                     &               & -0.037        & 0.174         &               & -0.010        & 0.163\\   
+                                              &               & (0.075)       & (0.129)       &               & (0.052)       & (0.088)\\   
+      Eval x PBIS                             &               & 0.023         & -0.160        &               & 0.011         & -0.122\\   
+                                              &               & (0.104)       & (0.154)       &               & (0.067)       & (0.110)\\   
+      Pre-trend                               &               &               & -0.034        &               &               & -0.031\\   
+                                              &               &               & (0.030)       &               &               & (0.020)\\   
+      Eval x Relative-Year                    &               &               & 0.077         &               &               & 0.069\\   
+                                              &               &               & (0.067)       &               &               & (0.043)\\   
+      Implement PBIS well $\times$ Pre-trend  &               &               & 0.060         &               &               & 0.049$^{*}$\\   
+                                              &               &               & (0.030)       &               &               & (0.022)\\ 
+      Eval X PBIS x Year                      &               &               & -0.065        &               &               & -0.064\\   
+                                              &               &               & (0.076)       &               &               & (0.048)\\   
+       \midrule
+      R$^2$                                   & 0.870         & 0.877         & 0.880         & 0.864         & 0.872         & 0.876\\  
+      Observations                            & 341           & 341           & 341           & 341           & 341           & 341\\  
+       \midrule
+      State fixed effects                     & $\checkmark$  & $\checkmark$  & $\checkmark$  & $\checkmark$  & $\checkmark$  & $\checkmark$\\   
+      Year fixed effects                      & $\checkmark$  & $\checkmark$  & $\checkmark$  & $\checkmark$  & $\checkmark$  & $\checkmark$\\   
+      \hline \hline \\[-1.8ex]
+   \end{tabular}
+   
+   \par \justifying 
+   \small \textit{Notes:} $^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$. Cells report coefficients and state-by-year clustered standard errors in parentheses. Models 1 and 3 are limited to states that ever implemented teacher evaluation reforms. Models 2 and 4 are estimated in balanced panels, restricted to state-year observations 5-years before and 1-year after evaluation reform. All models include fixed effects for year and state, are weighted by state enrollment, and adjust for the proportion of FRPL-eligible students and the proportion of students of different ethnoracial backgrounds.
+\end{table}
+
+

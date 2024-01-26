@@ -44,7 +44,7 @@ Assignment details: [pdf](./assignments/DARE_1/DARE_1.pdf)
 
 Dataset: [csv](./assignments/DARE_1/data/EDLD_650_DARE_1.csv)
 
-Answer Key: <!-- [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assignments/DARE_1/DARE_1.tex) | [R script](./assignments/DARE_1/code/EDLD_650_DARE_1_code.R) -->
+Answer Key: [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assignments/DARE_1/DARE_1_answers.tex) | [R script](./assignments/DARE_1/code/EDLD_650_DARE_1_code.R)
 
 ## DARE #2 
 
