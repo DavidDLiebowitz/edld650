@@ -4,7 +4,7 @@
     <title>Regression Discontinuity</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_4_RD_2_files/header-attrs-2.11/header-attrs.js"></script>
+    <script src="EDLD_650_4_RD_2_files/header-attrs-2.20/header-attrs.js"></script>
     <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
@@ -17,9 +17,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Regression Discontinuity
+]
+.subtitle[
 ## EDLD 650: Week 4
+]
+.author[
 ### David D. Liebowitz
+]
 
 ---
 
@@ -35,11 +41,12 @@ class: center, middle, inverse, title-slide
 # Agenda
 
 #### 1. Roadmap and Goals (9:00-9:10)
-- Final thoughts on DARE #1
+- Thoughts on DARE #1
+
 #### 2. Discussion Questions (9:10-10:20)
-- Angrist and Lavy
-- Ludwig and Miller
 - Murnane and Willett
+- Angrist and Lavy
+- Dee and Penner
 
 #### 3. Break (10:20-10:30)
 #### 4. Applied regression discontinuity (10:30-11:40)
@@ -55,14 +62,9 @@ class: center, middle, inverse, title-slide
   - Try to solve it, but if you can't write up what you have, note and interpret the differences
 
 --
-- For DARE #1, almost all errors were the result of either (a) creation of predictor variables or (b) model mis-specification
-  - The first is going to happen, review and learn from your mistake
-  - In the second case, review the model structure and think through what led to the different magnitude of the results
-      + In the DD case, how does the TWFE structure result in the estimation of a series of 2x2 pre/post and treat/not comparisons?
-      + What happens when you do not include year or state fixed effects?
-
---
-- Non-causal and causal estimates shouldn't appear side-by-side in tables (w/o very good reason)
+- Need to make transition to drafting for public audiences 
+- Non-causal and causal estimates shouldn't appear side-by-side in tables (w/o very good reason) -- beware [Table 2 fallacy](https://arxiv.org/abs/2005.10314)!!!
+- Prepare for challenge of assignment without model answers -- think hard about model development
 
 
 ---
@@ -88,7 +90,7 @@ class: middle, inverse
 
 # Break
 ---
-# Recall the basic set up of the RD
+# Recall the basic set up of RD
 
 
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
@@ -108,7 +110,7 @@ class: middle, inverse
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
-# The basic set up in regression
+## The basic set up in regression
 
 Given a continuous forcing variable `\(S_{i}\)` such that individuals receive a treatment `\((D_{i})\)` when `\(S_{i} \geq\)` a cutoff `\((C)\)`:  
   
@@ -131,7 +133,7 @@ Given a continuous forcing variable `\(S_{i}\)` such that individuals receive a 
 ---
 # Let's practice!
 
-Let's read in the modified Angrist &amp; Lavy data and look at its characteristics:  
+Read in modified Angrist &amp; Lavy data and look at its characteristics:  
 
 
 
@@ -213,12 +215,14 @@ sort &lt;- ggplot() +
 
 ---
 # Are RD assumptions met?
+.small[
 
 ```r
 quantile &lt;- ggplot() +
   geom_quantile(data=filter(d, size&lt;41), aes(size, ses), quantiles=0.5, color=purple) + 
   geom_quantile(data=filter(d, size&gt;=41), aes(size, ses), quantiles=0.5, color=red_pink)
 ```
+]
 
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 ---
@@ -227,7 +231,7 @@ quantile &lt;- ggplot() +
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
-# Let's refresh on how RD works
+# Refresh on how RD works
 
 `$$READSCORE_{i} = \beta_{0} + \beta_{1} COHORTSIZE_{i} + 1(COHORTSIZE_{i} \geq 41)\beta_{2} + \varepsilon_{i}$$`
 --
@@ -239,7 +243,7 @@ Could also write this as:
 Can you explain the identification strategy as you would in your methods section (using *secular trend, forcing variable, equal in expectation, projecting across the discontinuity, ITT*)?
 
 ---
-# Let's refresh on how RD works
+# Refresh on how RD works
 
 &gt; We estimate the effects of class size on individual *i*'s reading score. Specifically, we regress their test score outcome on whether the size of their grade cohort predicts that they will be assigned to a small class. We account for the secular relationship between test scores and cohort size by adjusting our estimates for the linear relationship between cohort size and test scores.
 
@@ -253,10 +257,15 @@ Can you explain the identification strategy as you would in your methods section
 d &lt;- d %&gt;% mutate(small = ifelse(size &gt;= 41,TRUE,FALSE))
 
 fx2 &lt;- ggplot() + 
-  geom_point(data=d, aes(x=size, y=read, colour=small), alpha=0.8, shape=16) 
+geom_point(data=d, aes(x=size, y=read, color=small), alpha=0.8, shape=16) 
 ```
 
+
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+
+--
+
+.small[Scatter prevents visual detection of discontinuity...thus, the value of [.red-pink[**bin scatter**]](https://arxiv.org/abs/1902.09608).]
 
 ---
 # Let's see if there's an effect
@@ -266,8 +275,9 @@ fx2 &lt;- ggplot() +
 bin&lt;- d %&gt;% group_by(size) %&gt;% summarise(across(c("read", "small"), mean))
 
 binned_plot &lt;- ggplot() + 
-  geom_point(data=bin, aes(x=size, y=read, colour=as.factor(small)), alpha=0.8, shape=16, size=3) 
+  geom_point(data=bin, aes(x=size, y=read, color=as.factor(small)), alpha=0.8, shape=16, size=3) 
 ```
+
 
 &lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
 
@@ -334,13 +344,14 @@ $$
 
 ---
 # Results
+.small[
 &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; Model 1 &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; Model 2 &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; Model 3 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;  (1) &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;   (2) &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;   (3) &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -399,10 +410,10 @@ $$
    &lt;td style="text-align:center;"&gt; 22.716* &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;box-shadow: 0px 1px"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;box-shadow: 0px 1px"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;box-shadow: 0px 1px"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:center;box-shadow: 0px 1px"&gt; (10.154) &lt;/td&gt;
+   &lt;td style="text-align:left;box-shadow: 0px 1.5px"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;box-shadow: 0px 1.5px"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;box-shadow: 0px 1.5px"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;box-shadow: 0px 1.5px"&gt; (10.154) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Num.Obs. &lt;/td&gt;
@@ -420,8 +431,9 @@ $$
 &lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;
 &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
 &lt;/table&gt;
+]
 ---
-# Can you explain these results?
+## Can you explain these results?
 
 Models 1 and 3 seem sensibly connected to the graphical evidence, but Model 2 suggest that the effect of an offer of small class size is negative and an estimated whopping .red[-24.3 points lower reading scores]. What gives?
 
@@ -451,7 +463,7 @@ $$
 .small[We need to project the fitted values that our regression results predict *at the discontinuity*. The most straightforward way is to plug in the values for grade cohorts that are just under and over the threshold for being split in two by Maimonides' Rule using the estimated coefficients from the table on the previous slide.] .blue[Take Eq. 2 and try doing this for cohorts of 40 and 41, respectively.]
 
 ---
-# Can you explain these results?
+## Can you explain these results?
 
 **Big class, grade cohort = 40**
 $$
@@ -476,8 +488,12 @@ $$
 
 So the predicted effect of being assigned to receive a smaller class when we allow the slopes to vary around the discontinuity is `\(73.012 - 67.046 = 5.9766\)`, or slightly larger than either the linear, constant slope or the quadratic specifications.
 
+--
+
+.purple[*Note: this is all implicitly solved for when you re-center the forcing variable at 0.*]
+
 ---
-# Can you explain these results?
+## Can you explain these results?
 
 Now that we've harmonized our findings, can you explain these results in technically accurate and substantively clear ways?
 --
@@ -527,11 +543,10 @@ class: middle, inverse
 - Holden (2016)
 
 ### DARE #2
-- Give me another chance!
-- Due 1/31, 9:00am
+- Due 2/4, 11:59pm
 
 ### Project proposal
-- Due 1/28, 9:00am
+- Due 2/2, 11:59pm
 
 ---
 # Feedback
@@ -584,6 +599,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

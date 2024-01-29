@@ -102,11 +102,12 @@ knit_hooks$set(output = function(x, options) {
 # Agenda
 
 #### 1. Roadmap and Goals (9:00-9:10)
-- Final thoughts on DARE #1
+- Thoughts on DARE #1
+
 #### 2. Discussion Questions (9:10-10:20)
-- Angrist and Lavy
-- Ludwig and Miller
 - Murnane and Willett
+- Angrist and Lavy
+- Dee and Penner
 
 #### 3. Break (10:20-10:30)
 #### 4. Applied regression discontinuity (10:30-11:40)
@@ -122,14 +123,9 @@ knit_hooks$set(output = function(x, options) {
   - Try to solve it, but if you can't write up what you have, note and interpret the differences
 
 --
-- For DARE #1, almost all errors were the result of either (a) creation of predictor variables or (b) model mis-specification
-  - The first is going to happen, review and learn from your mistake
-  - In the second case, review the model structure and think through what led to the different magnitude of the results
-      + In the DD case, how does the TWFE structure result in the estimation of a series of 2x2 pre/post and treat/not comparisons?
-      + What happens when you do not include year or state fixed effects?
-
---
-- Non-causal and causal estimates shouldn't appear side-by-side in tables (w/o very good reason)
+- Need to make transition to drafting for public audiences 
+- Non-causal and causal estimates shouldn't appear side-by-side in tables (w/o very good reason) -- beware [Table 2 fallacy](https://arxiv.org/abs/2005.10314)!!!
+- Prepare for challenge of assignment without model answers -- think hard about model development
 
 
 ---
@@ -157,7 +153,7 @@ class: middle, inverse
 
 # Break
 ---
-# Recall the basic set up of the RD
+# Recall the basic set up of RD
 
 
 ```{r, echo= F}
@@ -283,7 +279,7 @@ geom_errorbar(
 ```
 
 ---
-# The basic set up in regression
+## The basic set up in regression
 
 Given a continuous forcing variable $S_{i}$ such that individuals receive a treatment $(D_{i})$ when $S_{i} \geq$ a cutoff $(C)$:  
   
@@ -306,7 +302,7 @@ $$p(COLL_{i}=1)= \beta_{0} + \beta_{1} TESTSCORE_{i} + 1(TESTSCORE_{i} \geq 60)\
 ---
 # Let's practice!
 
-Let's read in the modified Angrist & Lavy data and look at its characteristics:  
+Read in modified Angrist & Lavy data and look at its characteristics:  
 
 
 ```{r, echo= T}
@@ -396,11 +392,13 @@ sort_polish
 
 ---
 # Are RD assumptions met?
-```{r, echo=T, fig.height=5.5}
+.small[
+```{r, echo=T}
 quantile <- ggplot() +
   geom_quantile(data=filter(d, size<41), aes(size, ses), quantiles=0.5, color=purple) + 
   geom_quantile(data=filter(d, size>=41), aes(size, ses), quantiles=0.5, color=red_pink)
 ```
+]
 
 ```{r, echo=F, fig.height=5.5}
 quantile_polish <- quantile +
@@ -424,7 +422,7 @@ fx
 ```
 
 ---
-# Let's refresh on how RD works
+# Refresh on how RD works
 
 $$READSCORE_{i} = \beta_{0} + \beta_{1} COHORTSIZE_{i} + 1(COHORTSIZE_{i} \geq 41)\beta_{2} + \varepsilon_{i}$$
 --
@@ -436,7 +434,7 @@ $$READSCORE_{i} = \beta_{0} + \beta_{1} COHORTSIZE_{i} + \beta_{2} SMALLCLASS_{i
 Can you explain the identification strategy as you would in your methods section (using *secular trend, forcing variable, equal in expectation, projecting across the discontinuity, ITT*)?
 
 ---
-# Let's refresh on how RD works
+# Refresh on how RD works
 
 > We estimate the effects of class size on individual *i*'s reading score. Specifically, we regress their test score outcome on whether the size of their grade cohort predicts that they will be assigned to a small class. We account for the secular relationship between test scores and cohort size by adjusting our estimates for the linear relationship between cohort size and test scores.
 
@@ -445,14 +443,15 @@ Can you explain the identification strategy as you would in your methods section
 ---
 # Let's see if there's an effect
 
-```{r, echo=T, fig.height=5}
+```{r, echo=T}
 d <- d %>% mutate(small = ifelse(size >= 41,TRUE,FALSE))
 
 fx2 <- ggplot() + 
-  geom_point(data=d, aes(x=size, y=read, colour=small), alpha=0.8, shape=16) 
+geom_point(data=d, aes(x=size, y=read, color=small), alpha=0.8, shape=16) 
 ```
 
-```{r, echo=F, fig.height=5}
+
+```{r, echo=F, fig.height=4}
 fx2_polish <- fx2 + 
   geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) + xlab("Cohort size") + ylab("Verbal score") + 
@@ -462,6 +461,10 @@ fx2_polish <- fx2 +
 fx2_polish
 ```
 
+--
+
+.small[Scatter prevents visual detection of discontinuity...thus, the value of [.red-pink[**bin scatter**]](https://arxiv.org/abs/1902.09608).]
+
 ---
 # Let's see if there's an effect
 
@@ -469,8 +472,9 @@ fx2_polish
 bin<- d %>% group_by(size) %>% summarise(across(c("read", "small"), mean))
 
 binned_plot <- ggplot() + 
-  geom_point(data=bin, aes(x=size, y=read, colour=as.factor(small)), alpha=0.8, shape=16, size=3) 
+  geom_point(data=bin, aes(x=size, y=read, color=as.factor(small)), alpha=0.8, shape=16, size=3) 
 ```
+
 
 ```{r, echo=F, fig.height=5}
 binned_polish <- binned_plot + 
@@ -590,6 +594,7 @@ $$
 
 ---
 # Results
+.small[
 ```{r, results='asis', echo=F}
 linear_const <- lm(read ~ size + I(size>40.5), d)
 linear_diff <- lm(read ~ size * I(size>40.5), d)
@@ -600,12 +605,13 @@ modelsummary(list(linear_const, linear_diff, quadratic),
              coef_rename = c("(Intercept)" = "Intercept", "size" = "Intended size", "I(size > 40.5)TRUE" = ".red[**Intended small class**]",
                              "size:I(size > 40.5)TRUE" = "Size x Small", 
                              "poly(size, 2)1" = "Intended size", "poly(size, 2)2" = "(Intended size)^2"),
-             gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|F"
+             gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|F|RMSE"
              )
 
 ```
+]
 ---
-# Can you explain these results?
+## Can you explain these results?
 
 Models 1 and 3 seem sensibly connected to the graphical evidence, but Model 2 suggest that the effect of an offer of small class size is negative and an estimated whopping .red[-24.3 points lower reading scores]. What gives?
 
@@ -635,7 +641,7 @@ $$
 .small[We need to project the fitted values that our regression results predict *at the discontinuity*. The most straightforward way is to plug in the values for grade cohorts that are just under and over the threshold for being split in two by Maimonides' Rule using the estimated coefficients from the table on the previous slide.] .blue[Take Eq. 2 and try doing this for cohorts of 40 and 41, respectively.]
 
 ---
-# Can you explain these results?
+## Can you explain these results?
 
 **Big class, grade cohort = 40**
 $$
@@ -660,8 +666,12 @@ $$
 
 So the predicted effect of being assigned to receive a smaller class when we allow the slopes to vary around the discontinuity is $73.012 - 67.046 = 5.9766$, or slightly larger than either the linear, constant slope or the quadratic specifications.
 
+--
+
+.purple[*Note: this is all implicitly solved for when you re-center the forcing variable at 0.*]
+
 ---
-# Can you explain these results?
+## Can you explain these results?
 
 Now that we've harmonized our findings, can you explain these results in technically accurate and substantively clear ways?
 --
@@ -715,11 +725,10 @@ class: middle, inverse
 - Holden (2016)
 
 ### DARE #2
-- Give me another chance!
-- Due 1/31, 9:00am
+- Due 2/4, 11:59pm
 
 ### Project proposal
-- Due 1/28, 9:00am
+- Due 2/2, 11:59pm
 
 ---
 # Feedback

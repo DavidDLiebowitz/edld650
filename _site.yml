@@ -17,7 +17,7 @@ navbar:
       - text: "Week 3: Difference-in-Differences (DD) II"
         href: ./slides/EDLD_650_3_RD_1.html
       - text: "Week 4: Regression Discontinuity (RD) I"
-        #href: ./slides/EDLD_650_4_RD_2.html
+        href: ./slides/EDLD_650_4_RD_2.html
       - text: "Week 5: Regression Discontinuity (RD) II"
         #href: ./slides/EDLD_650_5_IV_1.html
       - text: "Week 6: Instrumental Variables (IV) I"
