@@ -58,7 +58,7 @@ Assignment details:  [pdf](./assignments/DARE_2/DARE_2.pdf)
 
 Dataset: [dta](./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta)
 
-Answer Key:  <!-- [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R) -->
+Answer Key:  [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R)
 
 ## DARE #3 
 

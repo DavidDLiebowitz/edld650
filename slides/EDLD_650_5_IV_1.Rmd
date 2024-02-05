@@ -51,7 +51,7 @@ extra_css <- list(
   ".red-pink" = list(color= "#e64173"),
   ".grey-light" = list(color= "grey70"),
   ".slate" = list(color="#314f4f"),
-  ".small" = list("font-size" = "90%"),
+  ".small" = list("font-size" = "80%"),
   ".large" = list("font-size" = "120%"))
 
 
@@ -101,13 +101,13 @@ knit_hooks$set(output = function(x, options) {
 
 # Agenda
 
-### 1. Roadmap and reflections (9:00-9:10)
-### 2. Holden paper and DARE #2 (9:10-10:20)
+### 1. Roadmap (9:00-9:05)
+### 2. Holden paper and DARE #2 (9:05-10:20)
   - Discussion questions
   - DARE debrief
 
-### 3. Break (10:20-10:30)
-### 4. Instrumental variables (10:30-11:40)
+### 3. Break (10:20-10:35)
+### 4. Instrumental variables (10:35-11:40)
 ### 5. Wrap-up (11:40-11:50)
 
 ---
@@ -116,23 +116,6 @@ knit_hooks$set(output = function(x, options) {
 ```{r, echo=F}
   include_graphics("causal_id.jpg")
 ```
-
----
-# Mid-term feedback
-
-### Keep doing
-- Detailed feedback on assignments
-- Accountability
-- Well organized class materials and meaningful content
-
---
-
-### Concerns and shifts
-- Inappropriate level of challenge (though some signs of improvement)
-- Insufficient scaffolding for DAREs
-- Class questions too basic and lengthy, appear intended as completion check
-- Foster better climate around discussion question participation
-- Read and review paper before doing DARE
 
 ---
 # Goals
@@ -150,11 +133,6 @@ class: middle, inverse
 ---
 class: middle, inverse
 # You DARE-devils!
-
----
-# DARE-d to do it!
-
-Student examples in class...
 
 ---
 class: middle, inverse
@@ -176,7 +154,7 @@ $$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \varepsilon_{i}$$
 --
 
 **Now, let's apply this to a particular context:**
-$$INC_{i} = \beta_{0} + \beta_{1}COLLEGE_{i} + \varepsilon_{i}$$
+$$INCOME_{i} = \beta_{0} + \beta_{1}COLLEGE_{i} + \varepsilon_{i}$$
 --
 
 .red[**Don't be so crass!**]
@@ -232,7 +210,7 @@ $$\hat{\beta}_{1}^{OLS} = \frac{S_{YD}}{S_{D}^{2}}$$
 
 .pull-right[
 $$\hat{\beta}_{1}^{IVE} = \frac{S_{YD}}{S_{DZ}}$$
-a .blue[**Local Average Treatment Effect**]
+a .red-pink[**Local Average Treatment Effect**]
 ]
 
 ---
@@ -247,29 +225,30 @@ a .blue[**Local Average Treatment Effect**]
 2. Instrument $(Z_{i})$ must be orthogonal $(\perp)$ to all other determinants of the outcome $(Y_{i})$ 
   - Another way of saying it must be uncorrelated with the residuals $(\varepsilon_{i})$
 3. Instrument must be related to the outcome .red[*only*] through the treatment
-  - This is known as the .blue[**exclusion restriction**] (we'll come back to this)
+  - This is known as the .red-pink[**exclusion restriction**] (we'll come back to this)
 
 --
 
 .blue[Can you think of things that might serve as good instruments in the example of college attendance ("treatment") and voting ("outcome")?]
 
 ---
-# Two-stage least squares (2SLS) IV
+## Two-stage least squares (2SLS) IV
 
 ### 1<sup>st</sup> stage:
-Regress the endogenous treatment $(D_{i})$ on instrumental variable $(Z_{i})$ using OLS:
+Regress endogenous treatment $(D_{i})$ on instrumental variable $(Z_{i})$ using OLS:
 $$D_{i} = \alpha_{0} + \alpha_{1}Z_{i} + \nu_{i}$$
 
 Obtain the *predicted values* of the treatment $(\hat{D_{i}})$ from this fit.<sup>[1]</sup>
 
+.footnote[[1] This doesn't get the standard errors correct, have to adjust *post-hoc*, but this is automated in all statistical software.]
+
 --
 
 ### 2<sup>nd</sup> stage:
-Regress the outcome $(Y_{i})$ on the predicted values of the treatment $(\hat{D_{i}})$ using OLS:
+Regress outcome $(Y_{i})$ on predicted values of treatment $(\hat{D_{i}})$ using OLS:
 $$Y_{i} = \beta_{0} + \beta_{1}\hat{D_{i}} + \varepsilon_{i}$$
 
 
-.footnote[[1] This doesn't get the standard errors correct, have to adjust *post-hoc*, but this is automated in all statistical software.]
 
 ---
 # IV assumptions (re-stated)
@@ -294,8 +273,8 @@ Stage 2: $Y_{i} = \beta_{0} + \beta_{1}\hat{D_{i}} + \varepsilon_{i}$
 
 --
 
-.red-pink[**Problems with #1:**]
-- If $Z$ does not predict $D$, it would be a .blue[**"weak instrument"**]
+.purple[**Problems with #1:**]
+- If $Z$ does not predict $D$, it would be a .red-pink[**"weak instrument"**]
 - There would be no (minimal) variation in the obtained predicted values of the question predictor in the second stage
 - The estimated regression slope would be *indeterminate* (or close to it)
 
@@ -309,7 +288,7 @@ Stage 2: $Y_{i} = \beta_{0} + \beta_{1}\hat{D_{i}} + \varepsilon_{i}$
 
 --
 
-.red-pink[**Problems with #2:**]
+.purple[**Problems with #2:**]
 - If $Z$ is correlated with $\nu_{i}$, then $Z$ would be endogenous in the first stage equation
 - The values of the question predictor would be replaced by biased predicted values, and the estimated regression coefficient would be biased in ways similar to biased multi-variate regression models
 
@@ -323,7 +302,7 @@ Stage 2: $Y_{i} = \beta_{0} + \beta_{1}\hat{D_{i}} + \varepsilon_{i}$
 
 --
 
-.red-pink[**Problems with #3:**]
+.purple[**Problems with #3:**]
 
 The statistical basis for IV of a potentially endogenous relationship is that: 
 
@@ -344,7 +323,7 @@ where $\sigma_{YZ}$ is the population covariance of outcome $Y$ and instrument $
 3. .red-pink[Instrument must *not* be correlated with the residuals in the second stage equation] $\color{red}{(\sigma_{Z\varepsilon} = 0)}$
 
 
-.red-pink[**Problems with #3:**]
+.purple[**Problems with #3:**]
 
 The statistical basis for IV of a potentially endogenous relationship is that: 
 
@@ -361,7 +340,7 @@ $$
 If $Z$ correlated with $\varepsilon$, then $\sigma_{\varepsilon Z} \neq 0$ and $\beta_{1}$ will be biased. 
 
 ---
-# Exclusion restriction (visually)
+## Exclusion restriction (visually)
 
 **Those DAG-gone things come back...**
 
@@ -371,12 +350,12 @@ If $Z$ correlated with $\varepsilon$, then $\sigma_{\varepsilon Z} \neq 0$ and $
 
 --
 
-The .blue[**exclusion restriction**] states that the path by which the instrument influences the outcome goes **exclusively** through the endogenous predictor.
+The .red-pink[**exclusion restriction**] states that the path by which the instrument influences the outcome goes **exclusively** through the endogenous predictor.
 
 ---
 # Instrument examples
 
-| Outcome             |  Intervention (treatment)  |  Omitted variables         | Instrument
+| Outcome             |  Treatment                 |  Omitted variables         | Instrument
 |-------------------------------------------------------------------------------------------------
 | Health              |  Smoking cigarettes        |  Other neg health behaviors| [Tobacco taxes](https://www.sciencedirect.com/science/article/pii/S0047272798000905)
 | Labor market success|  Assimilation              |  Ability; motivation       | [Scrabble score of name](https://www.journals.uchicago.edu/doi/10.1086/692531)
@@ -386,7 +365,7 @@ The .blue[**exclusion restriction**] states that the path by which the instrumen
 
 --
 
-.small[Can you think of things that might serve as good instruments in the example of college and voting (**turn and talk**)? *Hint: trying to find something that exogenously predicts whether people will attend college but is unrelated to whether they will vote.*]
+.small[.blue[Can you think of a good instrument in the example of college and voting (**turn and talk**)?] *Hint: try to find something that exogenously predicts college attendance but is unrelated to voting.*]
 
 --
 
@@ -395,7 +374,7 @@ The .blue[**exclusion restriction**] states that the path by which the instrumen
 ---
 # Very special instruments
 
-| Outcome               |  Intervention (treatment)               |  Omitted variables                        | Instrument
+| Outcome               |  Treatment                              |  Omitted variables                        | Instrument
 |-----------------------------------------------------------------------------------------------------------------
 | Test scores           |  Voucher-based private school attendance|  Non-compliance                           | Original NYSP lottery 
 | Reading achievement   |  Class size                             |  Incomplete compliance to Maimonides' Rule| Rule-based assignment
@@ -404,7 +383,7 @@ The .blue[**exclusion restriction**] states that the path by which the instrumen
 
 --
 
-All instances in which assignment to treatment is *as-good-as random* but there is .blue[**imperfect compliance**].
+All instances in which assignment to treatment is *as-good-as random* but there is .red-pink[**imperfect compliance**].
 
 ---
 # NY vouchers (Ch. 4 *MM*)
@@ -450,12 +429,14 @@ In first year of experiment, **18% of kids** whose families *received vouchers* 
 
 --
 
+.small[
 As a result of these unobserved choices:
 1. **Attendance** at public and private school was *not* assigned exogenously
-2. Children who **attended** each kind of school were **not .blue[equal in expectation]** beforehand
+2. Children who **attended** each kind of school were **not .red-pink[equal in expectation]** beforehand
+]
 
 ---
-# Same ole' endogeneity problem
+## Same ole' endogeneity problem
 
 Want to estimate:
 
@@ -474,10 +455,10 @@ Consequently, $PRIVATE_{i}$ will be correlated with the residuals and an OLS est
 ---
 # An IV solution!
 
-- Offer of voucher *was* .blue[**randomized and exogenous**]
+- Offer of voucher *was* .red-pink[**randomized and exogenous**]
 - Offer of voucher likely to be correlated with **attendance** at a private or a public school because many families who got the voucher did in fact use it, and many families who didn’t sent their kids to public school
 - Being randomized to voucher receipt is unlikely to predict the child’s ultimate achievement, *except through its impact on private school attendance*
-  + No .blue[**third path**]!
+  + No .red-pink[**third path**]!
   
 --
 
@@ -494,26 +475,26 @@ We can use instrumental variable estimation, with attendance at private school $
 
 **1<sup>st</sup> stage:**
 
-$$PRIVATE_{i} = \alpha_{0} + \alpha_{1}VOUCHER_{i} + \alpha_{2}READ0_{i} + \delta_{i}$$
+$$PRIVATE_{i} = \alpha_{0} + \alpha_{1}VOUCHER_{i} + \alpha_{2}READ^{pre}_{i} + \delta_{i}$$
 
 --
 
 **2<sup>nd</sup> stage:**
 
-$$READ1_{i} = \beta_{0} + \beta_{1} \hat{PRIVATE}_{i} + \beta_{2}READ0_{i} + \varepsilon_{i}$$
+$$READ^{post}_{i} = \beta_{0} + \beta_{1} \hat{PRIVATE}_{i} + \beta_{2}READ^{pre}_{i} + \varepsilon_{i}$$
 
 --
 
-Note the inclusion of baseline reading scores $(READ0_{i})$ to improve precision and the inclusion of all covariates from Stage 1 in Stage 2!
+Note the inclusion of baseline reading scores $(READ^{pre}_{i})$ to improve precision and the inclusion of all covariates from Stage 1 in Stage 2!
 
 --
 
-$\beta_{1}$ is our causal parameter of interest and represents the estimated .blue[**Local Average Treatment Effect (LATE)**] of attending private school on lagged-score adjusted reading scores. .blue[*But to whom is it "local"? To whom do these estimates pertain?*]
+$\beta_{1}$ is our causal parameter of interest and represents the estimated .red-pink[**Local Average Treatment Effect (LATE)**] of attending private school on lagged-score adjusted reading scores. .small[.blue[*But to whom is it "local"? To whom do these estimates pertain?*]]
 
 ---
-## On which participants does IV depend?
+## On whom does IV depend?
 
-This is an exemplar for any causal analysis that relies on an original randomized offer, but is followed by endogenous “take-up.” It also provides considerable insight into what an IV estimator is actually estimating:
+.small[This is a helpful tool for any causal analysis that relies on an original randomized offer, but is followed by endogenous “take-up.” It also provides considerable insight into what an IV estimator is actually estimating:]
 
 --
 
@@ -525,15 +506,15 @@ This is an exemplar for any causal analysis that relies on an original randomize
 | **Voucher=0**          |  "Not treated"              |  "Treated"     | "Not treated"
 ]
 
-An IV estimate is often referred to as the effect of the .blue[**Treatement on the Treated (TOT)**].
+.small[An IV estimate is often referred to as the effect of the .blue[**Treatement on the Treated (TOT)**].]
 
 --
-Covariance algebra tells us that only the .blue[**compliers**] actually contribute to the IV estimate. IV is a LATE estimator, so only those participants whose actions respond to the instrument will participate in the estimate. .blue[**IV is the treatment effect for the compliers.**]
+.small[Covariance algebra tells us that only the .red-pink[**compliers**] actually contribute to the IV estimate. IV is a LATE estimator, so only those participants whose actions respond to the instrument will participate in the estimate. .red-pink[**IV is the treatment effect for the compliers.**]<sup>[1]</sup>]
+
+.footnote[.small[[1] Another term for the LATE you may encounter is the Causal Average Complier Effect (CACE).]]
 
 --
-
-This approach assumes that there are no .blue[**defiers**]. These would be people who seek out private schools *only when they don't receive the voucher* (they would otherwise have gone to public) and vice-versa.
-
+.small[This approach assumes that there are no .red-pink[**defiers**]. These are people who seek out private schools *only when they don't receive the voucher* (otherwise would have gone to public) and vice-versa.]
 
 
 ---
@@ -553,8 +534,7 @@ class: middle, inverse
 ---
 # To-Dos
 
-### Week 5: Instrumental variables
-- Class visitor
+### Week 6: Instrumental variables
 
 ### Readings: 
 - Murnane & Willett (2011), *MM* Chapters 10-11
@@ -563,8 +543,7 @@ class: middle, inverse
 - Further, *MHE*: Ch. 4; *'Metrics*: Ch. 3, *Mixtape*: Ch. 7
 
 ### Assignments Due:
-- DARE #3: 2/14, 9:00am
-- Talk to me about research project
+- DARE #3: 2/18, 11:59pm
 
 
 ---
