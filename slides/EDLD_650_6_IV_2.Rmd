@@ -105,6 +105,7 @@ knit_hooks$set(output = function(x, options) {
 #### 2. Discussion Questions (9:10-10:20)
   - Murnane and Willett
   - Angrist et al. (x2)
+  - Dee & Penner
   - Dee
   
 #### 3. Break (10:20-10:30)
@@ -156,7 +157,7 @@ include_graphics("PACES.jpg")
 ]
 
 --
-.blue[**Estimand of interest**]: *effect of using financial aid to attend private school*
+.red-pink[**Parameter of interest**]: *effect of using financial aid to attend private school*
 
 ---
 # Let's replicate!
@@ -167,8 +168,9 @@ DT::datatable(paces[,c(1:7)], fillContainer = FALSE, options =
                 list(pageLength = 5))
 
 ```
+
 ---
-# First post-randomization task?
+## First post-randomization task?
 
 --
 
@@ -196,20 +198,23 @@ summary(lm(won_lottry ~ male + base_age, data=paces))
 ```
 
 ---
-# A na&iuml;ve estimate of financial aid
+## A na&iuml;ve estimate of financial aid
 
 ```{r, results='asis', echo= T}
 ols1 <- lm(finish8th ~ use_fin_aid, data=paces)
 ols2 <- lm(finish8th ~ use_fin_aid + base_age + male, data=paces)
 ```
 
+.small[
 ```{r, results='asis', echo=F}
 stargazer(ols1, ols2, type='html', omit.stat = c("ser", "adj.rsq", "f"), 
     dep.var.caption="", dep.var.labels.include=F, omit=c("Constant"), 
     star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l")
 ```
+]
+
 ---
-## What's wrong with the na&iuml;ve approach?
+## What's wrong with na&iuml;ve approach?
 
 --
 
@@ -258,7 +263,7 @@ $$Y_{i} = \beta_{0} + \beta_{1}\hat{D_{i}} + \varepsilon_{i}$$
 
 --
 
-.red-pink[Think about this in the Colombia PACES experiment context. What is the **main outcome**? What is the **endogenous regressor**? What is the **instrument**? Can you write the two-stage equation without consulting the next slide or book?]
+.blue[Think about this in the Colombia PACES experiment context. What is the **main outcome**? What is the **endogenous regressor**? What is the **instrument**? Can you write the two-stage equation without consulting the next slide or book?]
 
 ---
 # The PACES Scholarship
@@ -282,7 +287,7 @@ $$
 
 --
 
-.red-pink[What is the main outcome? What is the endogenous regressor? What is the instrument? What are the assumptions?]
+.blue[What is the main outcome? What is the endogenous regressor? What is the instrument? What are the assumptions?]
 
 
 ---
@@ -310,7 +315,7 @@ ttest
 --
 
 
-.red-pink[**Can you interpret what this means?**]
+.blue[**Can you interpret what this means?**]
 
 ---
 # Intent-to-Treat Estimates
@@ -340,10 +345,11 @@ modelsummary(list(itt1, itt2, itt3),
          type='html')
 ```
 ]
+
 ---
 # Intent-to-Treat Estimates
 
-## .blue[What is our estimand of interest? Do these estimates represent that?]
+### .blue[What is our parameter of interest? Do these estimates represent that?]
 
 
 .small[
@@ -367,7 +373,7 @@ modelsummary(list(itt1, itt2, itt3),
 ]
 
 ---
-# Implementing IV in regression
+## Implementing IV in regression
 
 ### Reminder of key assumptions:
 1. Instrument correlated with endogenous predictor (.red-pink[no **"weak" instruments**])
@@ -380,7 +386,7 @@ modelsummary(list(itt1, itt2, itt3),
 ### Practical considerations:
 Can implement this various ways. Pedagogically, we'll implement 2SLS using the `fixest` package because it allows straightforward presentation of 1</sup>st</sup> stage results. This can also be done via `ivreg` and `iv_robust` in R.
 
-.footnote[[1] Don't forget, .blue[**no defiers**] too.]
+.footnote[[1] Don't forget, .red-pink[**no defiers**] too.]
 
 ---
 # IV Estimation
@@ -409,7 +415,7 @@ summary(tot2, stage = 1)
 
 --
 .small[
-You will see some rules of thumb about what makes for a strong instrument (e.g., $t_{F}>10$), but recent work has found that with $t$-ratios lower than 100 one should adjust critical value ([Lee et al., 2021](https://www.nber.org/papers/w29124)).
+You will see some common rules of thumb about what makes for a strong instrument (e.g., $t_{F}>10$), but recent work has found that with $t$-ratios lower than 100 one should adjust critical value ([Lee et al., 2021](https://www.nber.org/papers/w29124)).
 ]
 
 ---
@@ -418,7 +424,7 @@ You will see some rules of thumb about what makes for a strong instrument (e.g.,
 summary(tot2)
 ```
 
-.red-pink[**Can you interpret what this means?**]
+.blue[**Can you interpret what this means?**]
 
 ---
 # A taxonomy of IV estimates
@@ -435,6 +441,7 @@ tot4 <- feols(finish8th ~ base_age + male | as.factor(school) |
 ```
 ---
 # Estimate voucher use effects
+.small[
 ```{r, results='asis', echo=F}
 
 
@@ -461,10 +468,12 @@ modelsummary(mods,
       
 
 ```
+]
  
 ---
 # OLS, ITT and TOT estimates
 
+.small[
 ```{r, results='asis', echo=F}
 
 mod2 <- list()
@@ -495,6 +504,7 @@ modelsummary(mod2,
       
 
 ```
+]
 
 ---
 # Interpretation of results
@@ -536,11 +546,9 @@ class: middle, inverse
 
 ### Assignments Due
 **DARE 3**
-- Due 9:00am, Feb. 14
+- Due 11:59pm, Feb. 18
 
-**Final Research Project**
-- Presentation, March 8
-- Paper, March 18 (submit early [March 10] for feedback)
+
 
 ---
 # Feedback

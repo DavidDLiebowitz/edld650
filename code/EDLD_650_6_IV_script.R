@@ -1,9 +1,9 @@
 ######################################################
 ## Script Name: EDLD_650_6_IV_script.R
-## Project Title: EDLD 650 Winter 2022
+## Project Title: EDLD 650 Winter 2024
 ## Author: David Liebowitz
 ## Created: 2/4/22
-## Last update: 2/4/222
+## Last update: 2/9/2024
 ## Purpose: This script imports the Angrist et al data and conducts randomization assumption checks. It then conducts 
 ## initial analysis of the endogenous relationship between 8th grade completion and voucher use. Then, it proceeds through 
 ## some visualization and estimation of ITT estimates before implementing an IV estimator to return the causal effect of 
@@ -62,7 +62,8 @@ paces$lottery <- factor(paces$won_lottry,
 ###################################
 
 # We can examine the variable-by-variable balance using the `tableby` command from the `arsenal` package
-# There are, of course, many other approaches to doing the same
+# There are, of course, many other approaches to doing the same, including using datasummary with a two-
+# sided formula (var ~ var) to split the data
 
 random <- arsenal::tableby(won_lottry ~ male + base_age, paces)
 summary(random)

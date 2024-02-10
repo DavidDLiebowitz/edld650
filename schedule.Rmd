@@ -200,15 +200,11 @@ knitr::opts_chunk$set(echo = TRUE)
 	 
 
 **Lecture:**
-<!--
+
 - Slides: [html](./slides/EDLD_650_6_IV_2.html) | [pdf](./slides/EDLD_650_6_IV_2.pdf) -->
-
 - Class Questions: [doc](./questions/EDLD 650 Class 6 Questions.docx)
-
-<!--
 - R Script: [Class 6](./code/EDLD_650_6_IV_script.R)
 - Data: [PACES](./data/ch11_PACES.csv)
--->
 
 **Assignment:**
 
