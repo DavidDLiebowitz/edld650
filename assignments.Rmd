@@ -72,8 +72,7 @@ Assignment details: [pdf](./assignments/DARE_3/DARE_3.pdf)
 
 Dataset: [csv](./assignments/DARE_3/data/EDLD_650_DARE_3.csv)
 
-<!--
-Answer Key: [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assignments/DARE_3/DARE_3_answers.tex) | [R script](./assignments/DARE_3/code/EDLD_650_DARE_3_code.R) -->
+Answer Key: [pdf](./assignments/DARE_3/DARE_3_answers.pdf) | [tex](./assignments/DARE_3/DARE_3_answers.tex) | [R script](./assignments/DARE_3/code/EDLD_650_DARE_3_code.R)
 
 ## DARE #4 
 
