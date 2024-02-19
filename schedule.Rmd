@@ -201,7 +201,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
-- Slides: [html](./slides/EDLD_650_6_IV_2.html) | [pdf](./slides/EDLD_650_6_IV_2.pdf) -->
+- Slides: [html](./slides/EDLD_650_6_IV_2.html) | [pdf](./slides/EDLD_650_6_IV_2.pdf) 
 - Class Questions: [doc](./questions/EDLD 650 Class 6 Questions.docx)
 - R Script: [Class 6](./code/EDLD_650_6_IV_script.R)
 - Data: [PACES](./data/ch11_PACES.csv)
@@ -232,10 +232,10 @@ knitr::opts_chunk$set(echo = TRUE)
 1.	Kim, J.S., Capotosto, L., Hartry, A. & Fitzgerald, R. (2011). [Can a mixed-method literacy intervention improve the reading achievement of low-performing elementary school students in an after-school program? Results from a randomized controlled trial of READ180 Enterprise](./readings/Kim et al 2011.pdf). *Educational Evaluation and Policy Analysis, 33*(2), 183-201. 
 
 **Lecture:**
-<!--
+
 - Slides: [html](./slides/EDLD_650_7_match_1.html) | [pdf](./slides/EDLD_650_7_match_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 7 Questions.docx)
- -->
+
 
 **Assignment:**
 

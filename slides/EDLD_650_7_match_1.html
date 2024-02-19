@@ -4,7 +4,7 @@
     <title>Instrumental Variables and Matching</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_7_match_1_files/header-attrs-2.11.22/header-attrs.js"></script>
+    <script src="EDLD_650_7_match_1_files/header-attrs-2.20/header-attrs.js"></script>
     <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
@@ -15,9 +15,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Instrumental Variables and Matching
+]
+.subtitle[
 ## EDLD 650: Week 7
+]
+.author[
 ### David D. Liebowitz
+]
 
 ---
 
@@ -74,7 +80,7 @@ class: middle, inverse
 # Matching
 
 ---
-# Core causal inference challenge
+## Core causal inference challenge
 
 ### What is basic problem of drawing causal inferences from non-experimental (observational) data or data from a non-random subset within an experiment?
 
@@ -111,8 +117,8 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 --
 
 .small[
-- but...in addition to the underlying causal relationship between X and Y, society consistently favors one group of individuals over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment X.
-- so...one group of individuals would consistently experience higher levels of attainment X *and* later life success Y
+- but...in addition to the true causal relationship between X and Y, society consistently favors one group over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment (X)
+- so...one group of individuals would consistently experience higher levels of attainment (X) *and* later life success (Y)
 ]
 
 ---
@@ -132,8 +138,8 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 
 
 .small[
-- but...in addition to the underlying causal relationship between X and Y, society consistently favors one group of individuals over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment X.
-- so...one group of individuals would consistently experience higher levels of attainment X *and* later life success Y
+- but...in addition to the true causal relationship between X and Y, society consistently favors one group over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment (X)
+- so...one group of individuals would consistently experience higher levels of attainment (X) *and* later life success (Y)
 ]
 
 ---
@@ -160,7 +166,7 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 # A possible solution?
 
 **Big idea**: if we were sure we knew that the only factor driving selection into treatment was individuals' membership in this group:
-- We can ignore overall point cloud and refuse to estimate the biased Y|X slope
+- Can ignore overall point cloud and refuse to estimate the biased Y|X slope
 - Instead, conduct analysis within each subsidiary point clouds
   + Obtain estimates of treatment effect within each point cloud
   + Average to obtain overall *unbiased* estimate of treatment effect of more educational attainment
@@ -236,7 +242,7 @@ We match untreated observations to treated observations using `\(\textbf{X}_{i}\
 ---
 # The classic tradeoff
 
-&lt;img src="tradeoff.jpg" width="2088" style="display: block; margin: auto;" /&gt;
+&lt;img src="tradeoff.jpg" width="90%" style="display: block; margin: auto;" /&gt;
 
 We want to minimize bias in our estimates by finding a match that most closely approximates each treated unit but we don’t want to overly restrict the definition of matching so as to require excluding too many units or producing a sample that does not reflect our originally defined population.
 
@@ -258,11 +264,12 @@ We want to minimize bias in our estimates by finding a match that most closely a
 # Propensity scores (II)
 ### Phase II:
 
+.small[
 1. Stratify the sample using the propensity scores:
     - Enforce overlap:
         + Drop control units with `\(\hat{p}\)` below the minimum propensity score in the treatment group
         + Drop treated units with `\(\hat{p}\)` above the maximum propensity score in the control group
-    - Rule of thumb: as few as five strata may remove up to 90% of the observed bias
+    - Common rule of thumb: as few as five strata may remove up to 90% of the observed bias
 2. Within each stratum, check the balancing condition has been satisfied:
    - On the propensity scores themselves
    - On each of the covariates separately
@@ -270,6 +277,7 @@ We want to minimize bias in our estimates by finding a match that most closely a
    - Re-stratify, combining or splitting strata, until balancing condition is met
    - If this fails, re-specify the selection model (nonlinear terms, interactions?) and start again
 4. Once you have achieved balance, estimate treatment effect within each stratum, and average up
+]
 
 ---
 # Difference from OLS?
@@ -325,15 +333,15 @@ We want to minimize bias in our estimates by finding a match that most closely a
 ...**the approach matters and requires close attention to procedure**
 
 ---
-## Strengths/limitations of approaches
+## Strengths/limits of approaches
 .small[
 
 | Approach             |  Strengths                     |  Limitations
 |------------------------------------------------------------------------
 | Propensity-score nearest &lt;br&gt; neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment &lt;br&gt; - Limits dimensionality problem &lt;br&gt; - Calipers restrict poor matches &lt;br&gt; - Replacement takes maximal advantage of available data | - May generate poor matches &lt;br&gt; - Model dependent &lt;br&gt; Lacks transparency; PS in aribtrary units &lt;br&gt; - Potential for bias [(King &amp; Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
-| Propensity-score stratification | - Simulates block-randomized experiment &lt;br&gt; - Limits dimensionality problem | - May produce worse matches than nearest neighbor &lt;br&gt; - Lacks transparency; stratum arbitrary
-| Inverse probablity &lt;br&gt; (PS) matching | - Retains all original sample data &lt;br&gt; - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
-| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) &lt;br&gt; - Matching substantively driven &lt;br&gt; Transparent matching process &lt;br&gt; - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are &lt;br&gt; - May lead to disgarding large portions of sample
+| Propensity-score stratification | - Simulates block-randomized experiment &lt;br&gt; - Limits dimensionality problem | - May produce worse matches than NN &lt;br&gt; - Lacks transparency; stratum arbitrary
+| Inverse probability &lt;br&gt; (PS) matching | - Retains all original sample data &lt;br&gt; - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
+| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) &lt;br&gt; - Matching substantively driven &lt;br&gt; - Transparent matching process &lt;br&gt; - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are &lt;br&gt; - May lead to discarding large portions of sample
 
 ]
 ---
@@ -368,11 +376,11 @@ class: middle, inverse
 
 **Assignments Due**
 - **DARE 4** (last one!!!)
-    + Due 9:00am, Feb. 28
+    + Due 11:59pm, March 3
 
 - **Final Research Project**
-    + Presentation, March 8
-    + Paper, March 18 (submit early [March 10] for feedback)
+    + Presentation, March 11
+    + Paper, March 20 (submit early [March 13] for feedback)
 
 ---
 # Feedback
@@ -432,6 +440,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

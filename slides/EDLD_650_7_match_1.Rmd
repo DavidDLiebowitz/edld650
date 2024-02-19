@@ -51,7 +51,7 @@ extra_css <- list(
   ".red-pink" = list(color= "#e64173"),
   ".grey-light" = list(color= "grey70"),
   ".slate" = list(color="#314f4f"),
-  ".small" = list("font-size" = "90%"),
+  ".small" = list("font-size" = "85%"),
   ".large" = list("font-size" = "120%"))
 
 
@@ -145,7 +145,7 @@ class: middle, inverse
 # Matching
 
 ---
-# Core causal inference challenge
+## Core causal inference challenge
 
 ### What is basic problem of drawing causal inferences from non-experimental (observational) data or data from a non-random subset within an experiment?
 
@@ -201,8 +201,8 @@ p1
 --
 
 .small[
-- but...in addition to the underlying causal relationship between X and Y, society consistently favors one group of individuals over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment X.
-- so...one group of individuals would consistently experience higher levels of attainment X *and* later life success Y
+- but...in addition to the true causal relationship between X and Y, society consistently favors one group over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment (X)
+- so...one group of individuals would consistently experience higher levels of attainment (X) *and* later life success (Y)
 ]
 
 ---
@@ -238,8 +238,8 @@ ggplot(ed, aes(x, y2, color=factor(c))) +
 
 
 .small[
-- but...in addition to the underlying causal relationship between X and Y, society consistently favors one group of individuals over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment X.
-- so...one group of individuals would consistently experience higher levels of attainment X *and* later life success Y
+- but...in addition to the true causal relationship between X and Y, society consistently favors one group over another and in-so-doing, constrains some individuals' ability to access higher levels of educational attainment (X)
+- so...one group of individuals would consistently experience higher levels of attainment (X) *and* later life success (Y)
 ]
 
 ---
@@ -276,7 +276,7 @@ ggplot(ed, aes(x, y2)) +
 # A possible solution?
 
 **Big idea**: if we were sure we knew that the only factor driving selection into treatment was individuals' membership in this group:
-- We can ignore overall point cloud and refuse to estimate the biased Y|X slope
+- Can ignore overall point cloud and refuse to estimate the biased Y|X slope
 - Instead, conduct analysis within each subsidiary point clouds
   + Obtain estimates of treatment effect within each point cloud
   + Average to obtain overall *unbiased* estimate of treatment effect of more educational attainment
@@ -386,7 +386,7 @@ We match untreated observations to treated observations using $\textbf{X}_{i}$ a
 ---
 # The classic tradeoff
 
-```{r, echo=F}
+```{r, echo=F, out.width="90%"}
 include_graphics("tradeoff.jpg")
 ```
 
@@ -410,11 +410,12 @@ $$D_{i} = \frac{1}{1+e^{-\textbf{X}_{i} \theta_{i}}}$$
 # Propensity scores (II)
 ### Phase II:
 
+.small[
 1. Stratify the sample using the propensity scores:
     - Enforce overlap:
         + Drop control units with $\hat{p}$ below the minimum propensity score in the treatment group
         + Drop treated units with $\hat{p}$ above the maximum propensity score in the control group
-    - Rule of thumb: as few as five strata may remove up to 90% of the observed bias
+    - Common rule of thumb: as few as five strata may remove up to 90% of the observed bias
 2. Within each stratum, check the balancing condition has been satisfied:
    - On the propensity scores themselves
    - On each of the covariates separately
@@ -422,6 +423,7 @@ $$D_{i} = \frac{1}{1+e^{-\textbf{X}_{i} \theta_{i}}}$$
    - Re-stratify, combining or splitting strata, until balancing condition is met
    - If this fails, re-specify the selection model (nonlinear terms, interactions?) and start again
 4. Once you have achieved balance, estimate treatment effect within each stratum, and average up
+]
 
 ---
 # Difference from OLS?
@@ -488,15 +490,15 @@ include_graphics("ozzy.png")
 ...**the approach matters and requires close attention to procedure**
 
 ---
-## Strengths/limitations of approaches
+## Strengths/limits of approaches
 .small[
 
 | Approach             |  Strengths                     |  Limitations
 |------------------------------------------------------------------------
 | Propensity-score nearest <br> neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment <br> - Limits dimensionality problem <br> - Calipers restrict poor matches <br> - Replacement takes maximal advantage of available data | - May generate poor matches <br> - Model dependent <br> Lacks transparency; PS in aribtrary units <br> - Potential for bias [(King & Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
-| Propensity-score stratification | - Simulates block-randomized experiment <br> - Limits dimensionality problem | - May produce worse matches than nearest neighbor <br> - Lacks transparency; stratum arbitrary
-| Inverse probablity <br> (PS) matching | - Retains all original sample data <br> - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
-| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) <br> - Matching substantively driven <br> Transparent matching process <br> - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are <br> - May lead to disgarding large portions of sample
+| Propensity-score stratification | - Simulates block-randomized experiment <br> - Limits dimensionality problem | - May produce worse matches than NN <br> - Lacks transparency; stratum arbitrary
+| Inverse probability <br> (PS) matching | - Retains all original sample data <br> - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
+| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) <br> - Matching substantively driven <br> - Transparent matching process <br> - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are <br> - May lead to discarding large portions of sample
 
 ]
 ---
@@ -533,11 +535,11 @@ class: middle, inverse
 
 **Assignments Due**
 - **DARE 4** (last one!!!)
-    + Due 9:00am, Feb. 28
+    + Due 11:59pm, March 3
 
 - **Final Research Project**
-    + Presentation, March 8
-    + Paper, March 18 (submit early [March 10] for feedback)
+    + Presentation, March 11
+    + Paper, March 20 (submit early [March 13] for feedback)
 
 ---
 # Feedback
