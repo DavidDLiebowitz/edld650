@@ -25,7 +25,7 @@ navbar:
       - text: "Week 7: Instrumental Variables (IV) II"
         href: ./slides/EDLD_650_7_match_1.html
       - text: "Week 8: Matching I"
-        #href: ./slides/EDLD_650_8_match_2.html
+        href: ./slides/EDLD_650_8_match_2.html
       - text: "Week 9: Matching II"
         #href: ./slides/EDLD_650_9_synthesis.html
 

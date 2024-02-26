@@ -1,9 +1,9 @@
 ######################################################
 ## Script Name: EDLD_650_8_matching_script.R
-## Project Title: EDLD 650 Winter 2022
+## Project Title: EDLD 650 Winter 2024
 ## Author: David Liebowitz
 ## Created: 2/18/22
-## Last update: 2/18/222
+## Last update: 2/25/2024
 ## Purpose: This script imports the Catholic school data and 
 ## Inputs: ch12_catholic.dta 
 ######################################################
@@ -295,4 +295,4 @@ summary(margins::margins(fit, variables = "catholic",
 
 
 
-```
+

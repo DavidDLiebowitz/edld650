@@ -4,19 +4,19 @@
     <title>Matching</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_8_match_2_files/header-attrs-2.11.22/header-attrs.js"></script>
+    <script src="EDLD_650_8_match_2_files/header-attrs-2.20/header-attrs.js"></script>
     <link href="EDLD_650_8_match_2_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_8_match_2_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_8_match_2_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+    <script src="EDLD_650_8_match_2_files/htmlwidgets-1.6.1/htmlwidgets.js"></script>
     <link href="EDLD_650_8_match_2_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/datatables-binding-0.20/datatables.js"></script>
+    <script src="EDLD_650_8_match_2_files/datatables-binding-0.27/datatables.js"></script>
     <script src="EDLD_650_8_match_2_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-    <link href="EDLD_650_8_match_2_files/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="EDLD_650_8_match_2_files/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
-    <link href="EDLD_650_8_match_2_files/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+    <link href="EDLD_650_8_match_2_files/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="EDLD_650_8_match_2_files/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="EDLD_650_8_match_2_files/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+    <link href="EDLD_650_8_match_2_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+    <script src="EDLD_650_8_match_2_files/crosstalk-1.2.0/js/crosstalk.min.js"></script>
     <link rel="stylesheet" href="my_custom.css" type="text/css" />
     <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
   </head>
@@ -24,9 +24,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Matching
+]
+.subtitle[
 ## EDLD 650: Week 8
+]
+.author[
 ### David D. Liebowitz
+]
 
 ---
 
@@ -81,13 +87,13 @@ class: middle, inverse
 ## Propensity scores
 
 ---
-# Recall the Catholic school data
+# Recall Catholic school data
 
-<div id="htmlwidget-36270acf9c832793e2d3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-36270acf9c832793e2d3">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["1","2","3","4","5"],[124902,180625,702949,710976,1425490],[49.7700004577637,51.5099983215332,48.2799987792969,53.0099983215332,65.3499984741211],[1,1,0,0,1],[50.2700004577637,41.310001373291,45.75,46.0499992370605,66.6900024414062],[10,11,11,9,10]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id<\/th>\n      <th>math12<\/th>\n      <th>catholic<\/th>\n      <th>math8<\/th>\n      <th>faminc8<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0fd1e2a4181dd345fd31" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0fd1e2a4181dd345fd31">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["1","2","3","4","5"],[124902,180625,702949,710976,1425490],[49.7700004577637,51.5099983215332,48.2799987792969,53.0099983215332,65.3499984741211],[1,1,0,0,1],[50.2700004577637,41.310001373291,45.75,46.0499992370605,66.6900024414062],[10,11,11,9,10]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id<\/th>\n      <th>math12<\/th>\n      <th>catholic<\/th>\n      <th>math8<\/th>\n      <th>faminc8<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
-## Are Catholic HSers higher-performing?
+## Are Catholic HS higher-performing?
 
 ```r
 catholic %&gt;% group_by(catholic) %&gt;%
@@ -97,17 +103,17 @@ catholic %&gt;% group_by(catholic) %&gt;%
 
 ```
 #&gt; # A tibble: 2 x 4
-#&gt;    catholic n_students mean_math SD_math
+#&gt;   catholic  n_students mean_math SD_math
 #&gt;   &lt;dbl+lbl&gt;      &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-#&gt; 1   0 [no]        5079      50.6    9.53
-#&gt; 2   1 [yes]        592      54.5    8.46
+#&gt; 1 0 [no]          5079      50.6    9.53
+#&gt; 2 1 [yes]          592      54.5    8.46
 ```
 
 ---
-## Are Catholic HSers higher-performing?
+## Are Catholic HS higher-performing?
 &lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 ---
-## Are Catholic HSers higher-performing?
+## Are Catholic HS higher-performing?
 
 
 ```r
@@ -136,8 +142,9 @@ summary(ols1)
 .blue[**What is wrong with all of these approaches?**]
 
 ---
-## Are Catholic HS attendees different?
+## Are Catholic attendees different?
 
+.small[
 
 ```r
 table &lt;- tableby(catholic ~ faminc8 + math8 + white + female, 
@@ -160,6 +167,7 @@ summary(table, labelTranslations = mylabels)
 |&amp;nbsp;&amp;nbsp;&amp;nbsp;Mean (SD)          | 0.68 (0.47)  | 0.80 (0.40)  |  0.69 (0.46)   |        |
 |**student is female?**               |              |              |                |   0.253|
 |&amp;nbsp;&amp;nbsp;&amp;nbsp;Mean (SD)          | 0.52 (0.50)  | 0.54 (0.50)  |  0.52 (0.50)   |        |
+]
 
 ---
 # Implementing matching
@@ -186,7 +194,7 @@ Can implement this various ways. Pedagogically, we'll implement matching using a
 
 .footnote[[1] Most of the coarsening we'll do can be done directly within the `MatchIt` package, but it's good to get your hands into the data to truly understand what it is you're doing!]
 ---
-# Phase I: Generate propensities
+## Phase I: Generate propensities
 ## Step 1: Estimate selection model
 
 ```r
@@ -210,7 +218,7 @@ summary(pscores)
 #&gt;            BIC:  3,709.8     Squared Cor.: 0.018645
 ```
 ---
-# Phase I: Generate propensities
+## Phase I: Generate propensities
 ## Step 2: Predict selection likelihood
 
 ```r
@@ -234,12 +242,12 @@ head(pscore_df)
 *Note*: to apply Inverse-Probability Weights (IPW), you would take these propensities and assign weights of `\(1/\hat{p}\)` to treatment and `\(1/(1-\hat{p})\)` to control units.
 
 ---
-# Phase I: Generate propensities
-## Step 3: Common support (pre-match)
+## Phase I: Generate propensities
+### Step 3: Common support (pre-match)
 &lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 ---
-# Phase 2: PS Matching
-## Step 1: Assign nearest-neighbor match&lt;sup&gt;[1]&lt;/sup&gt; 
+## Phase 2: PS Matching
+### Step 1: Assign nearest-neighbor match&lt;sup&gt;[1]&lt;/sup&gt; 
 
 ```r
 matched &lt;- matchit(catholic ~ math8 + inc8, method="nearest", 
@@ -262,12 +270,12 @@ This is the **NOT** same number of observations as were in the original sample..
 
 
 ---
-# Phase 2: PS Matching 
-## Step 2: Common support (post-match)
+## Phase 2: PS Matching 
+### Step 2: Common support (post-match)
 &lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 ---
-# Phase 2: PS Matching
-## Step 3: Examine balance
+## Phase 2: PS Matching
+### Step 3: Examine balance
 *(doesn't really fit on screen)*
 
 ```r
@@ -290,7 +298,6 @@ summary(matched)
 #&gt; math8      0.1550
 #&gt; inc8       0.1934
 #&gt; 
-#&gt; 
 #&gt; Summary of Balance for Matched Data:
 #&gt;          Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
 #&gt; distance        0.1216        0.1216          0.0001     1.0000    0.0002
@@ -301,12 +308,6 @@ summary(matched)
 #&gt; math8      0.0304          0.5183
 #&gt; inc8       0.0118          0.1738
 #&gt; 
-#&gt; Percent Balance Improvement:
-#&gt;          Std. Mean Diff. Var. Ratio eCDF Mean eCDF Max
-#&gt; distance           100.0       99.9      99.9     96.8
-#&gt; math8               91.0       74.0      84.2     80.4
-#&gt; inc8                98.2       66.3      94.2     93.9
-#&gt; 
 #&gt; Sample Sizes:
 #&gt;               Control Treated
 #&gt; All           5079.       592
@@ -316,8 +317,8 @@ summary(matched)
 #&gt; Discarded       88.         0
 ```
 ---
-# Phase 2: PS Matching
-## Step 3: Examine balance
+## Phase 2: PS Matching
+### Step 3: Examine balance
 
 **Summary of balance for .red-pink[all] data:**
 
@@ -337,7 +338,7 @@ math8      |     53.6604     |   53.4416     |  0.0248
 inc8       |    39.5346      |  39.6698      | -0.0083
 
 ---
-# Phase 2: PS Matching
+## Phase 2: PS Matching
 
 Could get even closer with fuller model:
 
@@ -348,7 +349,7 @@ matched2 &lt;- matchit(catholic ~ math8 + inc8 + inc8sq + mathfam,
 
 &lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 ---
-# Phase 2: Estimate effects
+## Phase 2: Estimate effects
 
 ```r
 psmatch2 &lt;- lm(math12 ~ catholic + math8 + inc8 + inc8sq + mathfam, 
@@ -380,7 +381,7 @@ summary(psmatch2)
 ```
 
 ---
-# Can you interpret these results?
+## Can you interpret these results?
 
 &lt;br&gt;
 
@@ -512,7 +513,6 @@ summary(cem)
 #&gt; coarse_inc12   0.0993
 #&gt; math8          0.1550
 #&gt; 
-#&gt; 
 #&gt; Summary of Balance for Matched Data:
 #&gt;              Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
 #&gt; coarse_inc1         0.0135        0.0135          0.0000          .    0.0000
@@ -536,19 +536,6 @@ summary(cem)
 #&gt; coarse_inc11   0.0000          0.0000
 #&gt; coarse_inc12   0.0000          0.0000
 #&gt; math8          0.0431          0.3851
-#&gt; 
-#&gt; Percent Balance Improvement:
-#&gt;              Std. Mean Diff. Var. Ratio eCDF Mean eCDF Max
-#&gt; coarse_inc1            100.0          .     100.0    100.0
-#&gt; coarse_inc5            100.0          .     100.0    100.0
-#&gt; coarse_inc6            100.0          .     100.0    100.0
-#&gt; coarse_inc7            100.0          .     100.0    100.0
-#&gt; coarse_inc8            100.0          .     100.0    100.0
-#&gt; coarse_inc9            100.0          .     100.0    100.0
-#&gt; coarse_inc10           100.0          .     100.0    100.0
-#&gt; coarse_inc11           100.0          .     100.0    100.0
-#&gt; coarse_inc12           100.0          .     100.0    100.0
-#&gt; math8                   92.4         44      85.9     72.2
 #&gt; 
 #&gt; Sample Sizes:
 #&gt;               Control Treated
@@ -647,7 +634,6 @@ mathcuts2 &lt;- c(40, 45, 50, 55, 60, 65, 70)
 #&gt; coarse_inc12   0.0993
 #&gt; math8          0.1550
 #&gt; 
-#&gt; 
 #&gt; Summary of Balance for Matched Data:
 #&gt;              Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
 #&gt; coarse_inc1         0.0119        0.0119          0.0000          .     0.000
@@ -671,19 +657,6 @@ mathcuts2 &lt;- c(40, 45, 50, 55, 60, 65, 70)
 #&gt; coarse_inc11   0.0000          0.0000
 #&gt; coarse_inc12   0.0000          0.0000
 #&gt; math8          0.0225          0.1863
-#&gt; 
-#&gt; Percent Balance Improvement:
-#&gt;              Std. Mean Diff. Var. Ratio eCDF Mean eCDF Max
-#&gt; coarse_inc1            100.0          .       100    100.0
-#&gt; coarse_inc5            100.0          .       100    100.0
-#&gt; coarse_inc6            100.0          .       100    100.0
-#&gt; coarse_inc7            100.0          .       100    100.0
-#&gt; coarse_inc8            100.0          .       100    100.0
-#&gt; coarse_inc9            100.0          .       100    100.0
-#&gt; coarse_inc10           100.0          .       100    100.0
-#&gt; coarse_inc11           100.0          .       100    100.0
-#&gt; coarse_inc12           100.0          .       100    100.0
-#&gt; math8                   93.2       89.5        92     85.5
 #&gt; 
 #&gt; Sample Sizes:
 #&gt;               Control Treated
@@ -713,7 +686,7 @@ coarse_inc12   |      0.1639    |    0.1639     | -0.000
 math8          |     51.6351    |   51.3938     | 0.026  
 ]
 
-.small[We've forced T/C to be identical within coarsened income bins. The *original* **math8** variable still has some imbalance (but it's much better). Within **mathcuts2**, T/C would be identical.]
+.small[We've forced T/C to be identical within income bins. The *original* **math8** variable still has some imbalance (but it's much better). Within **mathcuts2**, T/C would be identical.]
 
 ---
 # Minimal sample loss
@@ -783,7 +756,7 @@ summary(att2)
 &lt;tr&gt;&lt;td colspan="7" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="6" style="text-align:left"&gt;*p&lt;0.05; **p&lt;0.01; ***p&lt;0.001. Models 2-3 and 5-6 match on income and math score. Model 3 adjusts for higher-order terms and interactions post matching; Model 4 includes them in matching algorithm. Model 6 uses narrower bins to match than Model 5. All CEM and PSM estimates are doubly-robust. Outcome mean (SD) for treated = 54.5 (8.5)&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 ---
-# How would you describe results?
+## How would you describe results?
 
 --
 
@@ -792,15 +765,15 @@ summary(att2)
 &gt; A na&amp;iuml;ve estimate of 12th grade math test score outcomes suggests that students who attend Catholic high school scored nearly 4 scale score points higher than those who attended public school (almost half a standard deviation). However, the characteristics of students who attended Catholic high school were substantially different. They had higher family income, scored higher on 8th grade math tests and were more likely to be White, among other distinguishing characteristics. We theorize that the primary driver of Catholic school attendance is student 8th grade performance and family income. Conditional on these two characteristics, we implement two separate matching algorithms: Propensity Score Matching and Coarsened Exact Matching. Both sets of estimates indicate that the benefits of Catholic school are overstated in the full sample, but the attenuated results are still large in magnitude (just under one-fifth of a SD) and statistically significant. 
 
 ---
-## Strengths/limitations of approaches
+## Strengths/limits of approaches
 .small[
 
 | Approach             |  Strengths                     |  Limitations
 |------------------------------------------------------------------------
-| PS nearest &lt;br&gt; neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment &lt;br&gt; - Limits dimensionality problem &lt;br&gt; - Calipers restrict poor matches &lt;br&gt; - Replacement takes maximal advantage of available data | - May generate poor matches &lt;br&gt; - Model dependent &lt;br&gt; Lacks transparency; PS in aribtrary units &lt;br&gt; - Potential for bias [(King &amp; Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
-| PS stratification | - Simulates block-randomized experiment &lt;br&gt; - Limits dimensionality problem | - May produce worse matches than nearest neighbor &lt;br&gt; - Lacks transparency; stratum arbitrary
-| Inverse probablity &lt;br&gt; (PS) matching | - Retains all original sample data &lt;br&gt; - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
-| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) &lt;br&gt; - Matching substantively driven &lt;br&gt; Transparent matching process &lt;br&gt; - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are &lt;br&gt; - May lead to disgarding large portions of sample
+| Propensity-score nearest &lt;br&gt; neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment &lt;br&gt; - Limits dimensionality problem &lt;br&gt; - Calipers restrict poor matches &lt;br&gt; - Replacement takes maximal advantage of available data | - May generate poor matches &lt;br&gt; - Model dependent &lt;br&gt; Lacks transparency; PS in aribtrary units &lt;br&gt; - Potential for bias [(King &amp; Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
+| Propensity-score stratification | - Simulates block-randomized experiment &lt;br&gt; - Limits dimensionality problem | - May produce worse matches than NN &lt;br&gt; - Lacks transparency; stratum arbitrary
+| Inverse probability &lt;br&gt; (PS) matching | - Retains all original sample data &lt;br&gt; - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
+| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) &lt;br&gt; - Matching substantively driven &lt;br&gt; - Transparent matching process &lt;br&gt; - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are &lt;br&gt; - May lead to discarding large portions of sample
 
 ]
 ---
@@ -825,18 +798,18 @@ class: middle, inverse
 ---
 # To-Dos
 
-## Week 9: Matching, presenting and...?
+### Week 9: Matching, presenting and...?
 
 ### Readings: 
 - Umansky &amp; Dumont (2021)
 
 ### Assignments Due
 **DARE 4**
-- Due 9:00am, February 28
+- Due 11:59pm, March 3
 
 **Final Research Project**
-- Presentation, March 8 
-- Paper, March 17 (submit March 10 for feedback)
+- Presentation, March 11
+- Paper, March 20 (submit March 13 for feedback)
 
 ---
 # Feedback
@@ -896,6 +869,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

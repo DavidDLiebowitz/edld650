@@ -51,7 +51,7 @@ extra_css <- list(
   ".red-pink" = list(color= "#e64173"),
   ".grey-light" = list(color= "grey70"),
   ".slate" = list(color="#314f4f"),
-  ".small" = list("font-size" = "90%"),
+  ".small" = list("font-size" = "85%"),
   ".large" = list("font-size" = "120%"))
 
 
@@ -141,7 +141,7 @@ class: middle, inverse
 ## Propensity scores
 
 ---
-# Recall the Catholic school data
+# Recall Catholic school data
 
 ```{r, echo= F}
 catholic <- read_dta(here("./data/ch12_catholic.dta"))
@@ -151,7 +151,7 @@ datatable(catholic[c(1,17,51,143,1101),c(1, 3, 6, 8, 17)], fillContainer = FALSE
 ```
 
 ---
-## Are Catholic HSers higher-performing?
+## Are Catholic HS higher-performing?
 ```{r, echo= T}
 catholic %>% group_by(catholic) %>%
   summarise(n_students = n(),
@@ -159,7 +159,7 @@ catholic %>% group_by(catholic) %>%
 ```
 
 ---
-## Are Catholic HSers higher-performing?
+## Are Catholic HS higher-performing?
 ```{r, echo=F, fig.height=4}
 raw_diff <- catholic %>% group_by(catholic) %>% summarise(n_students = n(), mean_math=mean(math12), se_math = sd(math12)/sqrt(n_students))
 
@@ -168,7 +168,7 @@ ggplot(raw_diff, aes(x=as.factor(catholic), y=mean_math, ymin=mean_math-se_math,
         xlab("Catholic HS attendance") + scale_y_continuous("Grade 12 math score")
 ```
 ---
-## Are Catholic HSers higher-performing?
+## Are Catholic HS higher-performing?
 
 ```{r, output.lines=-c(1:7), echo=T}
 ols1 <- lm(math12 ~ catholic, data=catholic)
@@ -180,8 +180,9 @@ summary(ols1)
 .blue[**What is wrong with all of these approaches?**]
 
 ---
-## Are Catholic HS attendees different?
+## Are Catholic attendees different?
 
+.small[
 ```{r, results='asis', echo=T}
 table <- tableby(catholic ~ faminc8 + math8 + white + female, 
         numeric.stats=c("meansd"), cat.stats=c("N", "countpct"), 
@@ -190,6 +191,7 @@ mylabels <- list(faminc8 = "Family income level in 8th grade",
         math8 = "8th grade math score")
 summary(table, labelTranslations = mylabels)
 ```
+]
 
 ---
 # Implementing matching
@@ -242,7 +244,7 @@ Can implement this various ways. Pedagogically, we'll implement matching using a
 
 .footnote[[1] Most of the coarsening we'll do can be done directly within the `MatchIt` package, but it's good to get your hands into the data to truly understand what it is you're doing!]
 ---
-# Phase I: Generate propensities
+## Phase I: Generate propensities
 ## Step 1: Estimate selection model
 ```{r, echo=T}
 pscores <- feglm(catholic ~ inc8 + math8 + mathfam, 
@@ -250,7 +252,7 @@ pscores <- feglm(catholic ~ inc8 + math8 + mathfam,
 summary(pscores)
 ```
 ---
-# Phase I: Generate propensities
+## Phase I: Generate propensities
 ## Step 2: Predict selection likelihood
 ```{r, echo=T}
 pscore_df <- data.frame(p_score = predict(pscores, type="response"),
@@ -263,15 +265,15 @@ head(pscore_df)
 *Note*: to apply Inverse-Probability Weights (IPW), you would take these propensities and assign weights of $1/\hat{p}$ to treatment and $1/(1-\hat{p})$ to control units.
 
 ---
-# Phase I: Generate propensities
-## Step 3: Common support (pre-match)
+## Phase I: Generate propensities
+### Step 3: Common support (pre-match)
 ```{r, echo=F, fig.height=4.5}
 ggplot(pscore_df, aes(p_score,fill=as.factor(catholic),color=as.factor(catholic))) + 
   geom_density(alpha=0.1) + theme_pander(base_size = 16) + xlab("Probability of Catholic HS attendance") 
 ```
 ---
-# Phase 2: PS Matching
-## Step 1: Assign nearest-neighbor match<sup>[1]</sup> 
+## Phase 2: PS Matching
+### Step 1: Assign nearest-neighbor match<sup>[1]</sup> 
 ```{r, echo=T}
 matched <- matchit(catholic ~ math8 + inc8, method="nearest", 
                    replace=T, discard="both", data=catholic)
@@ -289,22 +291,22 @@ This is the **NOT** same number of observations as were in the original sample..
 
 
 ---
-# Phase 2: PS Matching 
-## Step 2: Common support (post-match)
+## Phase 2: PS Matching 
+### Step 2: Common support (post-match)
 ```{r, echo=T, fig.height=6, echo=F}
 ggplot(df_match, aes(distance,fill=as.factor(catholic),color=as.factor(catholic))) + 
   geom_density(alpha=0.1) + theme_pander(base_size = 16) + xlab("Probability of Catholic HS attendance")
 ```
 ---
-# Phase 2: PS Matching
-## Step 3: Examine balance
+## Phase 2: PS Matching
+### Step 3: Examine balance
 *(doesn't really fit on screen)*
 ```{r, echo=T}
 summary(matched)
 ```
 ---
-# Phase 2: PS Matching
-## Step 3: Examine balance
+## Phase 2: PS Matching
+### Step 3: Examine balance
 
 **Summary of balance for .red-pink[all] data:**
 
@@ -324,7 +326,7 @@ math8      |     53.6604     |   53.4416     |  0.0248
 inc8       |    39.5346      |  39.6698      | -0.0083
 
 ---
-# Phase 2: PS Matching
+## Phase 2: PS Matching
 
 Could get even closer with fuller model:
 ```{r, echo=T}
@@ -339,7 +341,7 @@ ggplot(df_match2, aes(distance,fill=as.factor(catholic),color=as.factor(catholic
   "Fira Sans Book") + xlab("Probability of Catholic HS attendance")
 ```
 ---
-# Phase 2: Estimate effects
+## Phase 2: Estimate effects
 ```{r, echo=T, output.lines=-c(1:8)}
 psmatch2 <- lm(math12 ~ catholic + math8 + inc8 + inc8sq + mathfam, 
                weights = weights, data=df_match)
@@ -355,7 +357,7 @@ psmatch3 <- lm(math12 ~ catholic + math8 + inc8 + inc8sq + mathfam,
                weights = weights, data=df_match2)
 ```
 ---
-# Can you interpret these results?
+## Can you interpret these results?
 
 <br>
 
@@ -509,7 +511,7 @@ coarse_inc12   |      0.1639    |    0.1639     | -0.000
 math8          |     51.6351    |   51.3938     | 0.026  
 ]
 
-.small[We've forced T/C to be identical within coarsened income bins. The *original* **math8** variable still has some imbalance (but it's much better). Within **mathcuts2**, T/C would be identical.]
+.small[We've forced T/C to be identical within income bins. The *original* **math8** variable still has some imbalance (but it's much better). Within **mathcuts2**, T/C would be identical.]
 
 ---
 # Minimal sample loss
@@ -555,7 +557,7 @@ stargazer(ols1, psmatch1, psmatch2, psmatch3, att1, att2, type='html', omit.stat
       star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", notes=c("*p<0.05; **p<0.01; ***p<0.001. Models 2-3 and 5-6 match on income and math score. Model 3 adjusts for higher-order terms and interactions post matching; Model 4 includes them in matching algorithm. Model 6 uses narrower bins to match than Model 5. All CEM and PSM estimates are doubly-robust. Outcome mean (SD) for treated = 54.5 (8.5)"), model.names=F, column.labels = c("OLS", "PSM", "CEM"), column.separate = c(1, 3, 2))
 ```
 ---
-# How would you describe results?
+## How would you describe results?
 
 --
 
@@ -564,15 +566,15 @@ stargazer(ols1, psmatch1, psmatch2, psmatch3, att1, att2, type='html', omit.stat
 > A na&iuml;ve estimate of 12th grade math test score outcomes suggests that students who attend Catholic high school scored nearly 4 scale score points higher than those who attended public school (almost half a standard deviation). However, the characteristics of students who attended Catholic high school were substantially different. They had higher family income, scored higher on 8th grade math tests and were more likely to be White, among other distinguishing characteristics. We theorize that the primary driver of Catholic school attendance is student 8th grade performance and family income. Conditional on these two characteristics, we implement two separate matching algorithms: Propensity Score Matching and Coarsened Exact Matching. Both sets of estimates indicate that the benefits of Catholic school are overstated in the full sample, but the attenuated results are still large in magnitude (just under one-fifth of a SD) and statistically significant. 
 
 ---
-## Strengths/limitations of approaches
+## Strengths/limits of approaches
 .small[
 
 | Approach             |  Strengths                     |  Limitations
 |------------------------------------------------------------------------
-| PS nearest <br> neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment <br> - Limits dimensionality problem <br> - Calipers restrict poor matches <br> - Replacement takes maximal advantage of available data | - May generate poor matches <br> - Model dependent <br> Lacks transparency; PS in aribtrary units <br> - Potential for bias [(King & Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
-| PS stratification | - Simulates block-randomized experiment <br> - Limits dimensionality problem | - May produce worse matches than nearest neighbor <br> - Lacks transparency; stratum arbitrary
-| Inverse probablity <br> (PS) matching | - Retains all original sample data <br> - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
-| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) <br> - Matching substantively driven <br> Transparent matching process <br> - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are <br> - May lead to disgarding large portions of sample
+| Propensity-score nearest <br> neighbor matching w/ calipers and replacement | - Simulates ideal randomized experiment <br> - Limits dimensionality problem <br> - Calipers restrict poor matches <br> - Replacement takes maximal advantage of available data | - May generate poor matches <br> - Model dependent <br> Lacks transparency; PS in aribtrary units <br> - Potential for bias [(King & Nielsen, 2019)](https://www.cambridge.org/core/journals/political-analysis/article/abs/why-propensity-scores-should-not-be-used-for-matching/94DDE7ED8E2A796B693096EB714BE68B)
+| Propensity-score stratification | - Simulates block-randomized experiment <br> - Limits dimensionality problem | - May produce worse matches than NN <br> - Lacks transparency; stratum arbitrary
+| Inverse probability <br> (PS) matching | - Retains all original sample data <br> - Corrects bias of estimate with greater precision than matching/stratification | - Non-transparent/a-theoretical
+| Coarsened Exact Matching | - Matching variables can be pre-specified (and pre-registered) <br> - Matching substantively driven <br> - Transparent matching process <br> - Eliminates same bias as propensity score if SOO occurs | - May generate poor matches depending on how coarsened variables are <br> - May lead to discarding large portions of sample
 
 ]
 ---
@@ -599,18 +601,18 @@ class: middle, inverse
 ---
 # To-Dos
 
-## Week 9: Matching, presenting and...?
+### Week 9: Matching, presenting and...?
 
 ### Readings: 
 - Umansky & Dumont (2021)
 
 ### Assignments Due
 **DARE 4**
-- Due 9:00am, February 28
+- Due 11:59pm, March 3
 
 **Final Research Project**
-- Presentation, March 8 
-- Paper, March 17 (submit March 10 for feedback)
+- Presentation, March 11
+- Paper, March 20 (submit March 13 for feedback)
 
 ---
 # Feedback
