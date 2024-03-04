@@ -143,7 +143,7 @@ class: middle, inverse
 # Presenting
 
 ---
-# Causal inference presentations
+## Causal inference presentations
 
 With 10-15 minutes you have time for:
 1. What is the focus and why is this important? (1-2 slides)
@@ -194,7 +194,7 @@ class: middle, inverse
 ]
 
 ---
-# Causal inference: Platonic ideal
+## Causal inference: Platonic ideal
 
 
 $Y_{i}^{1}$ = potential value of outcome for $i^{th}$ person, when treated $(D_{i} = 1)$
@@ -246,7 +246,7 @@ $$\hat{ATE}_{i} = \frac{1}{n_{1}}{\sum_{i}^{n_1} ITE_{i}} - \frac{1}{n_{0}}{\sum
 - .small[The values of treatment variable, D, will also be completely uncorrelated with all characteristics of participants, observed and unobserved, in the population.]
 
 ---
-# RCTs: Issues and assumptions
+# RCTs: Issues & assumptions
 
 - **Randomization**: Was it successful Check balance at variable level and with omnibus $F$-test
 - **Sample**: Representative? Sufficiently powered? for tests of heterogeneity? Pre-registered?
@@ -486,6 +486,7 @@ class: middle, inverse
 $$\hat{\beta}_{1}^{IVE} = \frac{S_{YD}}{S_{DZ}}$$
 a .blue[**Local Average Treatment Effect**]
 ]
+
 ---
 # 2SLS IV set-up
 
@@ -562,15 +563,18 @@ ggplot(ed, aes(x, y2, color=factor(c))) +
 ```
 ]
 
+.small[
 **Big idea**: if we were sure we knew that the only factor driving selection into treatment was individuals' membership in this group:
 - We can ignore overall point cloud and refuse to estimate the biased Y|X slope
 - Instead, conduct analysis within each subsidiary point clouds
   + Obtain estimates of treatment effect within each point cloud
   + Average to obtain overall *unbiased* estimate of treatment effect of more educational attainment
+]
 
 ---
 # Matching routines
-### Phase I:
+
+.large[.purple[**Phase I:**]]
 
 1. Investigate the selection process explicitly by fitting a "selection model":
   - Could use exact, coarsened exact, etc. family of approaches
@@ -579,7 +583,7 @@ $$D_{i} = \frac{1}{1+e^{-\textbf{X}_{i} \theta_{i}}}$$
 2. Use selection model to estimate fitted probability of selection into treatment $(\hat{p})$ for each participant
 
 
-### Phase II:
+.large[.purple[**Phase II:**]]
 
 1. Enforce overlap in sample
 2. Check balancing condition has been satisfied
@@ -647,22 +651,25 @@ class: middle, inverse
 ## Week 10: Presentate! `r emo::ji("smile")`
 
 ### Order (randomly generated):
-1. Anwesha
-2. Taiyo
-3. Adria
-4. Merly
-5. Chris
-6. Thuy
+1. Yitong
+2. Xiaoqi
+3. Seulbi
+4. Havi
+5. Eunji
+6. Yessy
+7. Tony
+8. Janette
+9. Brittany
 
 ---
 # To-dos
 
 ### Readings: 
-- None!
+- **Optional**: *MM* Ch. 13 and 14
 
 ### Final Research Project
-- Presentation, March 8 
-- Paper, March 17 (submit March 10 for early feedback)
+- Presentation, March 11
+- Paper, March 20 (submit March 13 for feedback
 
 ---
 # Feedback
