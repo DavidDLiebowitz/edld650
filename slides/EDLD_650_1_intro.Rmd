@@ -111,7 +111,7 @@ include_graphics("museum2.jpg")
 - .large[**Data and Analytic Strategy**]: Our data and research design are observational, and so we are unable to identify the causal impact of X on Y.
 - .large[**Results**]: We find that a one-percentage point difference in X is associated with a 4.5 percentage point difference in Y.
 - .large[**Discussion**]: A major limitation of our study is that we cannot rule out the possibility of confounders or reverse causality. Thus, while we cannot say whether X causes Y, our findings show this is a strong possibility and future research should explicitly explore it.
-- .large[**Conclusion**]: But really `r emo::ji("wink")`, X causes Y.
+- .large[**Conclusion**]: But really `r fontawesome::fa("smile-wink")`, X causes Y.
 
 ---
 # Why .red[*careful*] causal research?
@@ -212,7 +212,7 @@ class: middle, inverse
 
 
 ---
-# 5 conditions of causal claims
+# 3 conditions of causal claims
 
 [William Shadish, Donald Cook and Thomas Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) adapt John Stuart Mill's critical conditions that must exist in order to defend the claim that one thing causes another:
 
@@ -220,13 +220,12 @@ class: middle, inverse
 
 1. Cause must precede effect in time
 
-2. Identified mechanism
+2. Cause related to effect
+  - Identified mechanism
+  - Consistency
+  - Responsiveness
 
-3. Consistency
-
-4. Responsiveness
-
-5. No plausible alternative explanation
+3. No plausible alternative explanation
 
 ]
 
@@ -434,7 +433,7 @@ $$Y_{i} = \beta_{0} + \beta_{1}D_{i} + \beta_{2}X_{i} + \color{purple}\varepsilo
 - Shared accountability for deep understanding of complex and technical readings
 
 .purple[**Norms**]
-- Questions posted by Wednesday
+- Questions posted by Thursday
 - Preparation is expected
 - These are hard concepts; mistakes are expected
 - Judgments on accuracy of responses are about the responses, not the individual
@@ -1097,12 +1096,47 @@ data <- tibble(
 data$T <- ordered(data$T,
                   levels = c(0, 1),
                   labels = c("Before", "After"))
+
+# create the brace
+make_brace <- function(x, y0, y1, width = 0.05, n = 100) {
+  
+  y_mid <- (y0 + y1) / 2
+  
+  # upper half
+  t1 <- seq(0, 1, length.out = n/2)
+  upper <- data.frame(
+    x = x + width * sin(pi * t1),
+    y = y1 - (y1 - y_mid) * t1
+  )
+  
+  # lower half
+  t2 <- seq(0, 1, length.out = n/2)
+  lower <- data.frame(
+    x = x + width * sin(pi * (1 - t2)),
+    y = y_mid - (y_mid - y0) * t2
+  )
+  
+  bind_rows(upper, lower)
+}
+
+brace_df <- make_brace(
+  x = 2.1,
+  y0 = 3.1,
+  y1 = 6
+)
+
 # plot
 data %>% 
   ggplot(aes(x = T, y = Y, group = Unit, color=Unit, linetype=Unit)) + geom_line(size = 1.5) + 
   scale_color_manual(values=c("red", "blue", "blue")) + 
   scale_linetype_manual(values=c("solid", "dashed", "solid")) +
-  ggbrace::geom_brace(aes(x=c(2.1, 2.2), y=c(3,6), label="Treatment effect"), rotate=90, inherit.data=FALSE, labelsize=5) +
+  geom_path(
+    data = brace_df,
+    aes(x = x, y = y),
+    inherit.aes = FALSE,
+    size = 1,
+    color = "black") +
+  annotate("text", x = 2.35, y = 4.65, label = "Treatment effect") +
   annotate("text", x=1.6, y=5.8, label="Observed change - Treatment", color="blue") +
   annotate("text", x=2.3, y=2, label="Observed change - 'Control'", color="red") +
   annotate("text", x=2.2, y=2.8, label="Hypothetical change - T IF not treated", color="blue") +
@@ -1175,18 +1209,16 @@ class: middle, inverse
 
 - Prepare questions in advance (partner work encouraged)
 
-- Class canceled Jan. 15 for MLK Jr. Day; online video and submission of written responses to class questions
-
 - Review session 
   + Review DD details
   + What else? (multi-level models? residuals/standard errors? notation?)
   + When?
 
 - Data Analysis and Replication Exercises (DAREs)
-- Project proposal by January 28
+- Project proposal by April 21
   - Meet w/ teaching staff to discuss at least once
-  - In class scholarly presentation (March 11)
-  - Written final research project (March 20; *optional feedback by March 13*)
+  - In class scholarly presentation (June 3)
+  - Written final research project (June 11; *optional feedback by June 5*)
 ]
 
 ---
@@ -1200,9 +1232,8 @@ class: inverse
 - Further, MHE: Ch. 5; 'Metrics: Ch. 5, Mixtape: Chs. 8 & 9
 
 ### Assignments Due
-- Complete student survey on Canvas (Jan. 10)
-- Watch recorded video and submit written responses to Class 2 questions (Jan. 16)
-- DARE #1 due: 11:59pm January 21
+- Complete student survey on Canvas (April 3)
+- DARE #1 due: 11:59pm April 14
 
 
 ---

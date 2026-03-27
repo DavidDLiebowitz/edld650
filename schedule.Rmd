@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 1: A Common Vocabulary
 
-### Week 1: January 8
+### Week 1: April 1
 
 **Objectives:**
 
@@ -44,7 +44,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Assignment:**
 
-- Student survey **due Jan. 10** (see email or Canvas)
+- Student survey **due April 3** (see email or Canvas)
 
 *Further readings:*
 
@@ -57,7 +57,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 2: Difference-in-differences
 
-### Week 2: Asynchronous Online
+### Week 2: April 8
 
 **Objectives:**
 
@@ -70,12 +70,13 @@ knitr::opts_chunk$set(echo = TRUE)
 2.	Dynarski, S.M. (2003). [Does aid matter? Measuring the effect of student aid on college attendance and completion](./readings/Dynarski 2003.pdf). *The American Economic Review, 93*(1), 279-288.  
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_2_DD_1.html) | [pdf](./slides/EDLD_650_2_DD_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 2 Questions.docx)
 - R Script: [Class 2](./code/EDLD_650_2_DD_script.R)
 - Data: [Dynarksi](./data/ch8_dynarski.dta) | [Liebowitz](./data/edld_650_class_2_eepa_data.dta)
 - Review slides: [html](./slides/EDLD_650_Review.html)
+!-->
 
 **Assignment:**
 
@@ -89,7 +90,7 @@ knitr::opts_chunk$set(echo = TRUE)
 3. Cunningham (2021), Chapters 8-9
 
 
-### Week 3: January 22
+### Week 3: April 15
 
 **Objectives:**
 
@@ -103,13 +104,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
+<!--
 - Slides: [html](./slides/EDLD_650_3_RD_1.html) | [pdf](./slides/EDLD_650_3_RD_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
-
+!-->
 
 **Assignment:**
 
-- Submit Research Project Proposal by 11:59pm, February 2
+- Submit Research Project Proposal by 11:59pm, April 21
 
 *Further readings:*
 
@@ -120,7 +122,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 3: Regression Discontinuity
 
-### Week 4: January 29
+### Week 4: April 28
 
 **Objectives:**
 
@@ -136,15 +138,15 @@ knitr::opts_chunk$set(echo = TRUE)
 	 
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_4_RD_2.html) | [pdf](./slides/EDLD_650_4_RD_2.pdf) 
 - Class Questions: [doc](./questions/EDLD 650 Class 4 Questions.docx)
 - R Script: [Class 4](./code/EDLD_650_4_RD_script.R)
 - Data: [Angrist](./data/ch9_angrist.dta)
-
+!-->
 **Assignment:** 
 
-- Complete DARE #2 by 11:59pm, February 4
+- Complete DARE #2 by 11:59pm, April 28
 
 *Further readings:*
 
@@ -153,7 +155,7 @@ knitr::opts_chunk$set(echo = TRUE)
 3. Cunningham (2021), Chapter 6
 4. Ludwig, J. & Miller, D. (2007). [Does Head Start improve children’s life chances? Evidence from a regression discontinuity design](./readings/Ludwig Miller 2007.pdf). *Quarterly Journal of Economics, 122*(1), 159-208.
 
-### Week 5: February 6
+### Week 5: April 29
 
 **Objectives:**
 
@@ -168,9 +170,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
+<!--
 - Slides: [html](./slides/EDLD_650_5_IV_1.html) | [pdf](./slides/EDLD_650_5_IV_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 5 Questions.docx)
-
+!-->
 
 **Assignment:** 
 
@@ -184,7 +187,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 4: Instrumental Variables
 
-### Week 6: February 12
+### Week 6: May 6
 
 **Objectives:**
 
@@ -201,14 +204,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
+<!--
 - Slides: [html](./slides/EDLD_650_6_IV_2.html) | [pdf](./slides/EDLD_650_6_IV_2.pdf) 
 - Class Questions: [doc](./questions/EDLD 650 Class 6 Questions.docx)
 - R Script: [Class 6](./code/EDLD_650_6_IV_script.R)
 - Data: [PACES](./data/ch11_PACES.csv)
+-->
 
 **Assignment:**
 
-- Complete DARE #3 by 11:59pm February 18
+- Complete DARE #3 by 11:59pm May 12
 
 *Further readings:*
 
@@ -218,7 +223,7 @@ knitr::opts_chunk$set(echo = TRUE)
 4.  Angrist, J.A and Krueger, A.B. (2001). [Instrumental variables and the search for identification: From supply and demand to natural experiments.](./readings/Angrist Krueger 2001.pdf) *Journal of Economic Perspectives, 15*(4), 69-85.
 
 
-### Week 7: February 19
+### Week 7: May 13
 
 **Objectives:**
 
@@ -233,9 +238,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Lecture:**
 
+<!--
 - Slides: [html](./slides/EDLD_650_7_match_1.html) | [pdf](./slides/EDLD_650_7_match_1.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 7 Questions.docx)
-
+-->
 
 **Assignment:**
 
@@ -248,7 +254,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 5: Matching
 
-### Week 8: February 26
+### Week 8: May 20
 
 **Objectives:**
 
@@ -260,18 +266,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Murnane and Willett, Chapter 12
 2. Diaz, J.J. & Handa, S. (2006). [An assessment of propensity score matching as a nonexperimental impact estimator: Evidence from Mexico’s PROGRESA program](./readings/Diaz Handa 2006.pdf). *The Journal of Human Resources, 41*(2), 319-345. 
- 
 
 **Lecture:**
 
+<!--
 - Slides: [html](./slides/EDLD_650_8_match_2.html) | [pdf](./slides/EDLD_650_8_match_2.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 8 Questions.docx)
 - R Script: [Class 8](./code/EDLD_650_8_matching_script.R) 
 - Data: [dta](./data/ch12_catholic.dta)
+-->
 
 **Assignment:**
 
-- Complete DARE #4 by 11:59pm, March 3.
+- Complete DARE #4 by 11:59pm, May 26
 
 *Further readings:*
 
@@ -280,7 +287,7 @@ knitr::opts_chunk$set(echo = TRUE)
 3.	Iacus, S. M., King, G., & Porro, G. (2011). Causal inference without balance checking: Coarsened Exact Matching. *Political Analysis, 20*(1), 1–24. https://doi.org/10.1093/pan/mpr013. 
 
 
-### Week 9: March 4
+### Week 9: May 27
 
 **Objectives:**
 
@@ -295,13 +302,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 **Lecture:**
-
+<!--
 - Slides: [html](./slides/EDLD_650_9_synthesis.html) | [pdf](./slides/EDLD_650_9_synthesis.pdf)
 - Class Questions: [doc](./questions/EDLD 650 Class 9 Questions.docx)
+-->
 
 **Assignment:**
 
-- Prepare to present Research Project Presentation in class on March 11
+- Prepare to present Research Project Presentation in class on June 3
 
 *Further readings:*
 
@@ -310,7 +318,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Unit 6: Presentations
 
-### Week 10: March 11
+### Week 10: June 3
 
 
 **Readings:** 
@@ -320,7 +328,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Assignment:** 
 
-- Submit Final Research Project by **5:00pm March 20th.**
+- Submit Final Research Project by **5:00pm June 11.**
 
 
 

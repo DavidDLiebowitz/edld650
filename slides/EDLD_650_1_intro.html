@@ -4,7 +4,7 @@
     <title>An Introduction to Causal Inference</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_1_intro_files/header-attrs-2.20/header-attrs.js"></script>
+    <script src="EDLD_650_1_intro_files/header-attrs-2.31/header-attrs.js"></script>
     <link href="EDLD_650_1_intro_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_1_intro_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_1_intro_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
@@ -38,13 +38,13 @@ class: center, middle, inverse, title-slide
 # Why causal research? (I)
 
 .pull-left[
-&lt;img src="museum.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="museum.jpg" alt="" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
 
 .pull-right[
-&lt;img src="museum2.jpg" width="120%" style="display: block; margin: auto;" /&gt;
+&lt;img src="museum2.jpg" alt="" width="120%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -54,24 +54,24 @@ class: center, middle, inverse, title-slide
 - .large[**Data and Analytic Strategy**]: Our data and research design are observational, and so we are unable to identify the causal impact of X on Y.
 - .large[**Results**]: We find that a one-percentage point difference in X is associated with a 4.5 percentage point difference in Y.
 - .large[**Discussion**]: A major limitation of our study is that we cannot rule out the possibility of confounders or reverse causality. Thus, while we cannot say whether X causes Y, our findings show this is a strong possibility and future research should explicitly explore it.
-- .large[**Conclusion**]: But really 😉, X causes Y.
+- .large[**Conclusion**]: But really <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z"/></svg>, X causes Y.
 
 ---
 # Why .red[*careful*] causal research?
 
 .pull-left[
-&lt;img src="cuddy.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="cuddy.jpg" alt="" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
 
 .pull-right[
-&lt;img src="cuddy_art.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="cuddy_art.jpg" alt="" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
 
-&lt;img src="cuddy_art2.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="cuddy_art2.jpg" alt="" width="90%" style="display: block; margin: auto;" /&gt;
 ---
 ## Descriptive and causal research
 
@@ -91,7 +91,7 @@ class: center, middle, inverse, title-slide
 ]
 
 .pull-right[
-&lt;img src="lanes.jpg" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="lanes.jpg" alt="" width="30%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -102,7 +102,7 @@ class: center, middle, inverse, title-slide
 ---
 # Roadmap
 
-&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -145,7 +145,7 @@ class: middle, inverse
 
 
 ---
-# 5 conditions of causal claims
+# 3 conditions of causal claims
 
 [William Shadish, Donald Cook and Thomas Cambpell (2002)](https://books.google.com/books/about/Experimental_and_Quasi_experimental_Desi.html?id=o7jaAAAAMAAJ) adapt John Stuart Mill's critical conditions that must exist in order to defend the claim that one thing causes another:
 
@@ -153,19 +153,18 @@ class: middle, inverse
 
 1. Cause must precede effect in time
 
-2. Identified mechanism
+2. Cause related to effect
+  - Identified mechanism
+  - Consistency
+  - Responsiveness
 
-3. Consistency
-
-4. Responsiveness
-
-5. No plausible alternative explanation
+3. No plausible alternative explanation
 
 ]
 
 
 .pull-right[
-&lt;img src="shadish.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="shadish.jpg" alt="" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 
@@ -190,7 +189,7 @@ class: middle, inverse
 ]
 
 .pull-right[
-&lt;img src="counterfactuals.jpg" width="963" style="display: block; margin: auto;" /&gt;
+&lt;img src="counterfactuals.jpg" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -198,7 +197,7 @@ class: middle, inverse
 
 Hypothetically, we could draw a random sample from a defined population:
 .pull-left[
-&lt;img src="group-stick-people.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="group-stick-people.jpg" alt="" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -254,7 +253,7 @@ An "ideal" experiment such as this one is impossible because the same group of p
 --
 
 .pull-left[
-&lt;img src="group-stick-people.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="group-stick-people.jpg" alt="" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -279,7 +278,7 @@ The big idea in a randomized experiment is that treatment variation is .blue[**e
 ]
 
 .pull-right[
-&lt;img src="researcher.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="researcher.jpg" alt="" width="70%" style="display: block; margin: auto;" /&gt;
 
 - Exogenous and random treatment variation validates the causal attribution of an experiment. This is referred to as the research design's .blue[**internal validity**].
 
@@ -318,7 +317,7 @@ In a randomized experiment, the residuals are uncorrelated with the values of th
 .pull-left[*Reminder of key OLS assumption*: residuals must be .blue[**"independent and identically distributed" (i.i.d.)**]. By independent we mean residuals must be uncorrelated with everything else, including the predictor(s) in the model, otherwise our estimates of the regression parameters will be .red[**biased**].]
 
 .pull-right[
-&lt;img src="bias.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="bias.jpg" alt="" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -329,7 +328,7 @@ Even in the most basic of well-executed RCTs, researchers will add covariates.
 --
 
 .pull-left[
-&lt;img src="variation_expl.jpg" width="120%" style="display: block; margin: auto;" /&gt;
+&lt;img src="variation_expl.jpg" alt="" width="120%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -353,7 +352,7 @@ Even in the most basic of well-executed RCTs, researchers will add covariates.
 - Shared accountability for deep understanding of complex and technical readings
 
 .purple[**Norms**]
-- Questions posted by Wednesday
+- Questions posted by Thursday
 - Preparation is expected
 - These are hard concepts; mistakes are expected
 - Judgments on accuracy of responses are about the responses, not the individual
@@ -417,7 +416,7 @@ Of course, in the real world, there are many reasons researchers are unable to c
 ]
 
 .pull-right[
-&lt;img src="realworld.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="realworld.jpg" alt="" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -434,7 +433,7 @@ but this is **hard**.
 RQ: What is the relationship between Oregon's annual per capita divorce rate and the U.S. per capita annual beef consumption? 
 
 --
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-17-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 *On the 10 o'clock news tonight: does U.S. beef consumption cause more "beefs" between Oregonians and their spouses?*
 
@@ -445,7 +444,7 @@ Do increases in beef consumption in Oregon **cause** increases in the U.S. divor
 
 --
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-18-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -464,7 +463,7 @@ Common barriers in attributing causality to observed co-relationships include:
 - .purple[Simpson's Paradox]: a third variable may reverse the correlation
 - Also, **lack** of correlation `\(\neq\)` **lack** of causality
 
-&lt;img src="causalinf.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="causalinf.jpg" alt="" width="40%" style="display: block; margin: auto;" /&gt;
 h/t [@causalinf](https://twitter.com/causalinf)
 
 ---
@@ -473,12 +472,12 @@ h/t [@causalinf](https://twitter.com/causalinf)
 [Directed Acyclical Graphs (DAGs)](https://journals.sagepub.com/doi/pdf/10.1177/2515245917745629) can help us visualize the assumptions necessary to estimate causal relationships in observational data through graphical representation.
 
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-20-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Spurious correlation
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-21-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -487,7 +486,7 @@ h/t [@causalinf](https://twitter.com/causalinf)
 ---
 # A DAG-gone example
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-22-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 - Directed Acyclical Graphs (DAGs)] help us visualize the assumptions necessary to estimate causal relationships in observational data
 - .red-pink[**Nodes**] represent variables; .purple[**arrows**] represent directional causal effects; missing arrow implies lack of a causal path
@@ -497,7 +496,7 @@ h/t [@causalinf](https://twitter.com/causalinf)
 ---
 # A DAG-gone example
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-23-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 - Directed Acyclical Graphs (DAGs)] help us visualize the assumptions necessary to estimate causal relationships in observational data
 - .red-pink[**Nodes**] represent variables; .purple[**arrows**] represent directional causal effects; missing arrow implies lack of a causal path
@@ -511,18 +510,18 @@ h/t [@causalinf](https://twitter.com/causalinf)
 # DAGs follow two rules
 
 .blue[**Rule 1: No bidirectional arrows**]   .red[**ILLEGAL!! Not "directed"**]
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-24-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 --
 
 .blue[**Rule 2: No feedback loops**]   .red[**ILLEGAL!! Not "acyclic"**]
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-25-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 
 ---
 # Confounders
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-26-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 We often hope that conditioning on the confounder closes **all** backdoor paths and thus allows us to estimate the direct effect of D on Y:
 - `\(D \rightarrow Y\)`: causal effect of D on Y
@@ -533,7 +532,7 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 ---
 # Confounders
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-27-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 We often hope that conditioning on the confounder closes **all** backdoor paths and thus allows us to estimate the direct effect of D on Y:
 - `\(D \rightarrow Y\)`: causal effect of D on Y
@@ -545,7 +544,7 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 ---
 # Colliders
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-28-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 - Career choice is a .blue[collider]. 
 - No need to condition on it as the backdoor path is already closed
@@ -555,7 +554,7 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 ---
 ## Where DAGs get tricky (for me)
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-29-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -578,7 +577,7 @@ class: middle, inverse
 # What is nested data?
 .small[Recall the Success for All evaluation from *Methods Matter*]&lt;sup&gt;1&lt;/sup&gt;
 
-```r
+``` r
 ch7_sfa &lt;- read_dta(here("data/ch7_sfa.dta"))
 ```
 
@@ -653,7 +652,7 @@ You may also have seen this written as:
 ---
 # What is a fixed effect doing?
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-32-1.gif" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-32-1.gif" alt="" style="display: block; margin: auto;" /&gt;
 
 .small[h/t [@nickchk](https://twitter.com/nickchk)]
 
@@ -686,7 +685,7 @@ You may also have seen this written as:
 ---
 ## Random intercepts application
 
-```r
+``` r
 sfa &lt;- lme4::lmer(wattack ~ sfa + (1 | schid), data=ch7_sfa)
 summary(sfa)
 ```
@@ -748,7 +747,7 @@ class: middle, inverse
 
 ---
 # Roadmap
-&lt;img src="causal_id.jpg" width="110%" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" width="110%" style="display: block; margin: auto;" /&gt;
 ---
 class: middle, inverse
 
@@ -766,7 +765,7 @@ class: middle, inverse
 ]
 
 .pull-right[
-&lt;img src="snow.jpg" width="1079" style="display: block; margin: auto;" /&gt;
+&lt;img src="snow.jpg" alt="" style="display: block; margin: auto;" /&gt;
 ]
 ---
 # The "Grand Experiment" (I)
@@ -781,7 +780,7 @@ class: middle, inverse
 ]
 
 .pull-right[
-&lt;img src="london_water.jpg" width="1067" style="display: block; margin: auto;" /&gt;
+&lt;img src="london_water.jpg" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -793,7 +792,7 @@ class: middle, inverse
 ]
 
 .pull-right[
-&lt;img src="mode_commun.jpg" width="1369" style="display: block; margin: auto;" /&gt;
+&lt;img src="mode_commun.jpg" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 .blue[**We will now pause this history lesson for a short methodological break**]
@@ -836,7 +835,7 @@ Difference-in-differences (DD) estimates are the difference of two differences:
 ---
 # Graphical DD
 
-&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_1_intro_files/figure-html/unnamed-chunk-39-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # John Snow's DD
@@ -852,7 +851,7 @@ Difference-in-differences (DD) estimates are the difference of two differences:
 --
 
 .pull-left[
-&lt;img src="table12.jpg" width="495" height="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="table12.jpg" alt="" height="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -898,18 +897,16 @@ class: middle, inverse
 
 - Prepare questions in advance (partner work encouraged)
 
-- Class canceled Jan. 15 for MLK Jr. Day; online video and submission of written responses to class questions
-
 - Review session 
   + Review DD details
   + What else? (multi-level models? residuals/standard errors? notation?)
   + When?
 
 - Data Analysis and Replication Exercises (DAREs)
-- Project proposal by January 28
+- Project proposal by April 21
   - Meet w/ teaching staff to discuss at least once
-  - In class scholarly presentation (March 11)
-  - Written final research project (March 20; *optional feedback by March 13*)
+  - In class scholarly presentation (June 3)
+  - Written final research project (June 11; *optional feedback by June 5*)
 ]
 
 ---
@@ -923,9 +920,8 @@ class: inverse
 - Further, MHE: Ch. 5; 'Metrics: Ch. 5, Mixtape: Chs. 8 &amp; 9
 
 ### Assignments Due
-- Complete student survey on Canvas (Jan. 10)
-- Watch recorded video and submit written responses to Class 2 questions (Jan. 16)
-- DARE #1 due: 11:59pm January 21
+- Complete student survey on Canvas (April 3)
+- DARE #1 due: 11:59pm April 14
 
 
 ---
@@ -947,9 +943,9 @@ class: inverse
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
