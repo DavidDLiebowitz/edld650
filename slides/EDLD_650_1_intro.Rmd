@@ -706,7 +706,7 @@ ggdag::ggdag_status(dag3b, text_size = 8) +
 ```{r, echo=F, fig.height=3.25}
 dag4 <- ggdag::dagify(y ~ d + i,
                       i ~ pe,
-                      pe  ~ i + x,
+                      pe  ~  x,
                        d ~ x + pe + i,
                      exposure = "d",
                      outcome = "y",
@@ -735,7 +735,7 @@ We often hope that conditioning on the confounder closes **all** backdoor paths 
 ```{r, echo=F, fig.height=3.25}
 dag5 <- ggdag::dagify(y ~ d + i + x,
                       i ~ pe,
-                      pe  ~ i + x,
+                      pe  ~  x,
                        d ~ x + pe + i,
                      exposure = "d",
                      outcome = "y",
