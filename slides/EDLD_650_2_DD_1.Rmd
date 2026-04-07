@@ -24,7 +24,7 @@ editor_options:
 ```{R, setup, include = F}
 library(pacman)
 
-p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven)
+p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, broom)
 
 
 i_am("slides/EDLD_650_2_DD_1.rmd")
@@ -114,13 +114,13 @@ knit_hooks$set(output = function(x, options) {
 ---
 # Programming in EDLD 650
 
-## What you won't get `r emo::ji("frown")`
+## What you won't get `r fontawesome::fa("face-frown")`
 - A heavy dose of data management and visualization strategies
 - The most efficient code with extensive use of functions
 
 --
 
-## What you will get `r emo::ji("smile")`
+## What you will get `r fontawesome::fa("face-smile")`
 - A review of the programming steps you should take as part of the **actual** research process
 - *Some* model code for data management and visualization
 - Programming strategies and packages that can be used to estimate the causal inference techniques we will study
@@ -152,7 +152,8 @@ $$
 
 I'm using the `haven` package to import a data file that is in the Stata .dta format. Lotsa options for importing file formats other than .csv ( `foreign` and `rio` are two such ones)!
 ```{r, echo=TRUE}
-dynarski <- haven::read_dta(here("data/ch8_dynarski.dta"))
+dynarski <- haven::read_dta(here("data/ch8_dynarski.dta")) %>%
+                haven::as_factor()
   
 head(dynarski)
 ```
@@ -160,8 +161,7 @@ head(dynarski)
 # Viewing the data
 
 ```{r, echo=FALSE, eval = T}
-datatable(dynarski[,c(1, 4:8)], fillContainer = FALSE, options = 
-                list(pageLength = 7))
+DT::datatable(dynarski[, c(1, 4:8)], fillContainer = FALSE, options = list(pageLength = 7))
 ```
 
 
@@ -175,7 +175,7 @@ summary(d)
 ```
 --
 ```{r, echo=TRUE}  
-sum(is.na(coll))
+sum(is.na(d$coll))
  
 ```
 
@@ -183,14 +183,15 @@ sum(is.na(coll))
 # Understanding the data (2)
 
 ```{r, echo=FALSE}
+# Convert coll from a numeric dummy to a factor variable
 dynarski$fac_coll <- as.factor(dynarski$coll)
-  dynarski$fac_coll <- factor(dynarski$fac_coll, levels = c(0,1),labels=c("No College", "College"))
-dynarski$fac_fatherdec <- as.factor(dynarski$fatherdec)
-  dynarski$fac_fatherdec <- factor(dynarski$fac_fatherdec, levels=c(0,1), labels=c("Father not deceased", "Father deceased"))
+dynarski$fac_coll <- factor(dynarski$fac_coll, levels = c(0,1),
+                                                labels=c("No College", "College"))
+
 ```
 
 ```{r, echo=TRUE}
-college <- table(dynarski$fac_fatherdec, dynarski$fac_coll)
+college <- table(dynarski$fatherdec, dynarski$fac_coll)
 college
 ```
 ---
@@ -311,7 +312,7 @@ est_dynarski %>% names()
 --
 
 ```{r, echo=TRUE}
-est_dynarski %>% tidy()
+est_dynarski %>% broom::tidy()
 ```
 
 ---
@@ -555,14 +556,47 @@ post_x <- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 pre_y <- c(0.00, -0.01, -0.01, 0.01, 0.02, 0.00, 0.01, -0.01, 0.00, 0.01, 0.01)
 post_y <- c(0.10, 0.09, 0.11, 0.08, 0.10, 0.11, 0.09, 0.11, 0.10, 0.12, 0.11)
 
-ex <- as.data.frame(pre_x, post_x, pre_y, post_y)
+ex <- data.frame(pre_x, post_x, pre_y, post_y)
+
+# create the brace
+make_brace <- function(x, y0, y1, width = 0.1, n = 100) {
+  
+  y_mid <- (y0 + y1) / 2
+  
+  # upper half
+  t1 <- seq(0, 1, length.out = n/2)
+  upper <- data.frame(
+    x = x + width * sin(pi * t1),
+    y = y1 - (y1 - y_mid) * t1
+  )
+  
+  # lower half
+  t2 <- seq(0, 1, length.out = n/2)
+  lower <- data.frame(
+    x = x + width * sin(pi * (1 - t2)),
+    y = y_mid - (y_mid - y0) * t2
+  )
+  
+  bind_rows(upper, lower)
+}
+
+brace_df <- make_brace(
+  x = 0.1,
+  y0 = 0.01,
+  y1 = 0.08
+)
 
 ggplot(data=ex) +
   geom_smooth(aes(x=pre_x, y=pre_y), method="lm", color = "blue") +
   geom_smooth(aes(x=post_x, y=post_y), method="lm", color = "orange") +
   expand_limits(y=c(-0.03, 0.15)) +
   geom_vline(aes(xintercept=0), col="black", lty="dashed", size=1) +
-  ggbrace::geom_brace(aes(x=c(0, 0.4), y=c(0.01, 0.09)), rotate=90, color="red", inherit.data = F) +
+   geom_path(
+    data = brace_df,
+    aes(x = x, y = y),
+    inherit.aes = FALSE,
+    size = 1,
+    color = "red") +
   annotate("text", x = -5, y = 0.03, label = "beta [3]", color = "blue", size = 8, parse=T) +
   annotate("text", x = 5, y = 0.08, label = "beta [2]", color = "orange", size = 8, parse=T) + 
   annotate("text", x = 1, y = 0.05, label = "beta [1]", color = "red", size = 8, parse=T) +
@@ -602,17 +636,18 @@ ols_unitary4 <- feols(sd_dropout_prop_b ~ unitary + black90_yr | leaid + year,
                  vcov = ~ leaid^year,
                  weights=desegregation$sd_t_1619_b)
 
-results <- list()
-results[['1']] <- ols_unitary3
-results[['2']] <- ols_unitary4
-results[['3']] <- ols_unitary_run
+results <- list(
+"(1)" <- ols_unitary3,
+"(2)" <- ols_unitary4,
+"(3)" <- ols_unitary_run
+                )
 
-row <- tribble(~term,          ~'1',  ~'2', ~'3',
+row <- tribble(~term,          ~'1',  ~'2',  ~'3',
                'Covariates?', '',  'X', 'X')
 attr(row, 'position') <- c(7)
 
 modelsummary(results, 
-         title = "Table 2. Effects of end of school desegregation on black dropout rate",
+         title = "Table 2. Effects of end of school desegregation on Black dropout rate",
          stars=T,
          coef_omit = c("black90_yr"),
          coef_rename = c("unitary" = "Unitary status", "rel_yr" = "Pre-trend", "unitary:rel_yr" = "Unitary x Relative-Year"),
@@ -620,9 +655,10 @@ modelsummary(results,
          gof_omit= "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|RMSE",
          vcov= ~leaid^year,
          add_rows = row,
-         threeparttable= T,
+         escape=FALSE,
+         threeparttable= FALSE,
          notes = c("Notes: +p<0.1, *p<0.05, **p<0.01, ***p<0.001. Table displays coefficients and district-by-year clustered standard errors in parentheses. All models include fixed effects for year and district. Models 2 and 3 adjust for proportion of 16-19 year-olds residing in district in 1990 who were Black, interacted with year."),
-         type='html')
+         type='html') 
 ```
 
 ---
@@ -755,5 +791,5 @@ class: middle, inverse
 - Indicate partners (or not)
 - I am available for support!
 
-#### Research Project Proposal due 11:59pm, 1/28
+#### Research Project Proposal due 11:59pm, 4/21
 - Talk to me!

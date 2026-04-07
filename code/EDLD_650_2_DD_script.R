@@ -3,7 +3,7 @@
 ## Project Title: EDLD 650 Winter 2022
 ## Author: David Liebowitz
 ## Created: 1/7/21
-## Last update: 1/10/23
+## Last update: 4/7/26
 ## Purpose: This script imports the Dynarski data, does light variable cleaning and estimates the effects of the offer of financial odd
 ##            on college-going outcomes in a difference-in-differences framework.
 ##            It also imports the Liebowitz data, estimates the main effects of the end of desegregation, provides examples
@@ -31,7 +31,8 @@ i_am("code/EDLD_650_2_DD_script.R")
 ########################################################
 
 # Read the data in; again in .dta format
-dynarski <- read_dta(here("data/ch8_dynarski.dta"))
+dynarski <- read_dta(here("data/ch8_dynarski.dta")) %>%
+              as_factor()
 
 
 # Viewing the data
@@ -48,18 +49,15 @@ d <- select(dynarski, coll, hgc23, fatherdec, offer)
 summary(d)
 
 # Are there missing values of coll?
-sum(is.na(coll))
+sum(is.na(d$coll))
 
-# Convert coll and fatherdec from a numeric dummy to a factor variable
+# Convert coll from a numeric dummy to a factor variable
 dynarski$fac_coll <- as.factor(dynarski$coll)
 dynarski$fac_coll <- factor(dynarski$fac_coll, levels = c(0,1),
                                                 labels=c("No College", "College"))
-dynarski$fac_fatherdec <- as.factor(dynarski$fatherdec)
-dynarski$fac_fatherdec <- factor(dynarski$fac_fatherdec, levels=c(0,1), 
-                                                labels=c("Father not deceased", "Father deceased"))
 
 # Create a two-way table
-college <- table(dynarski$fac_fatherdec, dynarski$fac_coll)
+college <- table(dynarski$fatherdec, dynarski$fac_coll)
 college
 
 
@@ -111,7 +109,7 @@ est_dynarski <- lm(coll ~ fatherdec*offer,
 est_dynarski %>% names()
 
 # One way to look at output
-est_dynarski %>% tidy()
+est_dynarski %>% broom::tidy()
 
 # The summary command (from the `broom` package, which is part of the tidyverse) is your workhorse for viewing regression output
 summary(est_dynarski)
@@ -199,18 +197,21 @@ ols_unitary_run2 <- feols(sd_dropout_prop_b ~ unitary*rel_yr + black90_yr | year
                           vcov = ~leaid^year, weights=desegregation$sd_t_1619_b)
 
 
-results <- list()
-results[['1']] <- ols_unitary3
-results[['2']] <- ols_unitary4
-results[['3']] <- ols_unitary_run2
+results <- list(
+  "(1)" <- ols_unitary3,
+  "(2)" <- ols_unitary4,
+  "(3)" <- ols_unitary_run
+                )
 
 # Add a row to indicate the inclusion of covariates
 row <- tribble(~term,          ~'1',  ~'2', ~'3',
                'Covariates?', '',  'X', 'X')
 attr(row, 'position') <- c(7)
 
+
+
 modelsummary(results, 
-             title = "Table 2. Effects of end of school desegregation on black dropout rate",
+             title = "Table 2. Effects of end of school desegregation on Black dropout rate",
              stars=T,
              coef_omit = c("black90_yr"),
              coef_rename = c("unitary" = "Unitary status", "rel_yr" = "Pre-trend", "unitary:rel_yr" = "Unitary x Relative-Year"),
@@ -218,9 +219,10 @@ modelsummary(results,
              gof_omit= "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|RMSE",
              vcov= ~leaid^year,
              add_rows = row,
-             threeparttable= T,
+             escape=FALSE,
+             threeparttable= FALSE,
              notes = c("Notes: +p<0.1, *p<0.05, **p<0.01, ***p<0.001. Table displays coefficients and district-by-year clustered standard errors in parentheses. All models include fixed effects for year and district. Models 2 and 3 adjust for proportion of 16-19 year-olds residing in district in 1990 who were Black, interacted with year."),
-             type='html')
+             type='html') 
 
 
 #############
