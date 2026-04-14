@@ -224,11 +224,11 @@ dynarski <- mutate(dynarski, post = ifelse(offer==1,0,1))
 
 dd <- ggplot(dynarski, aes(post,coll)) + aes(color=factor(fatherdec)) + 
       stat_summary(fun=mean, geom="line") + labs(y="Attend college (%)", 
-      color="Father Deceased") + scale_x_discrete(name="Year", 
-      breaks=c(0, 1), limits=c(0, 1), labels=c("0"= "pre-1981", "1"= "post-1981")) +
+      color="Father Deceased") + scale_x_continuous(name="Year", 
+      breaks=c(0, 1), limits=c(-0.25, 1), labels=c("0"= "pre-1981", "1"= "post-1981")) +
       expand_limits(y=c(0.35, 0.6), x=c(-0.25, 1)) +
-      annotate("text", x = 1, y = 0.45, label = "NOT deceased father", color = "#F8766D", size = 6) +
-      annotate("text", x = 1, y = 0.39, label = "DECEASED father", color = "#00BFC4", size = 6) +
+      annotate("text", x = 0.75, y = 0.45, label = "NOT deceased father", color = "#F8766D", size = 6) +
+      annotate("text", x = 0.75, y = 0.39, label = "DECEASED father", color = "#00BFC4", size = 6) +
       theme_pander(base_size = 20) +
       theme(legend.position = "none") 
 dd

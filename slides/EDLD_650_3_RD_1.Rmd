@@ -103,13 +103,13 @@ knit_hooks$set(output = function(x, options) {
 # Agenda
 
 .large[
-1. Roadmap and Goals (9:00-9:10)
-2. Analyzing Liebowitz, Porter & Bragg (9:10-10:10)
-3. How DARE you! (10:10-10:45)
-  - More questions?
-  - Preview debrief
-4. Break (10:45-11:00)
-5. Regression discontinuity (11:00-11:40)
+1. Roadmap and Goals (9:00-9:05)
+2. DD in panel data (9:05-9:30)
+2. Analyzing Liebowitz, Porter & Bragg (9:30-10:15)
+3. How DARE you? (10:15-10:30)
+  - Questions?
+4. Break (10:30-10:45)
+5. Regression discontinuity (10:45-11:40)
 6. Wrap-up (11:40-11:50)
   - Research project proposal
   - Plus/Deltas & Clear/Murky
@@ -176,13 +176,12 @@ dynarski <- mutate(dynarski, post = ifelse(offer==1,0,1))
 
 dd <- ggplot(dynarski, aes(post,coll)) + aes(color=factor(fatherdec)) + 
       stat_summary(fun=mean, geom="line") + labs(y="Attend college (%)", 
-      color="Father Deceased") + scale_x_discrete(name="Year", 
+      color="Father Deceased") + scale_x_continuous(name="Year", 
       breaks=c(0, 1), limits=c(0, 1), labels=c("0"= "pre-1981", "1"= "post-1981")) +
-      #expand_limits(y=c(0.35, 0.6), x=c(-0.25, 1)) +
-      annotate("text", x = 1, y = 0.45, label = "NOT deceased father", color = "#F8766D", size = 6) +
-      annotate("text", x = 1, y = 0.39, label = "DECEASED father", color = "#00BFC4", size = 6) +
-      theme_pander(base_size = 18) +
-      theme(legend.position = "none") 
+      annotate("text", x = 0.75, y = 0.45, label = "NOT deceased father", color = "#F8766D", size = 6) +
+      annotate("text", x = 0.75, y = 0.39, label = "DECEASED father", color = "#00BFC4", size = 6) +
+      theme_pander(base_size = 20) +
+      theme(legend.position = "none")  
 dd
 ```
 
@@ -490,10 +489,11 @@ class: middle, inverse
 - Dee & Penner (2017)
 - *Further*: MHE: Ch. 6, 'Metrics: Ch. 4, Mixtape: Ch. 6
 
-**Research Project Proposal due 11:59pm, 1/28**
+**Research Project Proposal due 11:59pm, 4/21**
 - Talk to me!
 
-**DARE #2 due 11:59pm, 2/5**
+**DARE #1 due 11:59pm, 4/20**
+**DARE #2 due 11:59pm, 4/28**
 
 ---
 # Feedback

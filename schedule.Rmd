@@ -103,10 +103,8 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Class Questions: [doc](./questions/EDLD 650 Class 3 Questions.docx)
-
-<!--
 - Slides: [html](./slides/EDLD_650_3_RD_1.html) | [pdf](./slides/EDLD_650_3_RD_1.pdf)
-!-->
+
 
 **Assignment:**
 
