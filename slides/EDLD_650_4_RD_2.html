@@ -4,7 +4,7 @@
     <title>Regression Discontinuity</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_4_RD_2_files/header-attrs-2.20/header-attrs.js"></script>
+    <script src="EDLD_650_4_RD_2_files/header-attrs-2.31/header-attrs.js"></script>
     <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_4_RD_2_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
@@ -70,7 +70,7 @@ class: center, middle, inverse, title-slide
 ---
 # Roadmap
 
-&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Goals
@@ -93,21 +93,21 @@ class: middle, inverse
 # Recall the basic set up of RD
 
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-3-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Failing a graduation test
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-4-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Failing a graduation test
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-5-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Failing a graduation test
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-6-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 ## The basic set up in regression
@@ -137,7 +137,7 @@ Read in modified Angrist &amp; Lavy data and look at its characteristics:
 
 
 
-```r
+``` r
 maimonides &lt;- read_dta(here("data/ch9_angrist.dta"))
 d &lt;- select(maimonides, 
             read, size, intended_classize, observed_classize)
@@ -154,7 +154,7 @@ summary(d)
 #&gt;  Max.   :93.86   Max.   :226.00   Max.   :40.00     Max.   :44.00
 ```
 
-```r
+``` r
 sapply(d, sd, na.rm=TRUE)
 ```
 
@@ -166,7 +166,7 @@ sapply(d, sd, na.rm=TRUE)
 ---
 # Variation in the treatment?
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-8-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -178,14 +178,14 @@ sapply(d, sd, na.rm=TRUE)
 Angrist, J. Lavy, V. Leder-Luis, J. &amp; Shany, A. (2019). Maimonides' rule redux. *American Economic Review: Insights, 1*(3), 1-16.
 
 .pull-left[
- &lt;img src="angrist_sort.jpg" width="1479" style="display: block; margin: auto;" /&gt;
+&lt;img src="angrist_sort.jpg" alt="" style="display: block; margin: auto;" /&gt;
  
 .blue[What does the picture on the left tell you about class size in Israel from 2002-2011?]
  ]
 --
   
 .pull-right[
-&lt;img src="angrist_2019_results.jpg" width="1388" style="display: block; margin: auto;" /&gt;
+&lt;img src="angrist_2019_results.jpg" alt="" style="display: block; margin: auto;" /&gt;
 
 .blue[What does the picture on the right tell you about the effects of class size in Israel from 2002-2011?]
 ]
@@ -196,39 +196,39 @@ Angrist, J. Lavy, V. Leder-Luis, J. &amp; Shany, A. (2019). Maimonides' rule red
 
 
 
-```r
+``` r
 bunch &lt;- ggplot() +
     geom_histogram(data=d, aes(size), fill=blue, binwidth = 1) 
 ```
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-13-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Are RD assumptions met?
 
-```r
+``` r
 sort &lt;- ggplot() +
   geom_boxplot(data=d, aes(x=as.factor(size), y=ses), 
   fill=red_pink, alpha=0.4)
 ```
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-15-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Are RD assumptions met?
 .small[
 
-```r
+``` r
 quantile &lt;- ggplot() +
   geom_quantile(data=filter(d, size&lt;41), aes(size, ses), quantiles=0.5, color=purple) + 
   geom_quantile(data=filter(d, size&gt;=41), aes(size, ses), quantiles=0.5, color=red_pink)
 ```
 ]
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-17-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ---
 
 # Let's see if there's an effect
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-18-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Refresh on how RD works
@@ -253,7 +253,7 @@ Can you explain the identification strategy as you would in your methods section
 # Let's see if there's an effect
 
 
-```r
+``` r
 d &lt;- d %&gt;% mutate(small = ifelse(size &gt;= 41,TRUE,FALSE))
 
 fx2 &lt;- ggplot() + 
@@ -261,7 +261,7 @@ geom_point(data=d, aes(x=size, y=read, color=small), alpha=0.8, shape=16)
 ```
 
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-20-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -271,7 +271,7 @@ geom_point(data=d, aes(x=size, y=read, color=small), alpha=0.8, shape=16)
 # Let's see if there's an effect
 
 
-```r
+``` r
 bin&lt;- d %&gt;% group_by(size) %&gt;% summarise(across(c("read", "small"), mean))
 
 binned_plot &lt;- ggplot() + 
@@ -279,39 +279,39 @@ binned_plot &lt;- ggplot() +
 ```
 
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-22-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect
 
 ### Fitted lines:
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-23-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect 
 
 ### Different slopes:
 
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-24-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect
 
 ### Change the bandwidth:
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-25-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Let's see if there's an effect
 
 ### Formal-ish:
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-26-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # But it could be non-linear
 
 ### Formal-ish:
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-27-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # Regression RD
@@ -369,9 +369,9 @@ $$
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Intended size &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -0.139 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -0.725** &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -33.987+ &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; −0.139 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; −0.725** &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; −33.987+ &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
@@ -382,7 +382,7 @@ $$
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; .red[**Intended small class**] &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 3.953* &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; -24.346* &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; −24.346* &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 5.894** &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -519,7 +519,7 @@ Now that we've harmonized our findings, can you explain these results in technic
 
 ---
 # Just for fun...
-&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_4_RD_2_files/figure-html/unnamed-chunk-29-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ---
 class: middle, inverse
 
@@ -543,10 +543,8 @@ class: middle, inverse
 - Holden (2016)
 
 ### DARE #2
-- Due 2/4, 11:59pm
+- Due April 28, 11:59pm
 
-### Project proposal
-- Due 2/2, 11:59pm
 
 ---
 # Feedback
@@ -556,9 +554,9 @@ class: middle, inverse
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

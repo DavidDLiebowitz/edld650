@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2022.5.27)  27 MAR 2026 14:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2022.5.27)  17 APR 2026 12:47
 entering extended mode
 **./DARE_1_answers.tex
 (DARE_1_answers.tex
@@ -567,7 +567,7 @@ Package pdftex.def Info: figures/odr_hist.png  used on input line 56.
 (pdftex.def)             Requested size: 341.30757pt x 273.0846pt.
 
 [2 <./figures/odr_hist.png>] (tables/descriptives_table.tex
-Overfull \hbox (62.06401pt too wide) in paragraph at lines 7--28
+Overfull \hbox (61.40875pt too wide) in paragraph at lines 7--28
  [][] 
  []
 
@@ -583,27 +583,27 @@ Overfull \hbox (28.47131pt too wide) in paragraph at lines 6--26
  []
 
 ) [6] (tables/robustness_results_1.tex
-Overfull \hbox (31.05673pt too wide) in paragraph at lines 6--25
+Overfull \hbox (31.05673pt too wide) in paragraph at lines 6--26
  [][] 
  []
 
 ) [7] (tables/robustness_results_2.tex) [8]
-<figures/event_study_class.png, id=87, 481.8pt x 481.8pt>
+<figures/event_study_class.png, id=85, 426.6339pt x 341.3553pt>
 File: figures/event_study_class.png Graphic file (type png)
 <use figures/event_study_class.png>
 Package pdftex.def Info: figures/event_study_class.png  used on input line 150.
 
-(pdftex.def)             Requested size: 240.8994pt x 240.8994pt.
-<figures/event_study_subjective.png, id=88, 481.8pt x 481.8pt>
+(pdftex.def)             Requested size: 213.31642pt x 170.67722pt.
+<figures/event_study_subjective.png, id=86, 426.6339pt x 341.3553pt>
 File: figures/event_study_subjective.png Graphic file (type png)
 <use figures/event_study_subjective.png>
 Package pdftex.def Info: figures/event_study_subjective.png  used on input line
  154.
-(pdftex.def)             Requested size: 240.8994pt x 240.8994pt.
+(pdftex.def)             Requested size: 213.31642pt x 170.67722pt.
  [9] [10 <./figures/event_study_class.png> <./figures/event_study_subjective.pn
 g>] (Tables/pbis.tex
 
-LaTeX Warning: Float too large for page by 37.80945pt on input line 36.
+LaTeX Warning: Float too large for page by 10.07036pt on input line 35.
 
 ) [11]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 172.
@@ -615,11 +615,11 @@ Package rerunfilecheck Info: File `DARE_1_answers.out' has not changed.
 (rerunfilecheck)             Checksum: CFC3AF1AACAC017112F524E8D7CA9A14;241.
  ) 
 Here is how much of TeX's memory you used:
- 9308 strings out of 492970
- 142419 string characters out of 3135849
+ 9299 strings out of 492970
+ 142310 string characters out of 3135849
  243673 words of memory out of 3000000
- 12938 multiletter control sequences out of 15000+200000
- 15987 words of font info for 60 fonts, out of 3000000 for 9000
+ 12930 multiletter control sequences out of 15000+200000
+ 13969 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  45i,15n,46p,1547b,576s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
@@ -633,14 +633,14 @@ ts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
 17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:
 /Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program F
 iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/f
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmti9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
 /symbols/msam10.pfb>
-Output written on DARE_1_answers.pdf (11 pages, 383784 bytes).
+Output written on DARE_1_answers.pdf (11 pages, 621795 bytes).
 PDF statistics:
- 174 PDF objects out of 1000 (max. 8388607)
+ 170 PDF objects out of 1000 (max. 8388607)
  29 named destinations out of 1000 (max. 500000)
  45 words of extra memory for PDF output out of 10000 (max. 10000000)
 

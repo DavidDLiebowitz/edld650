@@ -24,7 +24,7 @@ editor_options:
 ```{R, setup, include = F}
 library(pacman)
 
-p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven)
+p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, quantreg)
 
 
 i_am("slides/EDLD_650_4_RD_2.rmd")
@@ -174,7 +174,7 @@ lm_tmp <- lm(y ~ x + I(x>60), data = srd_df)
 lm_fun <- function(x) predict(lm_tmp, data.frame(x = x))
 
 gg_srd <- ggplot() +
-geom_vline(xintercept = 60, color = slate, size = 1, alpha = 0.1) +
+geom_vline(xintercept = 60, color = slate, linewidth = 1, alpha = 0.1) +
 
 scale_x_continuous(
   "Test Score",
@@ -202,7 +202,7 @@ gg_srd
 ```{r, echo= F}
 
 gg_srd2 <- ggplot() +
-geom_vline(xintercept = 60, color = slate, size = 1, alpha = 0.1) +
+geom_vline(xintercept = 60, color = slate, linewidth = 1, alpha = 0.1) +
 stat_function(
   data = data.frame(x = c(0, 100)),
   aes(x = x),
@@ -320,7 +320,7 @@ sapply(d, sd, na.rm=TRUE)
 ```{r, echo= F, fig.height=5.5}
 treat <- ggplot() +
   geom_jitter(data=maimonides, aes(x=size, y=observed_classize), color=grey_mid,alpha=0.4, shape=16) + 
-  geom_line(data=maimonides, aes(x=size, y=intended_classize), color=red_pink, linetype="dashed", size = 1.5) +
+  geom_line(data=maimonides, aes(x=size, y=intended_classize), color=red_pink, linetype="dashed", linewidth = 1.5) +
   theme_pander(base_size = 18) + scale_x_continuous("Cohort size") +
   scale_y_continuous("Class Size")
 
@@ -338,9 +338,9 @@ treat
 Angrist, J. Lavy, V. Leder-Luis, J. & Shany, A. (2019). Maimonides' rule redux. *American Economic Review: Insights, 1*(3), 1-16.
 
 .pull-left[
- ```{r, echo=F}
+```{r, echo=F}
      knitr::include_graphics("angrist_sort.jpg")
-  ```
+```
  
 .blue[What does the picture on the left tell you about class size in Israel from 2002-2011?]
  ]
@@ -369,7 +369,7 @@ bunch <- ggplot() +
 ```{r, echo=F, fig.height=5.5}
 
 bunch_polish <- bunch +
-            geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +       
+            geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) +       
             theme_pander(base_size = 18) + 
             scale_x_continuous("Cohort size", breaks=seq(29, 53, by = 1)) 
 bunch_polish
@@ -402,7 +402,7 @@ quantile <- ggplot() +
 
 ```{r, echo=F, fig.height=5.5}
 quantile_polish <- quantile +
-  geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
+  geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) +
   xlab("Cohort size") + scale_y_continuous("Family income") + expand_limits(y=c(-3,3))
 
@@ -414,7 +414,7 @@ quantile_polish
 ```{r, echo=F, fig.height=5.5}
 fx <- ggplot() +
   geom_point(data=d, aes(x=size, y=read), color=blue, alpha=0.8, shape=16) +
-  geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
+  geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) +
   xlab("Cohort size") + ylab("Verbal score") 
 
@@ -453,7 +453,7 @@ geom_point(data=d, aes(x=size, y=read, color=small), alpha=0.8, shape=16)
 
 ```{r, echo=F, fig.height=4}
 fx2_polish <- fx2 + 
-  geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
+  geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) + xlab("Cohort size") + ylab("Verbal score") + 
   scale_color_manual(values = c(purple, red_pink)) +
   theme(legend.position = "none")
@@ -478,7 +478,7 @@ binned_plot <- ggplot() +
 
 ```{r, echo=F, fig.height=5}
 binned_polish <- binned_plot + 
-  geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) + 
+  geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) + 
   theme_pander(base_size = 18) + xlab("Cohort size") + ylab("Verbal score") + 
   scale_color_manual(values = c(purple, red_pink)) +
   expand_limits(y=c(35,90)) +
@@ -605,7 +605,8 @@ modelsummary(list(linear_const, linear_diff, quadratic),
              coef_rename = c("(Intercept)" = "Intercept", "size" = "Intended size", "I(size > 40.5)TRUE" = ".red[**Intended small class**]",
                              "size:I(size > 40.5)TRUE" = "Size x Small", 
                              "poly(size, 2)1" = "Intended size", "poly(size, 2)2" = "(Intended size)^2"),
-             gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|F|RMSE"
+             gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|F|RMSE",
+             escape=F
              )
 
 ```
@@ -725,10 +726,8 @@ class: middle, inverse
 - Holden (2016)
 
 ### DARE #2
-- Due 2/4, 11:59pm
+- Due April 28, 11:59pm
 
-### Project proposal
-- Due 2/2, 11:59pm
 
 ---
 # Feedback

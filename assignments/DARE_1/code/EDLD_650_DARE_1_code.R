@@ -356,7 +356,7 @@ ols6 <-
           state_id + school_year,
           data = d, weights = d$enroll)
 
-row <- tribble(~term,          ~'(1)',  ~'(2)', ~'(3)', ~ '(4)', ~'(5)', ~'(6)',
+row <- tribble(~term,          ~'(1)',  ~'(2)', ~'(3)', ~'(4)', ~'(5)', ~'(6)',
                'Covariates?', '',  'X', 'X', '', 'X', 'X')
 attr(row, 'position') <- c(7)
 
@@ -369,6 +369,8 @@ mods[['(5)']] <- ols5
 mods[['(6)']] <- ols6
 
 # Using to modelsummary for table generation (though note the ease of etable below)
+options(modelsummary_factory_latex = "kableExtra")
+
 modelsummary(mods, 
           title = "The effect of teacher evaluation reforms on Office Disciplinary Referrals, by location and subjectivity \\label{tab:mainDD}",
           stars = T,
@@ -379,12 +381,10 @@ modelsummary(mods,
           vcov = ~ state_id^school_year,
           gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|RMSE",
           add_rows = row,
+          escape=F,
           threeparttable= T,
-          type='latex', 
-          notes = c("Notes: $^{+}p<0.1, ^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$. The table displays coefficients from Equations 1 and 2 and state-by-year-clustered standard errors in parentheses. All models include fixed effects for year and state and are weighted by state enrollment. Models 2-3 and 5-6 adjust for the proportion of FRPL-eligible students and the proportion of students of different ethnoracial backgrounds."),  
-          output="assignments/DARE_1/tables/main_DD_results.tex"
-          )
-          
+          notes = c("Notes: *p<0.05; **p<0.01; ***p<0.001. The table displays coefficients from Equations 1 and 2 and state-by-year-clustered standard errors in parentheses. All models include fixed effects for year and state and are weighted by state enrollment. Models 2-3 and 5-6 adjust for the proportion of FRPL-eligible students and the proportion of students of different ethnoracial backgrounds."),  
+          output = "assignments/DARE_1/tables/main_DD_results.tex")
 
 
 

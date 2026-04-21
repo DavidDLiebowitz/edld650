@@ -44,8 +44,7 @@ Assignment details: [pdf](./assignments/DARE_1/DARE_1.pdf)
 
 Dataset: [csv](./assignments/DARE_1/data/EDLD_650_DARE_1.csv)
 
-<!--
-Answer Key: [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assignments/DARE_1/DARE_1_answers.tex) | [R script](./assignments/DARE_1/code/EDLD_650_DARE_1_code.R) -->
+Answer Key: [pdf](./assignments/DARE_1/DARE_1_answers.pdf) | [tex](./assignments/DARE_1/DARE_1_answers.tex) | [R script](./assignments/DARE_1/code/EDLD_650_DARE_1_code.R)
 
 ## DARE #2 
 
@@ -55,11 +54,11 @@ Replication paper: Holden (2016)
 
 Deadline: 11:59pm, April 28
 
-<!--
-Assignment details:  [pdf](./assignments/DARE_2/DARE_2.pdf)
+Assignment details: [pdf](./assignments/DARE_2/DARE_2.pdf)
 
 Dataset: [dta](./assignments/DARE_2/data/EDLD_650_CA_schools_es.dta)
 
+<!--
 Answer Key:  [pdf](./assignments/DARE_2/DARE_2_answers.pdf) | [tex](./assignments/DARE_2/DARE_2.tex) | [R script](./assignments/DARE_2/code/EDLD_650_DARE_2_code.R)
 -->
 

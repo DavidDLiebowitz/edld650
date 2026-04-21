@@ -3,7 +3,7 @@
 ## Project Title: EDLD 650 Winter 2022
 ## Author: David Liebowitz
 ## Created: 1/24/22
-## Last update: 2/4/22
+## Last update: 4/21/26
 ## Purpose: This script imports the Angrist and Lavy data and does light variable cleaning. It conducts descriptive analysis to test the 
 ##          big three assumptions for RD and then estimates the intent-to-treat (ITT) effects of being assigned to a small class 
 ## Inputs: ch9_angrist.dta 
@@ -26,7 +26,7 @@ slate <- "#314f4f"
 library(pacman)
 
 # These are the packages you will need for the analyses 
-p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven)
+p_load(here, tidyverse, DT, ggplot2, xaringan, knitr, kableExtra, modelsummary, stargazer, xaringanthemer, gganimate, ggthemes, fixest, haven, quantreg)
 
 # You will want to have created a folder for the course and an R project within that folder
 # Then, create a folder within your course folder entitled "code"
@@ -62,7 +62,7 @@ sapply(d, sd, na.rm=TRUE)
 
 treat <- ggplot() +
   geom_jitter(data=maimonides, aes(x=size, y=observed_classize), color=grey_mid,alpha=0.4, shape=16) + 
-  geom_line(data=maimonides, aes(x=size, y=intended_classize), color=red_pink, linetype="dashed", size = 1.5) +
+  geom_line(data=maimonides, aes(x=size, y=intended_classize), color=red_pink, linetype="dashed", linewidth = 1.5) +
   theme_pander(base_size = 18) + scale_x_continuous("Cohort size") +
   scale_y_continuous("Class Size")
 
@@ -103,7 +103,7 @@ sort
 quantile <- ggplot() +
   geom_quantile(data=filter(d, size<41), aes(size, ses), quantiles=0.5, color=purple) + 
   geom_quantile(data=filter(d, size>=41), aes(size, ses), quantiles=0.5, color=red_pink) +
-  geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
+  geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) +
   xlab("Cohort size") + scale_y_continuous("Family income") + expand_limits(y=c(-3,3))
 
@@ -115,7 +115,7 @@ quantile
 
 fx <- ggplot() +
   geom_point(data=d, aes(x=size, y=read), color=blue, alpha=0.8, shape=16) +
-  geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) +
+  geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) +
   theme_pander(base_size = 18) +
   xlab("Cohort size") + ylab("Verbal score") 
 
@@ -149,7 +149,7 @@ d <- d %>%
 
 binned_plot <- ggplot() + 
   geom_point(data=bin, aes(x=size, y=read, colour=as.factor(small)), alpha=0.8, shape=16, size=3) +
-  geom_vline(xintercept = 40.5, color = slate, size = 1.5, alpha = 0.5) + 
+  geom_vline(xintercept = 40.5, color = slate, linewidth = 1.5, alpha = 0.5) + 
   theme_pander(base_size = 18) + xlab("Cohort size") + ylab("Verbal score") + 
   scale_color_manual(values = c(purple, red_pink)) +
   expand_limits(y=c(35,90)) +
@@ -217,6 +217,7 @@ modelsummary(list(linear_const, linear_diff, quadratic),
              coef_rename = c("(Intercept)" = "Intercept", "size" = "Intended size", "I(size > 40.5)TRUE" = "Intended small class",
                              "size:I(size > 40.5)TRUE" = "Size x Small", 
                              "poly(size, 2)1" = "Intended size", "poly(size, 2)2" = "(Intended size)^2"),
-             gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|F"
+             gof_omit = "Adj|Pseudo|Log|Within|AIC|BIC|FE|Std|F",
+             escape=F
             )
 
