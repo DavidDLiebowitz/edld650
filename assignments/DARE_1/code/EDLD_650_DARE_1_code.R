@@ -518,10 +518,11 @@ event_study_c <-
     state_id + school_year,  
     data = d1, weights=d1$enroll)
 
-iplot(event_study_c, ref.line = -0.5, xlab=c("Time to evaluation policy"), ylab=c("ODR per 500 stu"), 
-        main="", grid.par = list(vert=F))
 
-ggsave("assignments/DARE_1/figures/event_study_class.png", width=15, height=12, units=c("cm"))
+pdf("assignments/DARE_1/figures/event_study_class.pdf", width=6, height=4.75)
+iplot(event_study_c, ref.line = -0.5, xlab=c("Time to evaluation policy"), ylab=c("ODR per 500 stu"), 
+      main="", grid.par = list(vert=F))
+dev.off()
 
 ###############
 # Subjective ODRS
@@ -533,11 +534,10 @@ event_study_subj <-
       state_id + school_year,  
     data = d1, weights=d1$enroll)
 
+pdf("assignments/DARE_1/figures/event_study_subjective.pdf", width=6, height=4.75)
 iplot(event_study_subj, ref.line = -0.5, xlab=c("Time to evaluation policy"), ylab=c("ODR per 500 stu"), 
       main="", grid.par = list(vert=F))
-
-ggsave("assignments/DARE_1/figures/event_study_subjective.png", width=15, height=12, units=c("cm"))
-
+dev.off()
 
 ################################################
 ##            OPTIONAL Q5
