@@ -361,7 +361,7 @@ The .red-pink[**exclusion restriction**] states that the path by which the instr
 | Labor market success|  Assimilation              |  Ability; motivation       | [Scrabble score of name](https://www.journals.uchicago.edu/doi/10.1086/692531)
 | Crime rate          |  Patrol hours              |  # of criminals            | [Election cycles](https://www.jstor.org/stable/2951346)
 | Female labor market |  Number of children        |  Family preferences; religiosity | [First two children same-sex](https://www.jstor.org/stable/116844); [twin births](https://www.jstor.org/stable/2117765)
-| Conflicts           |  Economic growth           |  Simultaneous causality    | Rainfall `r emo::ji("smile")`
+| Conflicts           |  Economic growth           |  Simultaneous causality    | Rainfall `r fontawesome::fa("smile")`
 
 --
 
@@ -543,16 +543,7 @@ class: middle, inverse
 - Further, *MHE*: Ch. 4; *'Metrics*: Ch. 3, *Mixtape*: Ch. 7
 
 ### Assignments Due:
-- DARE #3: 2/18, 11:59pm
+- DARE #3: 5/12, 11:59pm
 
 
----
-# Feedback
 
-## Plus/Deltas
-
-Front side of index card
-
-## Clear/Murky
-
-On back
