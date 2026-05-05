@@ -201,16 +201,13 @@ knitr::opts_chunk$set(echo = TRUE)
 **Lecture:**
 
 - Class Questions: [doc](./questions/EDLD 650 Class 6 Questions.docx)
-
-<!--
 - Slides: [html](./slides/EDLD_650_6_IV_2.html) | [pdf](./slides/EDLD_650_6_IV_2.pdf) 
 - R Script: [Class 6](./code/EDLD_650_6_IV_script.R)
 - Data: [PACES](./data/ch11_PACES.csv)
--->
 
 **Assignment:**
 
-- Complete DARE #3 by 11:59pm May 12
+- Complete DARE #3 by 11:59pm, May 12
 
 *Further readings:*
 

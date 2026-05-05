@@ -51,7 +51,7 @@ extra_css <- list(
   ".red-pink" = list(color= "#e64173"),
   ".grey-light" = list(color= "grey70"),
   ".slate" = list(color="#314f4f"),
-  ".small" = list("font-size" = "90%"),
+  ".small" = list("font-size" = "80%"),
   ".large" = list("font-size" = "120%"))
 
 
@@ -242,7 +242,7 @@ summary(not_random)
 ]
 
 .pull-right[
-$$\hat{\beta}_{1}^{IVE} = \frac{S_{YD}}{S_{DZ}}$$
+$$\hat{\beta}_{1}^{IVE} = \frac{S_{YZ}}{S_{DZ}}$$
 a .blue[**Local Average Treatment Effect**]
 ]
 
@@ -342,6 +342,7 @@ modelsummary(list(itt1, itt2, itt3),
          add_rows = row,
          threeparttable= T,
          notes = c("Notes: The table displays coefficients from Equation X and standard errors in parentheses."),
+         escape=FALSE,
          type='html')
 ```
 ]
@@ -368,6 +369,7 @@ modelsummary(list(itt1, itt2, itt3),
          add_rows = row,
          threeparttable= T,
          notes = c("Notes: The table displays coefficients from Equation X and standard errors in parentheses."),
+         escape=FALSE,
          type='html')
 ```
 ]
@@ -409,18 +411,24 @@ tot2 <- feols(finish8th ~ base_age + male |
 
 ---
 # IV results - First Stage
-```{r, echo=T, highlight.output=13}
+```{r, echo=T, highlight.output=12}
 summary(tot2, stage = 1)
 ```
 
---
+
+---
+# IV results - First Stage
+```{r, echo=F, highlight.output=12}
+summary(tot2, stage = 1)
+```
+
 .small[
-You will see some common rules of thumb about what makes for a strong instrument (e.g., $t_{F}>10$), but recent work has found that with $t$-ratios lower than 100 one should adjust critical value ([Lee et al., 2021](https://www.nber.org/papers/w29124)).
+You will see some common rules of thumb about what makes for a strong instrument (e.g., $t_{F}>10$), but recent work has found that with $t$-ratios lower than 100 one should adjust critical value ([Lee et al., 2022](https://www.aeaweb.org/articles?id=10.1257/aer.20211063)).
 ]
 
 ---
-# IV results - Second Stage
-```{r, echo=T}
+## IV results - Second Stage
+```{r, echo=F}
 summary(tot2)
 ```
 
@@ -463,7 +471,8 @@ modelsummary(mods,
       coef_rename = c("fit_use_fin_aid" = "Use Fin. Aid", "base_age" = "Starting Age", "male" = "Male"),
       add_rows = row,
       threeparttable= T,
-      notes = c("The table displays coefficients from Equation X and standard errors in parentheses. Model 4 uses cluster-robust standard errors at school level.")
+      notes = c("The table displays coefficients from Equation X and standard errors in parentheses. Model 4 uses cluster-robust standard errors at school level."),
+      escape=FALSE
        ) 
       
 
@@ -499,7 +508,8 @@ modelsummary(mod2,
       coef_rename = c("won_lottry" = "Win Lottery", "use_fin_aid" = "Use Fin. Aid", "fit_use_fin_aid" = "Use Fin. Aid"),
       add_rows = row2,
       threeparttable= T,
-      notes = c("The table displays coefficients from Equation X and standard errors in parentheses.")
+      notes = c("The table displays coefficients from Equation X and standard errors in parentheses."),
+      escape=F
        ) 
       
 
@@ -546,7 +556,7 @@ class: middle, inverse
 
 ### Assignments Due
 **DARE 3**
-- Due 11:59pm, Feb. 18
+- Due 11:59pm, May 12
 
 
 
