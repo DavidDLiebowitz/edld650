@@ -3,7 +3,7 @@
 ##  Script Name: EDLD_DARE_3_code.R
 ##  Author: David D. Liebowitz
 ##  Date created: 2/14/22
-##  Last update: 2/18/24
+##  Last update: 5/8/26
 ##  Inputs: EDLD_650_DARE_3.csv
 ###############################################
 
@@ -42,6 +42,10 @@ options(modelsummary_format_numeric_latex = "plain")
 #Set location 
 i_am("assignments/DARE_3/code/EDLD_650_DARE_3_code.R")
 
+
+# Table format global option
+options(modelsummary_format_numeric_latex = "plain")
+options(modelsummary_factory_latex = "kableExtra")
 
 #import data
 read180 <- read_csv(here("assignments/DARE_3/data/EDLD_650_DARE_3.csv"))
@@ -84,7 +88,7 @@ stargazer(ols1, ols2, ols3, type='latex', out="assignments/DARE_3/tables/ols_res
           omit=c("Constant", "dorf", "frpl", "female", "school"), star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", model.names=F,
           add.lines = list(c("Student Chars", "No", "Yes", "Yes"), c("School Fixed Effects", "No", "No", "Yes")),
           covariate.labels=c("Full READ180 Attend"), 
-          title="Naive OLS estimates of the effects of READ180 attendance on reading comprehension score")
+          title="Naive OLS estimates of the effects of READ180 attendance on reading comprehension score \\label{tab:ols}")
 
 
 #B2. Comparison of outcomes
@@ -130,6 +134,7 @@ modelsummary(list(itt1, itt2, itt3, itt4, itt5),
           threeparttable = T,
           notes = c("Notes: Cells report coefficients and associated standard errors."),
           type = 'latex',
+          escape=F,
           output="assignments/DARE_3/tables/itt_results.tex"
           )
           
@@ -160,5 +165,6 @@ modelsummary(list(tot1, tot2, tot3, tot4),
              threeparttable = T,
              notes = c("Notes: Cells report coefficients and associated standard errors."),
              type = 'latex',
+             escape=F,
              output="assignments/DARE_3/tables/tot_results.tex"
             )
