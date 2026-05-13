@@ -460,13 +460,18 @@ ggplot(ed) +
 ]
 
 ---
-# Two princes
+.pull-left[
+# Two queens
+]
 
+.pull-right[
 ```{r, echo=F}
-include_graphics("ozzy.png")
+include_graphics("queens.jpg")
 ```
+.footnote[created with ChatGPT 5.5]
 
-.footnote[credit: not sure where original is from?]
+]
+
 ---
 # A family affair
 
@@ -531,15 +536,15 @@ class: middle, inverse
 **Readings: **
 - Murnane and Willett, Chapter 12
 - Diaz & Handa - evaluation of Mexico's PROGRESA program
-- Additional readings: Cunningham, Ch. 5; Dehejia & Wahba (2002); Iacus, King & Porro (2011); King et al. (2011); King & Nielsen (2019)
+- Additional optional readings: Cunningham, Ch. 5; Dehejia & Wahba (2002); Iacus, King & Porro (2011); King et al. (2011); King & Nielsen (2019)
 
 **Assignments Due**
 - **DARE 4** (last one!!!)
-    + Due 11:59pm, March 3
+    + Due 11:59pm, May 26
 
 - **Final Research Project**
-    + Presentation, March 11
-    + Paper, March 20 (submit early [March 13] for feedback)
+    + Presentation, June 3
+    + Paper, June 11 (optional: submit early [June 5] for feedback)
 
 ---
 # Feedback

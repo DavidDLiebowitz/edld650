@@ -4,7 +4,7 @@
     <title>Instrumental Variables and Matching</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_7_match_1_files/header-attrs-2.20/header-attrs.js"></script>
+    <script src="EDLD_650_7_match_1_files/header-attrs-2.31/header-attrs.js"></script>
     <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_7_match_1_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
@@ -48,7 +48,7 @@ class: center, middle, inverse, title-slide
 ---
 # Roadmap
 
-&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -107,7 +107,7 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 
 .pull-left[
 **Hypothetical causal relation**
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-3-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -128,12 +128,12 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 
 .pull-left[
 **Hypothetical causal relation**
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-4-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 **Observed relationship**
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-5-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 
@@ -149,12 +149,12 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 
 .pull-left[
 **Hypothetical causal relation**
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-6-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 **Observed relationship**
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-7-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 
@@ -175,12 +175,12 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 
 .pull-left[
 **Ignore biased observed relationship**
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-8-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 **Estimate treatment effect absent bias**
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-9-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -196,7 +196,7 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 ]
 
 .pull-right[
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-10-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -206,7 +206,7 @@ Imagine: outcome `\(Y\)` is a measure of later life success that depends on an e
 ---
 # Stratification
 
-&lt;img src="stratification.jpg" width="2436" style="display: block; margin: auto;" /&gt;
+&lt;img src="stratification.jpg" alt="" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -224,7 +224,7 @@ In extreme, group may have no observations in a strata
 ]
 
 .pull-right[
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-12-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -242,7 +242,7 @@ We match untreated observations to treated observations using `\(\textbf{X}_{i}\
 ---
 # The classic tradeoff
 
-&lt;img src="tradeoff.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="tradeoff.jpg" alt="" width="90%" style="display: block; margin: auto;" /&gt;
 
 We want to minimize bias in our estimates by finding a match that most closely approximates each treated unit but we don’t want to overly restrict the definition of matching so as to require excluding too many units or producing a sample that does not reflect our originally defined population.
 
@@ -283,7 +283,7 @@ We want to minimize bias in our estimates by finding a match that most closely a
 # Difference from OLS?
 
 .pull-left[
-&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_7_match_1_files/figure-html/unnamed-chunk-14-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right[ .small[
 1. It's not that different
@@ -305,11 +305,16 @@ We want to minimize bias in our estimates by finding a match that most closely a
 ]
 
 ---
-# Two princes
+.pull-left[
+# Two queens
+]
 
-&lt;img src="ozzy.png" width="521" style="display: block; margin: auto;" /&gt;
+.pull-right[
+&lt;img src="queens.jpg" alt="" style="display: block; margin: auto;" /&gt;
+.footnote[created with ChatGPT 5.5]
 
-.footnote[credit: not sure where original is from?]
+]
+
 ---
 # A family affair
 
@@ -362,7 +367,7 @@ class: middle, inverse
 ---
 # Roadmap
 
-&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # To-Dos
@@ -372,15 +377,15 @@ class: middle, inverse
 **Readings: **
 - Murnane and Willett, Chapter 12
 - Diaz &amp; Handa - evaluation of Mexico's PROGRESA program
-- Additional readings: Cunningham, Ch. 5; Dehejia &amp; Wahba (2002); Iacus, King &amp; Porro (2011); King et al. (2011); King &amp; Nielsen (2019)
+- Additional optional readings: Cunningham, Ch. 5; Dehejia &amp; Wahba (2002); Iacus, King &amp; Porro (2011); King et al. (2011); King &amp; Nielsen (2019)
 
 **Assignments Due**
 - **DARE 4** (last one!!!)
-    + Due 11:59pm, March 3
+    + Due 11:59pm, May 26
 
 - **Final Research Project**
-    + Presentation, March 11
-    + Paper, March 20 (submit early [March 13] for feedback)
+    + Presentation, June 3
+    + Paper, June 11 (optional: submit early [June 5] for feedback)
 
 ---
 # Feedback
@@ -397,9 +402,9 @@ On back
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
