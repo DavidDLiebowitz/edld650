@@ -130,6 +130,9 @@ ggplot(df_match2, aes(distance, fill = as.factor(catholic), color = as.factor(ca
                   theme_pander(base_size = 12) + 
                   xlab("Probability of Catholic HS attendance")
 
+# Can get a nice visualization of standardized mean difference
+cobalt::love.plot(matched)
+
 ## 4. Once happy with matches, estimate treatment effect in matched sample
 
 psmatch2 <- lm(math12 ~ catholic + math8 + inc8 + inc8sq + mathfam, data=df_match, weights=weights)

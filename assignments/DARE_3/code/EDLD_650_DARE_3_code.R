@@ -3,7 +3,7 @@
 ##  Script Name: EDLD_DARE_3_code.R
 ##  Author: David D. Liebowitz
 ##  Date created: 2/14/22
-##  Last update: 5/8/26
+##  Last update: 5/18/26
 ##  Inputs: EDLD_650_DARE_3.csv
 ###############################################
 
@@ -79,7 +79,7 @@ summary(f_test)
 
 #B1. Naive OLS estimates of outcome on READ180 attendance
 
-ols1 <- lm(sat10_compreh ~ read180_attend + dorf, data=read180)
+ols1 <- lm(sat10_compreh ~ read180_attend, data=read180)
 ols2 <- lm(sat10_compreh ~ read180_attend + dorf + frpl + female, data=read180)
 ols3 <- lm(sat10_compreh ~ read180_attend + dorf + frpl + female + as.factor(school), data=read180)
 

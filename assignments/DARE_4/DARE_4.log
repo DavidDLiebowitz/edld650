@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2022.5.27)  26 FEB 2024 08:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2022.5.27)  18 MAY 2026 16:38
 entering extended mode
 **./DARE_4.tex
 (DARE_4.tex
@@ -464,7 +464,7 @@ Package rerunfilecheck Info: File `DARE_4.out' has not changed.
 Here is how much of TeX's memory you used:
  7859 strings out of 492970
  121634 string characters out of 3135849
- 214516 words of memory out of 3000000
+ 214515 words of memory out of 3000000
  11595 multiletter control sequences out of 15000+200000
  10107 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -476,7 +476,7 @@ KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmti10.pfb>
-Output written on DARE_4.pdf (3 pages, 109553 bytes).
+Output written on DARE_4.pdf (3 pages, 109079 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  7 named destinations out of 1000 (max. 500000)

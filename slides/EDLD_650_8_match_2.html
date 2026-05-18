@@ -4,19 +4,20 @@
     <title>Matching</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_8_match_2_files/header-attrs-2.20/header-attrs.js"></script>
+    <script src="EDLD_650_8_match_2_files/header-attrs-2.31/header-attrs.js"></script>
     <link href="EDLD_650_8_match_2_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_8_match_2_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_8_match_2_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+    <link href="EDLD_650_8_match_2_files/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+    <script src="EDLD_650_8_match_2_files/htmlwidgets-1.6.4/htmlwidgets.js"></script>
     <link href="EDLD_650_8_match_2_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/datatables-binding-0.27/datatables.js"></script>
+    <script src="EDLD_650_8_match_2_files/datatables-binding-0.34.0/datatables.js"></script>
     <script src="EDLD_650_8_match_2_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-    <link href="EDLD_650_8_match_2_files/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="EDLD_650_8_match_2_files/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
-    <link href="EDLD_650_8_match_2_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-    <script src="EDLD_650_8_match_2_files/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+    <link href="EDLD_650_8_match_2_files/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="EDLD_650_8_match_2_files/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="EDLD_650_8_match_2_files/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+    <link href="EDLD_650_8_match_2_files/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+    <script src="EDLD_650_8_match_2_files/crosstalk-1.2.2/js/crosstalk.min.js"></script>
     <link rel="stylesheet" href="my_custom.css" type="text/css" />
     <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
   </head>
@@ -48,8 +49,8 @@ class: center, middle, inverse, title-slide
 # Agenda
 ### 1. Roadmap and Goals (9:00-9:10)
 ### 2. Discussion Questions (9:10-10:20)
-- Diaz &amp; Handa
 - Murnane &amp; Willett, Ch. 12
+- Diaz &amp; Handa
 
 ### 3. Break (10:20-10:30)
 ### 4. Applied matching (10:30-11:40)
@@ -60,7 +61,7 @@ class: center, middle, inverse, title-slide
 ---
 # Roadmap
 
-&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" style="display: block; margin: auto;" /&gt;
 ---
 # Goals
 
@@ -69,6 +70,11 @@ class: center, middle, inverse, title-slide
 ### 2. Assess validity of matching approach and what selection on observable assumptions implies
 
 ### 3. Conduct matching analysis in simplified data using both propensity-score matching and coarsened-exact matching (CEM)
+
+---
+class: middle, inverse
+
+# DARE-ing Do-ers
 
 ---
 class: middle, inverse
@@ -89,20 +95,20 @@ class: middle, inverse
 ---
 # Recall Catholic school data
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0fd1e2a4181dd345fd31" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-0fd1e2a4181dd345fd31">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["1","2","3","4","5"],[124902,180625,702949,710976,1425490],[49.7700004577637,51.5099983215332,48.2799987792969,53.0099983215332,65.3499984741211],[1,1,0,0,1],[50.2700004577637,41.310001373291,45.75,46.0499992370605,66.6900024414062],[10,11,11,9,10]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id<\/th>\n      <th>math12<\/th>\n      <th>catholic<\/th>\n      <th>math8<\/th>\n      <th>faminc8<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-3d074b78c541c76a7333" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3d074b78c541c76a7333">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["1","2","3","4","5"],[124902,180625,702949,710976,1425490],[49.77000045776367,51.5099983215332,48.27999877929688,53.0099983215332,65.34999847412109],[1,1,0,0,1],[50.27000045776367,41.31000137329102,45.75,46.04999923706055,66.69000244140625],[10,11,11,9,10]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id<\/th>\n      <th>math12<\/th>\n      <th>catholic<\/th>\n      <th>math8<\/th>\n      <th>faminc8<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"id","targets":1},{"name":"math12","targets":2},{"name":"catholic","targets":3},{"name":"math8","targets":4},{"name":"faminc8","targets":5}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 ---
 ## Are Catholic HS higher-performing?
 
-```r
+``` r
 catholic %&gt;% group_by(catholic) %&gt;%
   summarise(n_students = n(),
    mean_math = mean(math12), SD_math = sd(math12))
 ```
 
 ```
-#&gt; # A tibble: 2 x 4
+#&gt; # A tibble: 2 × 4
 #&gt;   catholic  n_students mean_math SD_math
 #&gt;   &lt;dbl+lbl&gt;      &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 #&gt; 1 0 [no]          5079      50.6    9.53
@@ -111,12 +117,12 @@ catholic %&gt;% group_by(catholic) %&gt;%
 
 ---
 ## Are Catholic HS higher-performing?
-&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-5-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ---
 ## Are Catholic HS higher-performing?
 
 
-```r
+``` r
 ols1 &lt;- lm(math12 ~ catholic, data=catholic)
 summary(ols1)
 ```
@@ -146,7 +152,7 @@ summary(ols1)
 
 .small[
 
-```r
+``` r
 table &lt;- tableby(catholic ~ faminc8 + math8 + white + female, 
         numeric.stats=c("meansd"), cat.stats=c("N", "countpct"), 
         digits=2, data=catholic)
@@ -180,14 +186,14 @@ summary(table, labelTranslations = mylabels)
 ]
 ]
 .pull-right[
-&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-8-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 ---
 # Practical considerations
 Can implement this various ways. Pedagogically, we'll implement matching using a combination of the `MatchIt` package (which is similar to the `cem` package for Coarsened Exact Matching), the `fixest` implementation of logistic regression and data manipulation by hand.&lt;sup&gt;[1]&lt;/sup&gt; 
 
 
-```r
+``` r
 # install.packages("MatchIt")
 # install.packages("gtools")
 ```
@@ -197,7 +203,7 @@ Can implement this various ways. Pedagogically, we'll implement matching using a
 ## Phase I: Generate propensities
 ## Step 1: Estimate selection model
 
-```r
+``` r
 pscores &lt;- feglm(catholic ~ inc8 + math8 + mathfam, 
                  family=c("logit"), data=catholic)
 summary(pscores)
@@ -205,9 +211,9 @@ summary(pscores)
 
 ```
 #&gt; GLM estimation, family = binomial(link = "logit"), Dep. Var.: catholic
-#&gt; Observations: 5,671 
+#&gt; Observations: 5,671
 #&gt; Standard-errors: IID 
-#&gt;              Estimate Std. Error  t value   Pr(&gt;|t|)    
+#&gt;              Estimate Std. Error  z value   Pr(&gt;|z|)    
 #&gt; (Intercept) -5.208846   0.586532 -8.88075  &lt; 2.2e-16 ***
 #&gt; inc8         0.061803   0.014058  4.39633 1.1009e-05 ***
 #&gt; math8        0.042959   0.011138  3.85707 1.1476e-04 ***
@@ -221,7 +227,7 @@ summary(pscores)
 ## Phase I: Generate propensities
 ## Step 2: Predict selection likelihood
 
-```r
+``` r
 pscore_df &lt;- data.frame(p_score = predict(pscores, type="response"),
                      catholic = catholic$catholic)
 head(pscore_df)
@@ -244,12 +250,12 @@ head(pscore_df)
 ---
 ## Phase I: Generate propensities
 ### Step 3: Common support (pre-match)
-&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-12-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ---
 ## Phase 2: PS Matching
 ### Step 1: Assign nearest-neighbor match&lt;sup&gt;[1]&lt;/sup&gt; 
 
-```r
+``` r
 matched &lt;- matchit(catholic ~ math8 + inc8, method="nearest", 
                    replace=T, discard="both", data=catholic)
 df_match &lt;- match.data(matched)
@@ -259,7 +265,7 @@ dim(df_match)
 ```
 
 ```
-#&gt; [1] 1118   30
+#&gt; [1] 1121   30
 ```
 
 .footnote[[1] As you might anticipate, there are *lots* of different ways besides "nearest-neighbor with replacement" to create these matches.]
@@ -272,13 +278,13 @@ This is the **NOT** same number of observations as were in the original sample..
 ---
 ## Phase 2: PS Matching 
 ### Step 2: Common support (post-match)
-&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-14-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ---
 ## Phase 2: PS Matching
 ### Step 3: Examine balance
-*(doesn't really fit on screen)*
+*(doesn't really fit on screen, sorry!)*
 
-```r
+``` r
 summary(matched)
 ```
 
@@ -301,7 +307,7 @@ summary(matched)
 #&gt; Summary of Balance for Matched Data:
 #&gt;          Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
 #&gt; distance        0.1216        0.1216          0.0001     1.0000    0.0002
-#&gt; math8          53.6604       53.4416          0.0248     0.9497    0.0119
+#&gt; math8          53.6604       53.4416          0.0248     0.9498    0.0119
 #&gt; inc8           39.5346       39.6698         -0.0083     1.0407    0.0045
 #&gt;          eCDF Max Std. Pair Dist.
 #&gt; distance   0.0068          0.0005
@@ -310,11 +316,11 @@ summary(matched)
 #&gt; 
 #&gt; Sample Sizes:
 #&gt;               Control Treated
-#&gt; All           5079.       592
-#&gt; Matched (ESS)  469.79     592
-#&gt; Matched        526.       592
-#&gt; Unmatched     4465.         0
-#&gt; Discarded       88.         0
+#&gt; All            5079.      592
+#&gt; Matched (ESS)   473.6     592
+#&gt; Matched         529.      592
+#&gt; Unmatched      4462.        0
+#&gt; Discarded        88.        0
 ```
 ---
 ## Phase 2: PS Matching
@@ -339,24 +345,36 @@ inc8       |    39.5346      |  39.6698      | -0.0083
 
 ---
 ## Phase 2: PS Matching
+### Step 3: Examine balance
+
+Can get a nice visualization of standardized mean differences for individual covariates *AND* propensity scores:
+
+``` r
+cobalt::love.plot(matched)
+```
+
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-16-1.png" alt="" style="display: block; margin: auto;" /&gt;
+
+---
+## Phase 2: PS Matching
 
 Could get even closer with fuller model:
 
-```r
+``` r
 matched2 &lt;- matchit(catholic ~ math8 + inc8 + inc8sq + mathfam, 
        method="nearest", replace=T, discard="both", data=catholic)
 ```
 
-&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-18-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ---
 ## Phase 2: Estimate effects
 
-```r
+``` r
 psmatch2 &lt;- lm(math12 ~ catholic + math8 + inc8 + inc8sq + mathfam, 
                weights = weights, data=df_match)
 #Notice how we have matched on just math8 and inc8 but are now 
 #   adjusting for more in our estimation. This is fine! 
-# Very important to include weights!
+# Very important to include weights (esp. when using replacement)!
 summary(psmatch2)
 ```
 
@@ -365,18 +383,18 @@ summary(psmatch2)
 #&gt; 
 #&gt; Coefficients:
 #&gt;               Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)  1.3079490  2.4457425   0.535 0.592905    
-#&gt; catholic     1.5990422  0.3144335   5.085 4.30e-07 ***
-#&gt; math8        0.9065628  0.0468521  19.349  &lt; 2e-16 ***
-#&gt; inc8         0.3701132  0.0663303   5.580 3.02e-08 ***
-#&gt; inc8sq      -0.0015921  0.0005686  -2.800 0.005194 ** 
-#&gt; mathfam     -0.0040694  0.0010783  -3.774 0.000169 ***
+#&gt; (Intercept)  1.0697446  2.4209677   0.442  0.65867    
+#&gt; catholic     1.6354030  0.3112114   5.255 1.77e-07 ***
+#&gt; math8        0.9138351  0.0463807  19.703  &lt; 2e-16 ***
+#&gt; inc8         0.3728445  0.0656601   5.678 1.73e-08 ***
+#&gt; inc8sq      -0.0015855  0.0005629  -2.817  0.00494 ** 
+#&gt; mathfam     -0.0042131  0.0010674  -3.947 8.41e-05 ***
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
-#&gt; Residual standard error: 5.244 on 1112 degrees of freedom
-#&gt; Multiple R-squared:  0.6323,	Adjusted R-squared:  0.6307 
-#&gt; F-statistic: 382.5 on 5 and 1112 DF,  p-value: &lt; 2.2e-16
+#&gt; Residual standard error: 5.198 on 1115 degrees of freedom
+#&gt; Multiple R-squared:  0.6364,	Adjusted R-squared:  0.6348 
+#&gt; F-statistic: 390.4 on 5 and 1115 DF,  p-value: &lt; 2.2e-16
 ...
 ```
 
@@ -387,7 +405,7 @@ summary(psmatch2)
 
 --
 
-&gt; In a matched sample of students who had nearly identical 8th grade math test scores and family income levels and were equally likely to attend private school based on these observable conditions, the effect of attending parochial high school was to increase 12th grade math test scores by 1.59 scale score points [95% CI: 0.98, 2.22]. To the extent that families' selection into Catholic high school is based entirely on their children's 8th grade test scores and their family income, we can interpret this a credibly causal estimate of the effect of Catholic high school attendance, purged of observable variable bias.
+&gt; In a matched sample of students who had nearly identical 8th grade math test scores and family income levels and were equally likely to attend private school based on these observable conditions, the effect of attending parochial high school was to increase 12th grade math test scores by 1.64 scale score points [95% CI: 1.03, 2.24]. To the extent that families' selection into Catholic high school is based entirely on their children's 8th grade test scores and their family income, we can interpret this a credibly causal estimate of the effect of Catholic high school attendance, purged of observable variable bias.
 
 ---
 class: middle, inverse
@@ -421,7 +439,7 @@ class: middle, inverse
 # Creating bins
 
 
-```r
+``` r
 table(catholic$faminc8)
 ```
 
@@ -432,7 +450,7 @@ table(catholic$faminc8)
 ```
 --
 
-```r
+``` r
 catholic &lt;- mutate(catholic, coarse_inc=ifelse(faminc8&lt;5,1,faminc8))
 catholic$coarse_inc &lt;- as.ordered(catholic$coarse_inc)
 levels(catholic$coarse_inc)
@@ -443,7 +461,7 @@ levels(catholic$coarse_inc)
 ```
 --
 
-```r
+``` r
 summary(catholic$math8)
 ```
 
@@ -452,14 +470,14 @@ summary(catholic$math8)
 #&gt;   34.48   43.45   50.45   51.49   58.55   77.20
 ```
 
-```r
+``` r
 mathcuts &lt;- c(43.45, 51.49, 58.55)
 ```
 
 ---
 # CEM matches
 
-```r
+``` r
 cem &lt;- matchit(catholic ~ coarse_inc + math8, 
       cutpoints=list(math8=mathcuts), method="cem", data=catholic)
 df_cem &lt;- match.data(cem)
@@ -479,7 +497,7 @@ This is the same number of observations as were in the original sample. .blue[Wh
 ---
 # Quality of matches
 
-```r
+``` r
 summary(cem)
 ```
 
@@ -569,13 +587,17 @@ math8          |     53.6604    |   51.2365     | -0.2746
 ---
 # Common support?
 
+--
 
-```r
+
+``` r
 df_cem1 &lt;- df_cem %&gt;% group_by(catholic, subclass) %&gt;% 
             summarise(count= n())  
 df_cem1 &lt;- df_cem1 %&gt;%  mutate(attend = count / sum(count))
 ```
-&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+
+### Strata overlap
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-27-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -583,7 +605,7 @@ df_cem1 &lt;- df_cem1 %&gt;%  mutate(attend = count / sum(count))
 
 Can generate different quantiles, e.g., quintiles
 
-```r
+``` r
 math8_quints &lt;- gtools::quantcut(catholic$math8, 5)
 table(math8_quints)
 ```
@@ -598,7 +620,7 @@ table(math8_quints)
 
 You might also have a substantive reason for the cuts:
 
-```r
+``` r
 mathcuts2 &lt;- c(40, 45, 50, 55, 60, 65, 70)
 ```
 ---
@@ -700,15 +722,15 @@ Matched    |   4866  |    590
 Unmatched  |    213  |      2
 
 --
-Common support?
+Strata overlap?
 --
-&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_8_match_2_files/figure-html/unnamed-chunk-31-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ---
 # Estimating effects
 
 
 
-```r
+``` r
 att2 &lt;- lm(math12 ~ catholic + coarse_inc + math8, 
            data=df_cem2, weights = weights)
 summary(att2)
@@ -750,9 +772,9 @@ summary(att2)
 
 &lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="7" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;OLS&lt;/td&gt;&lt;td colspan="3"&gt;PSM&lt;/td&gt;&lt;td colspan="2"&gt;CEM&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;td&gt;(3)&lt;/td&gt;&lt;td&gt;(4)&lt;/td&gt;&lt;td&gt;(5)&lt;/td&gt;&lt;td&gt;(6)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="7" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Attend catholic school&lt;/td&gt;&lt;td&gt;3.895&lt;sup&gt;***&lt;/sup&gt; (0.409)&lt;/td&gt;&lt;td&gt;1.612&lt;sup&gt;***&lt;/sup&gt; (0.318)&lt;/td&gt;&lt;td&gt;1.599&lt;sup&gt;***&lt;/sup&gt; (0.314)&lt;/td&gt;&lt;td&gt;1.688&lt;sup&gt;***&lt;/sup&gt; (0.306)&lt;/td&gt;&lt;td&gt;1.561&lt;sup&gt;***&lt;/sup&gt; (0.228)&lt;/td&gt;&lt;td&gt;1.505&lt;sup&gt;***&lt;/sup&gt; (0.229)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="7" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;5,671&lt;/td&gt;&lt;td&gt;1,118&lt;/td&gt;&lt;td&gt;1,118&lt;/td&gt;&lt;td&gt;1,126&lt;/td&gt;&lt;td&gt;5,671&lt;/td&gt;&lt;td&gt;5,456&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.016&lt;/td&gt;&lt;td&gt;0.623&lt;/td&gt;&lt;td&gt;0.632&lt;/td&gt;&lt;td&gt;0.651&lt;/td&gt;&lt;td&gt;0.656&lt;/td&gt;&lt;td&gt;0.644&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="7" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Attend catholic school&lt;/td&gt;&lt;td&gt;3.895&lt;sup&gt;***&lt;/sup&gt; (0.409)&lt;/td&gt;&lt;td&gt;1.649&lt;sup&gt;***&lt;/sup&gt; (0.315)&lt;/td&gt;&lt;td&gt;1.635&lt;sup&gt;***&lt;/sup&gt; (0.311)&lt;/td&gt;&lt;td&gt;1.701&lt;sup&gt;***&lt;/sup&gt; (0.303)&lt;/td&gt;&lt;td&gt;1.561&lt;sup&gt;***&lt;/sup&gt; (0.228)&lt;/td&gt;&lt;td&gt;1.505&lt;sup&gt;***&lt;/sup&gt; (0.229)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="7" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;5,671&lt;/td&gt;&lt;td&gt;1,121&lt;/td&gt;&lt;td&gt;1,121&lt;/td&gt;&lt;td&gt;1,130&lt;/td&gt;&lt;td&gt;5,671&lt;/td&gt;&lt;td&gt;5,456&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.016&lt;/td&gt;&lt;td&gt;0.627&lt;/td&gt;&lt;td&gt;0.636&lt;/td&gt;&lt;td&gt;0.652&lt;/td&gt;&lt;td&gt;0.656&lt;/td&gt;&lt;td&gt;0.644&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td colspan="7" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="6" style="text-align:left"&gt;*p&lt;0.05; **p&lt;0.01; ***p&lt;0.001. Models 2-3 and 5-6 match on income and math score. Model 3 adjusts for higher-order terms and interactions post matching; Model 4 includes them in matching algorithm. Model 6 uses narrower bins to match than Model 5. All CEM and PSM estimates are doubly-robust. Outcome mean (SD) for treated = 54.5 (8.5)&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 ---
@@ -793,7 +815,7 @@ class: middle, inverse
 ---
 # Can you explain this figure?
 
-&lt;img src="causal_id.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # To-Dos
@@ -805,11 +827,11 @@ class: middle, inverse
 
 ### Assignments Due
 **DARE 4**
-- Due 11:59pm, March 3
+- Due 11:59pm, May 26
 
 **Final Research Project**
-- Presentation, March 11
-- Paper, March 20 (submit March 13 for feedback)
+- Presentation, June 3
+- Paper, June 11 (submit June 5 for feedback)
 
 ---
 # Feedback
@@ -826,9 +848,9 @@ On back
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
