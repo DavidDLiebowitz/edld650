@@ -128,11 +128,6 @@ class: middle, inverse
 # So random...
 
 ---
-# DARE-d to do it!
-
-Student examples in class...
-
----
 class: middle, inverse
 
 # Break
@@ -145,12 +140,12 @@ class: middle, inverse
 ---
 ## Causal inference presentations
 
-With 10-15 minutes you have time for:
-1. What is the focus and why is this important? (1-2 slides)
+With 10 minutes you have time for:
+1. What is the focus and why is this important? (1 slide)
 2. What are the research questions? (1 slide)
-3. What are the key features of the sample and data (2 slides)
+3. What are the key features of the sample and data (1-2 slides)
 4. What is the methodology and research design? (2-3 slides)
-5. What is the result? (3-4 slides)
+5. What is the result? (3 slides)
 6. What does this mean? (1 slide)
 
 --
@@ -294,16 +289,49 @@ post_x <- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 pre_y <- c(0.00, -0.01, -0.01, 0.01, 0.02, 0.00, 0.01, -0.01, 0.00, 0.01, 0.01)
 post_y <- c(0.10, 0.09, 0.11, 0.08, 0.10, 0.11, 0.09, 0.11, 0.10, 0.12, 0.11)
 
-ex <- as.data.frame(pre_x, post_x, pre_y, post_y)
+ex <- data.frame(pre_x, post_x, pre_y, post_y)
+
+# create the brace
+make_brace <- function(x, y0, y1, width = 0.1, n = 100) {
+  
+  y_mid <- (y0 + y1) / 2
+  
+  # upper half
+  t1 <- seq(0, 1, length.out = n/2)
+  upper <- data.frame(
+    x = x + width * sin(pi * t1),
+    y = y1 - (y1 - y_mid) * t1
+  )
+  
+  # lower half
+  t2 <- seq(0, 1, length.out = n/2)
+  lower <- data.frame(
+    x = x + width * sin(pi * (1 - t2)),
+    y = y_mid - (y_mid - y0) * t2
+  )
+  
+  bind_rows(upper, lower)
+}
+
+brace_df <- make_brace(
+  x = 0.1,
+  y0 = 0.01,
+  y1 = 0.08
+)
 
 ggplot(data=ex) +
   geom_smooth(aes(x=pre_x, y=pre_y), method="lm", color = "blue") +
   geom_smooth(aes(x=post_x, y=post_y), method="lm", color = "orange") +
   expand_limits(y=c(-0.03, 0.15)) +
   geom_vline(aes(xintercept=0), col="black", lty="dashed", size=1) +
-  ggbrace::geom_brace(aes(x=c(0, 0.4), y=c(0.01, 0.09)), rotate=90, color="red", inherit.data = F) +
+   geom_path(
+    data = brace_df,
+    aes(x = x, y = y),
+    inherit.aes = FALSE,
+    size = 1,
+    color = "red") +
   annotate("text", x = -5, y = 0.03, label = "beta [3]", color = "blue", size = 8, parse=T) +
-  annotate("text", x = 5, y = 0.08, label = "beta [2]", color = "orange", size = 8, parse=T) +
+  annotate("text", x = 5, y = 0.08, label = "beta [2]", color = "orange", size = 8, parse=T) + 
   annotate("text", x = 1, y = 0.05, label = "beta [1]", color = "red", size = 8, parse=T) +
   labs(y="Black Dropout Rate", x="Relative Year") +
   theme_pander(base_size = 20)
@@ -483,7 +511,7 @@ class: middle, inverse
 ]
 
 .pull-right[
-$$\hat{\beta}_{1}^{IVE} = \frac{S_{YD}}{S_{DZ}}$$
+$$\hat{\beta}_{1}^{IVE} = \frac{S_{YZ}}{S_{DZ}}$$
 a .blue[**Local Average Treatment Effect**]
 ]
 
@@ -603,18 +631,18 @@ class: middle, inverse
 .red-pink[.large[**NO!**]]
 
 --
-Each research design is the best design and has the highest degree of internal validity, *given the data-generating process*.
+Each research design is the best design and has the highest degree of internal validity, *given a particular data-generating process*.
 
 --
 
 A regression discontinuity design with poorly met assumptions (*e.g., manipulation or even insufficient observations on one side of discontinuity that prevent modeling appropriate functional form*) is not a "better" design than a well-justified matching study.
 
 --
-An RCT with great internal validity might not teach us as much as a generalizable RD.
+An RCT with great internal validity might not teach us as much as a more generalizable RD in which there are multiple discontinuities in an authentic (no *founder effects*) setting.
 
 --
 
-Always conduct research designed to make causal inference with a mix of "humble and hotshot" attitude
+Always conduct research designed to make causal inferences with a mix of "humble and hotshot" attitude
 
 --
 
@@ -648,31 +676,28 @@ class: middle, inverse
 ---
 # To-Dos
 
-## Week 10: Presentate! `r emo::ji("smile")`
+## Week 10: Presentate! `r fontawesome::fa("smile")`
 
 ### Order (randomly generated):
-1. Yitong
-2. Xiaoqi
-3. Seulbi
-4. Havi
-5. Eunji
-6. Yessy
-7. Tony
-8. Janette
-9. Brittany
+1. Errol
+2. Aden
+3. Heesoo
+4. Michelle
+5. Dodji
+6. Lucas
+7. Wookjin
+8. Shi Zhang
+9. Yumeng
 
 ---
 # To-dos
 
 ### Readings: 
-- **Optional**: *MM* Ch. 13 and 14
+- **If haven't yet**: *MM* Ch. 13 and 14
 
 ### Final Research Project
-- Presentation, March 11
-- Paper, March 20 (submit March 13 for feedback
+- Presentation, June 3
+- Paper, June 11 (submit June 5 for feedback)
 
----
-# Feedback
 
-### Student Experience Survey
 

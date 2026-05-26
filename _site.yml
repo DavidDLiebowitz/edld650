@@ -27,7 +27,7 @@ navbar:
       - text: "Week 8: Matching I"
         href: ./slides/EDLD_650_8_match_2.html
       - text: "Week 9: Matching II"
-        #href: ./slides/EDLD_650_9_synthesis.html
+        href: ./slides/EDLD_650_9_synthesis.html
 
 
   right:

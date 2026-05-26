@@ -4,7 +4,7 @@
     <title>Matching and Synthesis</title>
     <meta charset="utf-8" />
     <meta name="author" content="David D. Liebowitz" />
-    <script src="EDLD_650_9_synthesis_files/header-attrs-2.20/header-attrs.js"></script>
+    <script src="EDLD_650_9_synthesis_files/header-attrs-2.31/header-attrs.js"></script>
     <link href="EDLD_650_9_synthesis_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="EDLD_650_9_synthesis_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="EDLD_650_9_synthesis_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
@@ -47,7 +47,7 @@ class: center, middle, inverse, title-slide
 ---
 # Roadmap
 
-&lt;img src="causal_id.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" style="display: block; margin: auto;" /&gt;
 ---
 # Goals
 
@@ -65,11 +65,6 @@ class: middle, inverse
 # So random...
 
 ---
-# DARE-d to do it!
-
-Student examples in class...
-
----
 class: middle, inverse
 
 # Break
@@ -82,12 +77,12 @@ class: middle, inverse
 ---
 ## Causal inference presentations
 
-With 10-15 minutes you have time for:
-1. What is the focus and why is this important? (1-2 slides)
+With 10 minutes you have time for:
+1. What is the focus and why is this important? (1 slide)
 2. What are the research questions? (1 slide)
-3. What are the key features of the sample and data (2 slides)
+3. What are the key features of the sample and data (1-2 slides)
 4. What is the methodology and research design? (2-3 slides)
-5. What is the result? (3-4 slides)
+5. What is the result? (3 slides)
 6. What does this mean? (1 slide)
 
 --
@@ -225,7 +220,7 @@ $$
     &amp; \color{blue}{\beta_3} \text{YEAR_CENT} _{jt} + \Gamma_j  + \Pi_t + \epsilon _{j}
 \end{aligned}`
 $$
-&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-3-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -275,7 +270,7 @@ class: middle, inverse
 
 `$$p(COLL_{i}=1)= \beta_{0} + \beta_{1} TESTSCORE_{i} + 1(TESTSCORE_{i} \geq 60)\beta_{2} + \varepsilon_{i}$$`
 
-&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-4-1.png" alt="" style="display: block; margin: auto;" /&gt;
 
 ---
 # RD: Issues and Assumptions
@@ -295,7 +290,7 @@ class: middle, inverse
 ---
 # Instrumental variables
 
-&lt;img src="iv2.jpg" width="1707" style="display: block; margin: auto;" /&gt;
+&lt;img src="iv2.jpg" alt="" style="display: block; margin: auto;" /&gt;
 
 
 .pull-left[
@@ -303,7 +298,7 @@ class: middle, inverse
 ]
 
 .pull-right[
-`$$\hat{\beta}_{1}^{IVE} = \frac{S_{YD}}{S_{DZ}}$$`
+`$$\hat{\beta}_{1}^{IVE} = \frac{S_{YZ}}{S_{DZ}}$$`
 a .blue[**Local Average Treatment Effect**]
 ]
 
@@ -342,12 +337,12 @@ class: middle, inverse
 
 .pull-left[
 **Ignore biased observed relationship**
-&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-7-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 **Estimate treatment effect absent bias**
-&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="EDLD_650_9_synthesis_files/figure-html/unnamed-chunk-8-1.png" alt="" style="display: block; margin: auto;" /&gt;
 ]
 
 .small[
@@ -390,18 +385,18 @@ class: middle, inverse
 .red-pink[.large[**NO!**]]
 
 --
-Each research design is the best design and has the highest degree of internal validity, *given the data-generating process*.
+Each research design is the best design and has the highest degree of internal validity, *given a particular data-generating process*.
 
 --
 
 A regression discontinuity design with poorly met assumptions (*e.g., manipulation or even insufficient observations on one side of discontinuity that prevent modeling appropriate functional form*) is not a "better" design than a well-justified matching study.
 
 --
-An RCT with great internal validity might not teach us as much as a generalizable RD.
+An RCT with great internal validity might not teach us as much as a more generalizable RD in which there are multiple discontinuities in an authentic (no *founder effects*) setting.
 
 --
 
-Always conduct research designed to make causal inference with a mix of "humble and hotshot" attitude
+Always conduct research designed to make causal inferences with a mix of "humble and hotshot" attitude
 
 --
 
@@ -413,7 +408,7 @@ Beyond UO: **Mixtape Sessions, MethodsU, ICPSR, IES**, etc.
 ---
 # Can you explain this figure?
 
-&lt;img src="causal_id.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="causal_id.jpg" alt="" width="100%" style="display: block; margin: auto;" /&gt;
 ---
 class: middle, inverse
 # Logistics and wrap-up
@@ -433,41 +428,38 @@ class: middle, inverse
 ---
 # To-Dos
 
-## Week 10: Presentate! 😄
+## Week 10: Presentate! <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
 
 ### Order (randomly generated):
-1. Yitong
-2. Xiaoqi
-3. Seulbi
-4. Havi
-5. Eunji
-6. Yessy
-7. Tony
-8. Janette
-9. Brittany
+1. Errol
+2. Aden
+3. Heesoo
+4. Michelle
+5. Dodji
+6. Lucas
+7. Wookjin
+8. Shi Zhang
+9. Yumeng
 
 ---
 # To-dos
 
 ### Readings: 
-- **Optional**: *MM* Ch. 13 and 14
+- **If haven't yet**: *MM* Ch. 13 and 14
 
 ### Final Research Project
-- Presentation, March 11
-- Paper, March 20 (submit March 13 for feedback
+- Presentation, June 3
+- Paper, June 11 (submit June 5 for feedback)
 
----
-# Feedback
 
-### Student Experience Survey
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
