@@ -3,8 +3,8 @@
 ##  Script Name: EDLD_DARE_4_code.R
 ##  Author: David D. Liebowitz
 ##  Date created: 2/14/22
-##  Last update: 3/1/24
-##  Inputs: EDLD_650_DARE_3.csv
+##  Last update: 5/26/26
+##  Inputs: dumont_umansky_ECLSK.dta
 ###############################################
 
 # Define pretty graphing colors
@@ -277,7 +277,8 @@ summary(att1_lang)
 
 stargazer(ols1_math, ols2_math, cem_fx_math, att1_math, ols1_lang, ols2_lang, cem_fx_lang, att1_lang, 
           type='latex', out='assignments/DARE_4/tables/matching_results.tex', 
-          omit.stat = c("ser", "adj.rsq", "f"), omit=c("Constant", "prelas", "ebrs", "ses", "rural", "female", "hisp"), 
+          omit.stat = c("ser", "adj.rsq", "f"), 
+          omit=c("Constant", "prelas", "ebrs", "ses", "rural", "female", "hisp"), 
             dep.var.labels=c("Teacher Math Perception","Teacher Language Perception"), 
           column.labels=c("OLS", "OLS", "CEM", "PSM", "OLS", "OLS", "CEM", "PSM"), star.cutoffs=c(0.05, 0.01, 0.001), notes.align="l", 
           covariate.labels=c("EL-classified"), add.lines = list(c("Student Chars", "No", "Yes", "Yes", "Yes",  "No", "Yes", "Yes", "Yes")),

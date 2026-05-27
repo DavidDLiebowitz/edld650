@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2022.5.27)  1 MAR 2024 16:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2022.5.27)  27 MAY 2026 08:27
 entering extended mode
 **./DARE_4_answers.tex
 (DARE_4_answers.tex
@@ -461,16 +461,21 @@ File: figures/read_percep_raw_diff.png Graphic file (type png)
 Package pdftex.def Info: figures/read_percep_raw_diff.png  used on input line 7
 0.
 (pdftex.def)             Requested size: 170.65053pt x 136.53969pt.
-<tables/descriptives.pdf, id=15, 359.16083pt x 332.00539pt>
+<tables/descriptives.pdf, id=15, 375.8823pt x 351.55241pt>
 File: tables/descriptives.pdf Graphic file (type pdf)
 <use tables/descriptives.pdf>
 Package pdftex.def Info: tables/descriptives.pdf  used on input line 79.
-(pdftex.def)             Requested size: 359.15994pt x 332.00456pt.
- [1
+(pdftex.def)             Requested size: 375.88136pt x 351.55154pt.
 
-{C:/Users/daviddl/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2 <./fig
-ures/math_percep_raw_diff.png> <./figures/read_percep_raw_diff.png> <./tables/d
-escriptives.pdf>]
+Overfull \hbox (15.88136pt too wide) in paragraph at lines 79--80
+[][] 
+ []
+
+[1
+
+{C:/Users/daviddl/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+[2 <./figures/math_percep_raw_diff.png> <./figures/read_percep_raw_diff.png> <.
+/tables/descriptives.pdf>]
 <figures/base_common_support.png, id=47, 426.6339pt x 341.3553pt>
 File: figures/base_common_support.png Graphic file (type png)
 <use figures/base_common_support.png>
@@ -478,13 +483,13 @@ Package pdftex.def Info: figures/base_common_support.png  used on input line 10
 2.
 (pdftex.def)             Requested size: 298.64168pt x 238.94707pt.
  [3] [4 <./figures/base_common_support.png>]
-<tables/cem_descriptives.pdf, id=71, 403.25154pt x 239.35623pt>
+<tables/cem_descriptives.pdf, id=71, 380.74748pt x 250.58719pt>
 File: tables/cem_descriptives.pdf Graphic file (type pdf)
 <use tables/cem_descriptives.pdf>
 Package pdftex.def Info: tables/cem_descriptives.pdf  used on input line 115.
-(pdftex.def)             Requested size: 403.25055pt x 239.35564pt.
+(pdftex.def)             Requested size: 380.74654pt x 250.58658pt.
 
-Overfull \hbox (43.25055pt too wide) in paragraph at lines 115--116
+Overfull \hbox (20.74654pt too wide) in paragraph at lines 115--116
 [][] 
  []
 
@@ -501,13 +506,13 @@ File: figures/psm_common_support.png Graphic file (type png)
 Package pdftex.def Info: figures/psm_common_support.png  used on input line 133
 .
 (pdftex.def)             Requested size: 298.64168pt x 238.94707pt.
-<tables/psm_descriptives2.pdf, id=88, 383.20665pt x 266.47655pt>
+<tables/psm_descriptives2.pdf, id=88, 369.79956pt x 260.31953pt>
 File: tables/psm_descriptives2.pdf Graphic file (type pdf)
 <use tables/psm_descriptives2.pdf>
 Package pdftex.def Info: tables/psm_descriptives2.pdf  used on input line 139.
-(pdftex.def)             Requested size: 383.2057pt x 266.47589pt.
+(pdftex.def)             Requested size: 369.79866pt x 260.31888pt.
 
-Overfull \hbox (23.2057pt too wide) in paragraph at lines 139--140
+Overfull \hbox (9.79866pt too wide) in paragraph at lines 139--140
 [][] 
  []
 
@@ -547,7 +552,7 @@ gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files
 type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
 lic/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/l
 mbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb>
-Output written on DARE_4_answers.pdf (9 pages, 781333 bytes).
+Output written on DARE_4_answers.pdf (9 pages, 783014 bytes).
 PDF statistics:
  176 PDF objects out of 1000 (max. 8388607)
  24 named destinations out of 1000 (max. 500000)
